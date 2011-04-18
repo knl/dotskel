@@ -1,0 +1,39 @@
+[user]
+	name = Nikola Knezevic
+	email = laladelausanne@gmail.com
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	ui = auto
+[alias]
+	st = status --ignore-submodules=untracked
+	ci = commit
+	cm = commit -m
+	ai = add -i
+	co = checkout
+	lol = log --pretty=oneline --abbrev-commit --graph --decorate
+	hist = log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+[core]
+	legacyheaders = false
+	excludesfile = ~/.gitignore
+	editor = vim -c ':normal gg'
+	autocrlf = input
+	safecrlf = true
+	whitespace = trailing-space,space-before-tab
+[repack]
+	usedeltabaseoffset = true
+[github]
+	user = knl
+	token = GITHUB_TOKEN 
+[diff]
+	renames = copies
+	mnemonicprefix = true
+[branch]
+	autosetupmerge = true
+[push]
+	default = tracking
+[rerere]
+	enabled = true
+[merge]
+	stat = true
