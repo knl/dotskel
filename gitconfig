@@ -9,13 +9,23 @@
 [color "diff"]
     whitespace = red reverse
 [alias]
-	st = status --ignore-submodules=untracked
+	st = status
+	ss = status -sb
 	ci = commit
-	cm = commit -m
-	ai = add -i
 	co = checkout
-	lol = log --pretty=oneline --abbrev-commit --graph --decorate
-	hist = log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+	br = branch
+	dc = diff --cached
+	lg = log -p
+	ls = ls-files
+	w  = whatchanged
+# Show files ignored by git:
+    ign = ls-files -o -i --exclude-standard
+# Word diffs
+	wd = diff --word-diff
+	lolo = log --pretty=oneline --abbrev-commit --graph --decorate
+	hist = log --pretty=format:'%Cblue%h %Cgreen%ad%Creset | %s%d [%an]' --graph --date=short
+	lol = log --pretty=tformat:'%Cblue%h %Cgreen[%cr]%Creset%d * %s' --color --abbrev-commit --graph --decorate
+	distclean = clean -dxf
 [core]
 	legacyheaders = false
 	excludesfile = ~/.gitignore
