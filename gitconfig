@@ -40,6 +40,9 @@
 [diff]
 	renames = copies
 	mnemonicprefix = true
+[diff "latex"]
+	wordRegex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{}[:space:]]+"
+	command = ~/bin/word-diff.sh
 [branch]
 	autosetupmerge = true
 [push]
