@@ -6,6 +6,8 @@
 	diff = auto
 	branch = auto
 	ui = auto
+[color "diff"]
+    whitespace = red reverse
 [alias]
 	st = status --ignore-submodules=untracked
 	ci = commit
@@ -18,9 +20,8 @@
 	legacyheaders = false
 	excludesfile = ~/.gitignore
 	editor = vim -c ':normal gg'
-	autocrlf = input
-	safecrlf = true
-	whitespace = trailing-space,space-before-tab
+	;whitespace = trailing-space,space-before-tab
+	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [repack]
 	usedeltabaseoffset = true
 [github]
