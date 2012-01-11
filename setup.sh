@@ -2,7 +2,7 @@
 
 FILES='gitconfig gitattributes gitignore'
 
-PWD=`pwd`
+SKELDIR=`pwd`
 
 cd ${HOME}
-for fname in ${FILES}; do ln -sf ${PWD}/${fname} .; done
+for fname in ${FILES}; do ln -sf ${SKELDIR}/${fname} .; done
