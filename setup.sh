@@ -1,6 +1,12 @@
 #!/bin/sh
 
-FILES='gitconfig gitattributes gitignore'
+FILES='\
+    gitconfig \
+    gitattributes \
+    gitignore \
+    ackrc \
+    hgrc \
+'
 
 SKELDIR=`pwd`
 
