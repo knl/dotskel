@@ -6,7 +6,8 @@ FILES='\
     gitignore \
     ackrc \
     hgrc \
-'
+    tmux.conf \
+    '
 
 SKELDIR=`pwd`
 
