@@ -6,6 +6,8 @@ FILES='\
     gitignore \
     ackrc \
     hgrc \
+    hgskel \
+    hgignore \
     tmux.conf \
     '
 

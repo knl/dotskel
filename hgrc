@@ -19,11 +19,12 @@ parentrevspec =
 schemes = 
 progress =
 fetch =
-hgsubversion = 
-prompt = 
-histedit = 
+hgsubversion = ~/.hgskel/hgsubversion/hgsubversion
+prompt = ~/.hgskel/hg-prompt/prompt.py 
+histedit = ~/.hgskel/histedit/hg_histedit.py 
 hggit = 
-collapse = 
+collapse = ~/.hgskel/hgcollapse/hgext/collapse.py 
+shelve =
 
 [progress]
 delay = 1.0
