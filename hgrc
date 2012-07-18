@@ -25,6 +25,7 @@ histedit = ~/.hgskel/histedit/hg_histedit.py
 hggit = 
 collapse = ~/.hgskel/hgcollapse/hgext/collapse.py 
 shelve =
+mercurial_keyring = 
 
 [progress]
 delay = 1.0
