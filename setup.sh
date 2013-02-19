@@ -9,6 +9,7 @@ FILES='\
     hgskel \
     hgignore \
     tmux.conf \
+    slate \
     '
 
 SKELDIR=`pwd`
