@@ -7,6 +7,12 @@ config nudgePercentOf screenSize
 # The base value for resize percent calculation
 config resizePercentOf screenSize
 
+# Hints!
+config windowHintsIgnoreHiddenWindows false
+config windowHintsShowIcons true
+config windowHintsSpread true
+config windowHintsSpreadSearchWidth 60
+config windowHintsSpreadSearchHeight 60
 
 # Alias' directive: alias name value
  
@@ -23,14 +29,15 @@ alias leftthird move screenOriginX;screenOriginY screenSizeX/3;screenSizeY
 alias middlethird move screenOriginX+screenSizeX/3;screenOriginY screenSizeX/3;screenSizeY
 alias rightthird move screenOriginX+screenSizeX/3+screenSizeX/3;screenOriginY screenSizeX/3;screenSizeY
 alias lefttwothirds move screenOriginX;screenOriginY 2*screenSizeX/3;screenSizeY
+alias middletwothirds move screenOriginX+screenSizeX/6;screenOriginY 2*screenSizeX/3;screenSizeY
 alias righttwothirds move screenOriginX+screenSizeX/3;screenOriginY 2*screenSizeX/3;screenSizeY
 
 
 # Layout's directive - layout name 'app name':OPTIONS operations
  
 # Creates the aliases needed for this example
-#alias 0-full move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
-#alias 1-full move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
+alias 0-full move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
+alias 1-full move screenOriginX;screenOriginY screenSizeX;screenSizeY 1
  
 # oneDisplayLayout - Places iTerm in the left half and Firefox in the right half.
 #layout oneDisplayLayout 'iTerm':MAIN_FIRST #{lefthalf}
@@ -60,12 +67,25 @@ bind j:ctrl;alt;cmd ${leftthird}
 bind k:ctrl;alt;cmd ${middlethird}
 bind l:ctrl;alt;cmd ${rightthird}
 bind h:ctrl;alt ${lefttwothirds}
+bind j:ctrl;alt ${middletwothirds}
 bind l:ctrl;alt ${righttwothirds}
 bind b:alt;cmd ${bottomleft}
 bind y:alt;cmd ${topleft}
 bind .:alt;cmd ${bottomright}
 bind p:alt;cmd ${topright}
 
+# width and height settings
+# | make the window full-height
+bind backslash:shift;alt;cmd move windowTopLeftX;0 windowSizeX;screenSizeY
+# _ make the window full-width
+bind -:shift;alt;cmd move 0;windowTopLeftY screenSizeX;windowSizeY
+
+# Screen changing Bindings
+bind 1:alt;cmd throw 0
+bind 2:alt;cmd throw 1
+bind [:alt;cmd throw left
+bind ]:alt;cmd throw right
+#
 # Nudge Bindings
 bind l:shift;alt nudge +1% +0
 bind h:shift;alt nudge -1% +0
@@ -73,19 +93,22 @@ bind k:shift;alt nudge +0 -1%
 bind j:shift;alt nudge +0 +1%
 
 # Focus Bindings
-bind l:shift;ctrl focus right
-bind h:shift;ctrl focus left
-bind k:shift;ctrl focus up
-bind j:shift;ctrl focus down
-bind k:shift;ctrl;alt focus above
-bind j:shift;ctrl;alt focus behind
+#bind l:shift;ctrl focus right
+#bind h:shift;ctrl focus left
+#bind k:shift;ctrl focus up
+#bind j:shift;ctrl focus down
+#bind k:shift;ctrl;alt focus above
+#bind j:shift;ctrl;alt focus behind
 
 # Resize Bindings
-bind l:alt resize +1% +0
-bind h:alt resize -1% +0
-bind k:alt resize +0 -1%
-bind j:alt resize +0 +1%
-bind l:ctrl;alt resize -1% +0 bottom-right
-bind h:ctrl;alt resize +1% +0 bottom-right
-bind k:ctrl;alt resize +0 +1% bottom-right
-bind j:ctrl;alt resize +0 -1% bottom-right
+#bind l:alt resize +1% +0
+#bind h:alt resize -1% +0
+#bind k:alt resize +0 -1%
+#bind j:alt resize +0 +1%
+#bind l:ctrl;alt resize -1% +0 bottom-right
+#bind h:ctrl;alt resize +1% +0 bottom-right
+#bind k:ctrl;alt resize +0 +1% bottom-right
+#bind j:ctrl;alt resize +0 -1% bottom-right
+
+# Hints! \o/
+bind `:ctrl hint
