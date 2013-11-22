@@ -53,7 +53,6 @@
 	usedeltabaseoffset = true
 [github]
 	user = knl
-	token = GITHUB_TOKEN 
 [diff]
 	renames = copies
 	mnemonicprefix = true
