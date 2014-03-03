@@ -17,6 +17,10 @@ SKELDIR=`pwd`
 cd ${HOME}
 for fname in ${FILES}; do ln -sf ${SKELDIR}/${fname} .${fname}; done
 
+# setup keyremap4macbook
+mkdir -p ${HOME}/Library/Application\ Support/KeyRemap4MacBook/
+ln -s ${SKELDIR}/keyremap4macbook/private.xml ${HOME}/Library/Application\ Support/KeyRemap4MacBook/
+
 sudo easy_install hg-git
 sudo easy_install mercurial_keyring
 sudo easy_install keyring
