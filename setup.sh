@@ -9,7 +9,6 @@ FILES='
     hgskel \
     hgignore \
     tmux.conf \
-    hydra \
     '
 
 SKELDIR=`pwd`
