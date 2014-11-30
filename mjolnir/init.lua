@@ -23,25 +23,25 @@ local ctalt    = {"alt", "ctrl"}
 --hotkey.bind(mash, 'P', grid.pushwindow_prevscreen)
 
 -- 2x2 grid
-hotkey.bind(cmdalt, 'k', function () grid22:adjust_focused_window(function(f) f.x = 0; f.y = 0; f.w = grid22.width; f.h = 1 end) end)
-hotkey.bind(cmdalt, 'j', function () grid22:adjust_focused_window(function(f) f.x = 0; f.y = 1; f.w = grid22.width; f.h = 1 end) end)
-hotkey.bind(cmdalt, 'h', function () grid22:adjust_focused_window(function(f) f.x = 0; f.y = 0; f.w = 1; f.h = grid22.height end) end)
-hotkey.bind(cmdalt, 'l', function () grid22:adjust_focused_window(function(f) f.x = 1; f.y = 0; f.w = 1; f.h = grid22.height end) end)
+hotkey.bind(cmdalt, 'k', grid22:focused():leftmost():topmost():widest():tall(1):act())
+hotkey.bind(cmdalt, 'j', grid22:focused():leftmost():bottommost():widest():tall(1):act())
+hotkey.bind(cmdalt, 'h', grid22:focused():leftmost():topmost():wide(1):tallest():act())
+hotkey.bind(cmdalt, 'l', grid22:focused():rightmost():topmost():wide(1):tallest():act())
 
-hotkey.bind(cmdalt, 'b', function () grid22:adjust_focused_window(function(f) f.x = 0; f.y = 1; f.w = 1; f.h = 1 end) end)
-hotkey.bind(cmdalt, 'y', function () grid22:adjust_focused_window(function(f) f.x = 0; f.y = 0; f.w = 1; f.h = 1 end) end)
-hotkey.bind(cmdalt, 'p', function () grid22:adjust_focused_window(function(f) f.x = 1; f.y = 0; f.w = 1; f.h = 1 end) end)
-hotkey.bind(cmdalt, '.', function () grid22:adjust_focused_window(function(f) f.x = 1; f.y = 1; f.w = 1; f.h = 1 end) end)
+hotkey.bind(cmdalt, 'b', grid22:focused():leftmost():bottommost():wide(1):tall(1):act())
+hotkey.bind(cmdalt, 'y', grid22:focused():leftmost():topmost():wide(1):tall(1):act())
+hotkey.bind(cmdalt, 'p', grid22:focused():rightmost():topmost():wide(1):tall(1):act())
+hotkey.bind(cmdalt, '.', grid22:focused():rightmost():bottommost():wide(1):tall(1):act())
 
 -- 3x3 grid, but only horizontal grids
 -- one thirds
-hotkey.bind(ctcmdalt, 'j', function () grid33:adjust_focused_window(function(f) f.x = 0; f.y = 0; f.w = 1; f.h = grid33.height end) end)
-hotkey.bind(ctcmdalt, 'k', function () grid33:adjust_focused_window(function(f) f.x = 1; f.y = 0; f.w = 1; f.h = grid33.height end) end)
-hotkey.bind(ctcmdalt, 'l', function () grid33:adjust_focused_window(function(f) f.x = 2; f.y = 0; f.w = 1; f.h = grid33.height end) end)
+hotkey.bind(ctcmdalt, 'j', grid33:focused():leftmost():topmost():wide(1):tallest():act())
+hotkey.bind(ctcmdalt, 'k', grid33:focused():xpos(1):topmost():wide(1):tallest():act())
+hotkey.bind(ctcmdalt, 'l', grid33:focused():xpos(2):topmost():wide(1):tallest():act())
 
 -- two thirds
-hotkey.bind(ctalt, 'j', function () grid33:adjust_focused_window(function(f) f.x = 0; f.y = 0; f.w = 2; f.h = grid33.height end) end)
-hotkey.bind(ctalt, 'l', function () grid33:adjust_focused_window(function(f) f.x = 1; f.y = 0; f.w = 2; f.h = grid33.height end) end)
+hotkey.bind(ctalt, 'j', grid33:focused():leftmost():topmost():wide(2):tallest():act())
+hotkey.bind(ctalt, 'l', grid33:focused():rightmost():topmost():wide(2):tallest():act())
 
 function vcenter()
   local win = window.focusedwindow()
@@ -69,7 +69,8 @@ function hcenter()
   win:setframe(f)
 end
 
-hotkey.bind(ctalt, 'k', function () grid33:adjust_focused_window(function(f) f.x = 1; f.y = 0; f.w = 2; f.h = grid33.height end); vcenter() end)
+-- a bit of convolution, as grille doesn't support centering
+hotkey.bind(ctalt, 'k', function () fn = grid33:focused():leftmost():topmost():wide(2):tallest():act(); fn(); vcenter() end)
 
 -- bind return:shift;cmd ${full}
 
@@ -80,39 +81,6 @@ hotkey.bind(ctalt, 'k', function () grid33:adjust_focused_window(function(f) f.x
 -- bind ]:alt;cmd throw right
 
 
---- Passes the focused window to fn and uses the returned result as window's new dimensions.
-function adjust_focused_window(fn)
-  local win = window.focusedwindow()
-  local winframe = win:frame()
-  local screenrect = win:screen():frame()
-  win:setframe(fn(winframe, screenrect))
-end
-
-function full_height(winframe, screenrect)
-  return {
-     x = winframe.x,
-     y = screenrect.y,
-     w = winframe.w,
-     h = screenrect.h,
-  }
-end
-
-function full_width(winframe, screenrect)
-  return {
-     x = screenrect.x,
-     y = winframe.y,
-     w = screenrect.w,
-     h = winframe.h,
-
-  }
-end
-
-function compose2(fn1, fn2)
-  return function(winframe, screenrect)
-    return fn2(fn1(winframe, screenrect), screenrect)
-  end
-end
-
-hotkey.bind(scmdalt, '\\', function() adjust_focused_window(full_height) end)
-hotkey.bind(scmdalt, '-', function() adjust_focused_window(full_width) end)
-hotkey.bind(scmdalt, '=', function() adjust_focused_window(compose2(full_width, full_height)) end)
+hotkey.bind(scmdalt, '\\', grid22:focused():tallest():resize())
+hotkey.bind(scmdalt, '-', grid22:focused():widest():resize())
+hotkey.bind(scmdalt, '=', grid22:focused():widest():tallest():resize())
