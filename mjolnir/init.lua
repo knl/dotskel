@@ -1,4 +1,5 @@
-package.path = package.path .. ';/Users/knl/work/mjolnir.grille/?.lua'
+-- package.path = package.path .. ';/Users/knl/work/mjolnir.grille/?.lua'
+-- package.path = package.path .. ';/Users/knl/work/mjolnir.winter/?.lua'
 
 package.path = package.path .. ';/Users/knl/.luarocks/share/lua/5.2/?.lua'
 package.cpath = package.cpath .. ';/Users/knl/.luarocks/lib/lua/5.2/?.so'
@@ -8,19 +9,20 @@ local hotkey = require "mjolnir.hotkey"
 local window = require "mjolnir.window"
 local fnutils = require "mjolnir.fnutils"
 
-local grille = require "grille"
+local winter = require "mjolnir.winter"
+local win = winter.new()
+
+local grille = require "mjolnir.grille"
 
 local grid22 = grille.new(2, 2)
 local grid33 = grille.new(3, 3)
 local grid42 = grille.new(4, 2)
 
+
 local cmdalt   = {"cmd", "alt"}
 local scmdalt  = {"cmd", "alt", "shift"}
 local ctcmdalt = {"cmd", "alt", "ctrl"}
 local ctalt    = {"alt", "ctrl"}
-
---hotkey.bind(mash, 'N', grid.pushwindow_nextscreen)
---hotkey.bind(mash, 'P', grid.pushwindow_prevscreen)
 
 -- 2x2 grid
 hotkey.bind(cmdalt, 'k', grid22:focused():leftmost():topmost():widest():tall(1):act())
@@ -43,44 +45,15 @@ hotkey.bind(ctcmdalt, 'l', grid33:focused():xpos(2):topmost():wide(1):tallest():
 hotkey.bind(ctalt, 'j', grid33:focused():leftmost():topmost():wide(2):tallest():act())
 hotkey.bind(ctalt, 'l', grid33:focused():rightmost():topmost():wide(2):tallest():act())
 
-function vcenter()
-  local win = window.focusedwindow()
-  local winframe = win:frame()
-  local screenrect = win:screen():frame()
-  local f = {
-     w = winframe.w,
-     h = winframe.h,
-     x = math.max(0, (screenrect.w - winframe.w)/2),
-     y = winframe.y,
-  }
-  win:setframe(f)
-end
-
-function hcenter()
-  local win = window.focusedwindow()
-  local winframe = win:frame()
-  local screenrect = win:screen():frame()
-  local f = {
-     w = winframe.w,
-     h = winframe.h,
-     x = winframe.x,
-     y = math.max(0, (screenrect.h - winframe.h)/2),
-  }
-  win:setframe(f)
-end
-
 -- a bit of convolution, as grille doesn't support centering
-hotkey.bind(ctalt, 'k', function () fn = grid33:focused():leftmost():topmost():wide(2):tallest():act(); fn(); vcenter() end)
+hotkey.bind(ctalt, 'k', function () fn1 = grid33:focused():leftmost():topmost():wide(2):tallest():act(); fn2 = win:focused():vcenter():move(); fn1(); fn2(); end)
 
--- bind return:shift;cmd ${full}
+-- fullwidth, fullheight and the combination (|,_,+)
+hotkey.bind(scmdalt, '\\', win:focused():tallest():resize())
+hotkey.bind(scmdalt, '-', win:focused():widest():resize())
+hotkey.bind(scmdalt, '=', win:focused():widest():tallest():resize())
 
--- # Screen changing Bindings
--- bind 1:alt;cmd throw 0
--- bind 2:alt;cmd throw 1
--- bind [:alt;cmd throw left
--- bind ]:alt;cmd throw right
+-- push to different screen
+hotkey.bind(cmdalt, '[', win:focused():prevscreen():move())
+hotkey.bind(cmdalt, ']', win:focused():nextscreen():move())
 
-
-hotkey.bind(scmdalt, '\\', grid22:focused():tallest():resize())
-hotkey.bind(scmdalt, '-', grid22:focused():widest():resize())
-hotkey.bind(scmdalt, '=', grid22:focused():widest():tallest():resize())
