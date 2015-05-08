@@ -1,2 +1,0 @@
-include Makefile *.rst
-recursive-include tests *.py *.sh *.svndump *.txt
