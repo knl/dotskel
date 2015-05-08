@@ -7,7 +7,7 @@
   (setq-default
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("~/dotfiles/dotskel/dotemacs")
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -148,6 +148,7 @@ before layers configuration."
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
   (setq powerline-default-separator 'arrow)
+  ;; I like linum and I want relative numbers with the absolute number for the current line
   (global-linum-mode)
   (linum-relative-toggle)
   (when (display-graphic-p)
@@ -163,6 +164,25 @@ layers configuration."
                                   (frame-char-height))))
     (add-to-list 'default-frame-alist
                  (cons 'top 0)))
+
+  ;; show trailing whitespaces
+  (setq-default show-trailing-whitespace t)
+
+  ;; don't use double-space as the end of the sentence
+  (setq sentence-end-double-space nil)
+
+  ;; always end a file with a newline
+  (setq require-final-newline t)
+
+  ;; Make C-x k kill the buffer in emacsclient session (instead of C-x #)
+  ;; source: http://www.emacswiki.org/emacs/EmacsClient
+  (add-hook 'server-switch-hook
+            (lambda ()
+              (when (current-local-map)
+                (use-local-map (copy-keymap (current-local-map))))
+              (when server-buffer-clients
+		(local-set-key (kbd "C-x k") 'server-edit))))
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
