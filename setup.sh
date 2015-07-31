@@ -6,7 +6,7 @@ FILES='
     gitignore \
     ackrc \
     tmux.conf \
-    spacemacs \
+    hammerspoon \
     '
 
 SKELDIR=`pwd`
