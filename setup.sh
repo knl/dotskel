@@ -14,6 +14,7 @@ SKELDIR=`pwd`
 # setup Karabiner
 mkdir -p ${HOME}/Library/Application\ Support/Karabiner/
 ln -s ${SKELDIR}/karabiner/private.xml ${HOME}/Library/Application\ Support/Karabiner/
+ln -s ${SKELDIR}/karabiner/org.pqrs.Karabiner.plist ${HOME}/Library/Preferences/org.pqrs.Karabiner.plist
 
 # setup quicksilver
 mkdir -p ${HOME}/Library/Application\ Support/Quicksilver
