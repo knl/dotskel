@@ -11,9 +11,9 @@ FILES='
 
 SKELDIR=`pwd`
 
-# setup keyremap4macbook
-mkdir -p ${HOME}/Library/Application\ Support/KeyRemap4MacBook/
-ln -s ${SKELDIR}/keyremap4macbook/private.xml ${HOME}/Library/Application\ Support/KeyRemap4MacBook/
+# setup Karabiner
+mkdir -p ${HOME}/Library/Application\ Support/Karabiner/
+ln -s ${SKELDIR}/karabiner/private.xml ${HOME}/Library/Application\ Support/Karabiner/
 
 # setup quicksilver
 mkdir -p ${HOME}/Library/Application\ Support/Quicksilver
