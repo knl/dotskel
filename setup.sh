@@ -13,12 +13,16 @@ SKELDIR=`pwd`
 
 # setup Karabiner
 mkdir -p ${HOME}/Library/Application\ Support/Karabiner/
-ln -s ${SKELDIR}/karabiner/private.xml ${HOME}/Library/Application\ Support/Karabiner/
-ln -s ${SKELDIR}/karabiner/org.pqrs.Karabiner.plist ${HOME}/Library/Preferences/org.pqrs.Karabiner.plist
+# ... remove files first
+rm -f ${HOME}/Library/Application\ Support/Karabiner/private.xml ${HOME}/Library/Preferences/org.pqrs.Karabiner.plist
+ln -sf ${SKELDIR}/karabiner/private.xml ${HOME}/Library/Application\ Support/Karabiner/
+ln -sf ${SKELDIR}/karabiner/org.pqrs.Karabiner.plist ${HOME}/Library/Preferences/
 
 # setup quicksilver
 mkdir -p ${HOME}/Library/Application\ Support/Quicksilver
-ln -s ${SKELDIR}/quicksilver/Triggers.plist ${HOME}/Library/Application\ Support/Quicksilver/
+# .. remove files first
+rm -f ${HOME}/Library/Application\ Support/Quicksilver/Triggers.plist
+ln -sf ${SKELDIR}/quicksilver/Triggers.plist ${HOME}/Library/Application\ Support/Quicksilver/
 
 # spacemacs!
 # brew tap railwaycat/emacsmacport
