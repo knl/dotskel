@@ -15,9 +15,8 @@ SKELDIR=`pwd`
 # setup Karabiner
 mkdir -p ${HOME}/Library/Application\ Support/Karabiner/
 # ... remove files first
-rm -f ${HOME}/Library/Application\ Support/Karabiner/private.xml ${HOME}/Library/Preferences/org.pqrs.Karabiner.plist
+rm -f ${HOME}/Library/Application\ Support/Karabiner/private.xml
 ln -sf ${SKELDIR}/karabiner/private.xml ${HOME}/Library/Application\ Support/Karabiner/
-ln -sf ${SKELDIR}/karabiner/org.pqrs.Karabiner.plist ${HOME}/Library/Preferences/
 
 # setup quicksilver
 mkdir -p ${HOME}/Library/Application\ Support/Quicksilver
@@ -29,6 +28,11 @@ ln -sf ${SKELDIR}/quicksilver/Triggers.plist ${HOME}/Library/Application\ Suppor
 # brew tap railwaycat/emacsmacport
 # brew install emacs-mac
 git clone --recursive http://github.com/syl20bnr/spacemacs $HOME/.emacs.d
+
+# copy preferences
+for pref in preferences/*.plist; do
+    ln -sf ${SKELDIR}/${pref} ${HOME}/Library/Preferences/
+done
 
 # add config files at their right locations
 cd ${HOME}
