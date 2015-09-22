@@ -7,6 +7,7 @@ FILES='
     ackrc \
     tmux.conf \
     hammerspoon \
+    spacemacs
     '
 
 SKELDIR=`pwd`
