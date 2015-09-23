@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>MigrationUtilitiesCurrentBundleIdentifer</key>
+	<string>org.pqrs.Seil</string>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>1067 747 400 129 0 0 1680 1027 </string>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>528 476 620 392 0 0 1680 1027 </string>
+	<key>NSWindow Frame SUUpdateAlertFrame</key>
+	<string>669 589 578 392 0 0 1920 1178 </string>
+	<key>SUFeedURL</key>
+	<string>https://pqrs.org/osx/karabiner/files/seil-appcast.xml</string>
+	<key>SUHasLaunchedBefore</key>
+	<true/>
+	<key>SULastCheckTime</key>
+	<date>2015-09-23T07:08:40Z</date>
+	<key>WebKitDefaultFontSize</key>
+	<integer>11</integer>
+	<key>WebKitStandardFont</key>
+	<string>Lucida Grande</string>
+	<key>sysctl</key>
+	<dict>
+		<key>enable_capslock</key>
+		<integer>1</integer>
+		<key>keycode_capslock</key>
+		<integer>80</integer>
+	</dict>
+</dict>
+</plist>
