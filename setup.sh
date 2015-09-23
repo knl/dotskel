@@ -1,6 +1,6 @@
 #!/bin/sh
 
-FILES='
+FILES=' \
     gitconfig \
     gitattributes \
     gitignore \
