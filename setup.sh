@@ -26,7 +26,7 @@ ln -sf ${SKELDIR}/quicksilver/Triggers.plist ${HOME}/Library/Application\ Suppor
 
 # spacemacs!
 # brew tap railwaycat/emacsmacport
-# brew install emacs-mac
+# brew install --with-spacemacs-icon --with-imagemagick --with-gnutls --with-ctags emacs-mac
 git clone --recursive http://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 
 # copy preferences
