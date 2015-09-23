@@ -53,8 +53,8 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
-# Disable the “Are you sure you want to open this application?” dialog
-# defaults write com.apple.LaunchServices LSQuarantine -bool false
+# Enable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool true
 
 # Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
@@ -158,10 +158,8 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true
 # defaults write NSGlobalDomain KeyRepeat -int 0
 
 # Set language and text formats
-# Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
-# `Inches`, `en_GB` with `en_US`, and `true` with `false`.
-defaults write NSGlobalDomain AppleLanguages -array "en"
-defaults write NSGlobalDomain AppleLocale -string "en_US@currency=CHF"
+defaults write NSGlobalDomain AppleLanguages -array "en, de, sr"
+defaults write NSGlobalDomain AppleLocale -string "en_CH"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
@@ -286,7 +284,7 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
 # Empty Trash securely by default
-defaults write com.apple.finder EmptyTrashSecurely -bool true
+# defaults write com.apple.finder EmptyTrashSecurely -bool true
 
 # Enable AirDrop over Ethernet and on unsupported Macs running Lion
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
@@ -295,8 +293,8 @@ defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 chflags nohidden ~/Library
 
 # Remove Dropbox’s green checkmark icons in Finder
-file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
-[ -e "${file}" ] && mv -f "${file}" "${file}.bak"
+# file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
+# [ -e "${file}" ] && mv -f "${file}" "${file}.bak"
 
 # Expand the following File Info panes:
 # “General”, “Open with”, and “Sharing & Permissions”
@@ -358,9 +356,9 @@ defaults write com.apple.dock dashboard-in-overlay -bool true
 defaults write com.apple.dock mru-spaces -bool false
 
 # Remove the auto-hiding Dock delay
-defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-delay -float 1.0
 # Remove the animation when hiding/showing the Dock
-defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0.5
 
 # Automatically hide and show the Dock
 defaults write com.apple.dock autohide -bool true
@@ -377,7 +375,7 @@ find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -dele
 # Add a spacer to the left side of the Dock (where the applications are)
 #defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
 # Add a spacer to the right side of the Dock (where the Trash is)
-defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
+# defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
 
 # Hot corners
 # Possible values:
