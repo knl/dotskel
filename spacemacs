@@ -33,7 +33,9 @@ values."
      syntax-checking
      spell-checking
      osx
-     latex
+     (latex :variables
+            latex-build-command "LatexMk"
+            latex-enable-auto-fill t)
      python
      git
      version-control
@@ -247,7 +249,66 @@ layers configuration. You are free to put any user code."
               (when server-buffer-clients
 		(local-set-key (kbd "C-x k") 'server-edit))))
 
-)
+  ;; Default packages included in every tex file, pdflatex or xelatex
+  (setq org-latex-packages-alist
+        '(("" "graphicx" t)
+          ("" "longtable" nil)
+          ("" "float" nil)))
+
+  ;; source: https://lists.gnu.org/archive/html/emacs-orgmode/2013-06/msg00240.html
+  (defun my-auto-tex-cmd (backend)
+    "When exporting from .org with latex,
+    automatically run latex, pdflatex, or xelatex as appropriate,
+    using latexmk."
+    (let ((texcmd))
+      (setq texcmd "latexmk -pdf %f")
+      (if (string-match "LATEX_CMD: pdflatex" (buffer-string))
+          (progn
+            (setq texcmd "latexmk -pdf -pdflatex='pdflatex -file-line-error -synctex=1' %f")
+            (setq org-latex-default-packages-alist
+                  '(("AUTO" "inputenc" t)
+                    ("T1"   "fontenc"   t)
+                    (""     "fixltx2e"  nil)
+                    (""     "wrapfig"   nil)
+                    (""     "soul"      t)
+                    (""     "textcomp"  t)
+                    (""     "marvosym"  t)
+                    (""     "wasysym"   t)
+                    (""     "latexsym"  t)
+                    (""     "amssymb"   t)
+                    (""     "hyperref"  nil)))))
+      (if (string-match "LATEX_CMD: pdflatex-shell-escape" (buffer-string))
+          (setq texcmd "latexmk -pdf -pdflatex='pdflatex -file-line-error --shell-escape -synctex=1' %f"))
+      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
+          (progn
+            (setq texcmd "latexmk -pdflatex='xelatex -file-line-error --shell-escape -synctex=1' -pdf %f")
+            (setq org-latex-default-packages-alist
+                  '(("" "fontspec" t)
+                    ("" "xunicode" t)
+                    ("" "url" t)
+                    ;; ("" "rotating" t)
+                    ;; ("" "memoir-article-styles" t)
+                    ;; ("american" "babel" t)
+                    ;; ("babel" "csquotes" t)
+                    ;; ("" "listings" nil)
+                    ("svgnames" "xcolor" t)
+                    ("" "soul" t)
+                    ("xetex, colorlinks=true, urlcolor=FireBrick, plainpages=false, pdfpagelabels, bookmarksnumbered" "hyperref" nil)
+                    ))
+            (setq org-latex-classes
+                  (cons '("memarticle"
+                          "\\documentclass[11pt,oneside,article]{memoir}"
+                          ("\\section{%s}" . "\\section*{%s}")
+                          ("\\subsection{%s}" . "\\subsection*{%s}")
+                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                          ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+                        org-latex-classes))))
+
+      (setq org-latex-pdf-process (list texcmd))))
+  (add-hook 'org-export-before-parsing-hook 'my-auto-tex-cmd)
+
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
