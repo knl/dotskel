@@ -249,6 +249,21 @@ layers configuration. You are free to put any user code."
               (when server-buffer-clients
 		(local-set-key (kbd "C-x k") 'server-edit))))
 
+  ;; switch between Skim & Okular
+  (cond
+   ((string-equal system-type "darwin")
+    (progn (setq TeX-view-program-selection '((output-pdf "Skim")))))
+   ((string-equal system-type "gnu/linux")
+    (progn (setq TeX-view-program-selection '((output-pdf "Okular"))))))
+
+  ;; LaTeX Sync
+  (setq TeX-source-correlate-mode t)
+  (setq TeX-source-correlate-start-server t)
+  (setq TeX-source-correlate-method 'synctex)
+  (setq TeX-view-program-list
+        '(("Okular" "okular --unique %o#src:%n%b")
+          ("Skim" "displayline -b -g %n %o %b")))
+
   ;; Default packages included in every tex file, pdflatex or xelatex
   (setq org-latex-packages-alist
         '(("" "graphicx" t)
