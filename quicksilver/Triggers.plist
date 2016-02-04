@@ -63,8 +63,23 @@
 			<dict>
 				<key>actionID</key>
 				<string>QSShellScriptRunWithArgsAction</string>
-				<key>directID</key>
-				<string>/Users/kne/Library/Application Support/Quicksilver/PlugIns/com.blacktree.Quicksilver.QSExtraScriptsPlugIn.92.qsplugin/Contents/Resources/ExtraScripts/Processes/Fast Logout.sh</string>
+				<key>directArchive</key>
+				<dict>
+					<key>class</key>
+					<string>QSObject</string>
+					<key>data</key>
+					<dict>
+						<key>public.utf8-plain-text</key>
+						<string>/Users/knl/Library/Application Support/Quicksilver/PlugIns/com.blacktree.Quicksilver.QSExtraScriptsPlugIn.92.qsplugin/Contents/Resources/ExtraScripts/Processes/Fast Logout.sh</string>
+					</dict>
+					<key>properties</key>
+					<dict>
+						<key>QSObjectName</key>
+						<string>/Users/knl/Library/Application Support/Quicksilver/PlugIns/com.blacktree.Quicksilver.QSExtraScriptsPlugIn.92.qsplugin/Contents/Resources/ExtraScripts/Processes/Fast Logout.sh</string>
+						<key>QSObjectType</key>
+						<string>public.utf8-plain-text</string>
+					</dict>
+				</dict>
 				<key>indirectArchive</key>
 				<dict>
 					<key>class</key>
@@ -142,8 +157,6 @@
 		<dict>
 			<key>ID</key>
 			<string>YTDeMinMinimizeAllWindowsTrigger</string>
-			<key>command</key>
-			<string>YTDeMinMinimizeAllWindowsCommand</string>
 			<key>enabled</key>
 			<true/>
 			<key>name</key>
@@ -347,8 +360,6 @@
 		<dict>
 			<key>ID</key>
 			<string>YTDeMinRestoreAllMinWindowsTrigger</string>
-			<key>command</key>
-			<string>YTDeMinRestoreAllMinWindowsCommand</string>
 			<key>enabled</key>
 			<true/>
 			<key>name</key>
@@ -456,8 +467,6 @@
 		<dict>
 			<key>ID</key>
 			<string>YTDeMinRestoreFirstMinWindowTrigger</string>
-			<key>command</key>
-			<string>YTDeMinRestoreFirstMinWindowCommand</string>
 			<key>enabled</key>
 			<true/>
 			<key>name</key>
@@ -627,8 +636,6 @@
 		<dict>
 			<key>ID</key>
 			<string>YTDeMinRestoreLastMinWindowTrigger</string>
-			<key>command</key>
-			<string>YTDeMinRestoreLastMinWindowCommand</string>
 			<key>enabled</key>
 			<true/>
 			<key>name</key>
