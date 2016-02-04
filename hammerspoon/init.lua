@@ -1,27 +1,21 @@
 local application = require "hs.application"
 local hotkey = require "hs.hotkey"
 local window = require "hs.window"
-local fnutils = require "hs.fnutils"
+
+local winter = require "winter"
+local win = winter.new()
 
 local grille = require "grille"
-local winter = require "window.fluent"
 
 local grid22 = grille.new(2, 2)
 local grid33 = grille.new(3, 3)
 local grid42 = grille.new(4, 2)
 
+
 local cmdalt   = {"cmd", "alt"}
 local scmdalt  = {"cmd", "alt", "shift"}
 local ctcmdalt = {"cmd", "alt", "ctrl"}
 local ctalt    = {"alt", "ctrl"}
-
---hotkey.bind(mash, 'N', grid.pushwindow_nextscreen)
---hotkey.bind(mash, 'P', grid.pushwindow_prevscreen)
-
--- reloading
-hs.hotkey.bind(ctcmdalt, "R", function()
-  hs.reload()
-end)
 
 -- 2x2 grid
 hotkey.bind(cmdalt, 'k', grid22:focused():leftmost():topmost():widest():tall(1):act())
@@ -44,52 +38,21 @@ hotkey.bind(ctcmdalt, 'l', grid33:focused():xpos(2):topmost():wide(1):tallest():
 hotkey.bind(ctalt, 'j', grid33:focused():leftmost():topmost():wide(2):tallest():act())
 hotkey.bind(ctalt, 'l', grid33:focused():rightmost():topmost():wide(2):tallest():act())
 
-function vcenter()
-  local win = window.focusedWindow()
-  local winframe = win:frame()
-  local screenrect = win:screen():frame()
-  local f = {
-     w = winframe.w,
-     h = winframe.h,
-     x = math.max(0, (screenrect.w - winframe.w)/2),
-     y = winframe.y,
-  }
-  win:setFrame(f)
-end
-
-function hcenter()
-  local win = window.focusedWindow()
-  local winframe = win:frame()
-  local screenrect = win:screen():frame()
-  local f = {
-     w = winframe.w,
-     h = winframe.h,
-     x = winframe.x,
-     y = math.max(0, (screenrect.h - winframe.h)/2),
-  }
-  win:setFrame(f)
-end
-
 -- a bit of convolution, as grille doesn't support centering
-hotkey.bind(ctalt, 'k', function () fn = grid33:focused():leftmost():topmost():wide(2):tallest():act(); fn(); vcenter() end)
+hotkey.bind(ctalt, 'k', function () fn1 = grid33:focused():leftmost():topmost():wide(2):tallest():act(); fn2 = win:focused():vcenter():move(); fn1(); fn2(); end)
 
--- bind return:shift;cmd ${full}
+-- fullwidth, fullheight and the combination (|,_,+)
+hotkey.bind(scmdalt, '\\', win:focused():tallest():resize())
+hotkey.bind(scmdalt, '-', win:focused():widest():resize())
+hotkey.bind(scmdalt, '=', win:focused():widest():tallest():resize())
 
--- # Screen changing Bindings
--- bind 1:alt;cmd throw 0
--- bind 2:alt;cmd throw 1
--- bind [:alt;cmd throw left
--- bind ]:alt;cmd throw right
+-- push to different screen
+hotkey.bind(cmdalt, '[', win:focused():prevscreen():move())
+hotkey.bind(cmdalt, ']', win:focused():nextscreen():move())
 
-
-hotkey.bind(scmdalt, '\\', winter.focused():tallest():resize())
-hotkey.bind(scmdalt, '-', winter.focused():widest():resize())
-hotkey.bind(scmdalt, '=', winter.focused():widest():tallest():resize())
-
+-- and now layouts, everyone likes layouts
 local kinematic = require "kinematic"
 
--- layouts!
--- development
 hotkey.bind(cmdalt, '1', function() kinematic.go({
 "CCCCCCCCCCCCCiiiiiiiiiii      # <-- The windowgram, it defines the shapes and positions of windows",
 "CCCCCCCCCCCCCiiiiiiiiiii",
@@ -102,18 +65,23 @@ hotkey.bind(cmdalt, '1', function() kinematic.go({
 "S Skype",
 "E Emacs"}) end)
 
--- productivity
 hotkey.bind(cmdalt, '2', function() kinematic.go({
-"m:PPPP",
-"m:OPPP",
-"m:OPPP",
-"m:OPPP",
-"m:OPPP",
+"..CCCCCCCCCCCiiiiiiiiiii      # <-- The windowgram, it defines the shapes and positions of windows",
+"..CCCCCCCCCCCiiiiiiiiiii",
 "",
-"p:TTTTTTAAIIIIIIIIII",
-"",
-"P Postbox",
-"O Day One",
-"T Things",
-"A Adium",
-"I Calendar"}) end)
+"C Google Chrome            # <-- window C has application():title() 'Google Chrome'",
+"i iTerm"}) end)
+
+hotkey.bind(cmdalt, '3', function() kinematic.go({
+            "CCCCCCCCCCCCCiiiiiiiiiii      # <-- The windowgram, it defines the shapes and positions of windows",
+            "CCCCCCCCCCCCCiiiiiiiiiii",
+            "SSSSSSSSSSSSSiiiiiiiiiii",
+            "SSSSSSSSSSSSSYYYYYYYYYYY",
+            "SSSSSSSSSSSSSYYYYYYYYYYY",
+            "",
+            "#  foc                     # <-- Three 3-letter commands to remember: Focus, Directory, Run",
+            "#  dir ~                   # <-- Unlinked directory, becomes default for all undefined panes",
+            "C Google Chrome            # <-- window C has application():title() 'Google Chrome'",
+            "i iTerm",
+            "Y Preview",
+            "S Skype"}) end)
