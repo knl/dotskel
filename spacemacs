@@ -11,6 +11,9 @@ values."
    ;; `+distribution'. For now available distributions are `spacemacs-base'
    ;; or `spacemacs'. (default 'spacemacs)
    dotspacemacs-distribution 'spacemacs
+   ;; If non-nil layers with lazy install support are lazy installed.
+   ;; (default nil)
+   dotspacemacs-enable-lazy-installation nil
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
@@ -23,32 +26,55 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ;; system
      osx
-     auto-completion
-     spell-checking
+     ;; behaviour
+     helm
+     semantic
+     (auto-completion :variables
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-help-tooltip t)
      syntax-checking
+     spell-checking
+
+     ;; utilities
      (org :variables
           org-enable-reveal-js t)
-     markdown
-     (latex :variables
-            latex-build-command "LatexMk"
-            latex-enable-auto-fill t)
-     python
      git
      version-control
-     lua
-     clojure
+     cscope
+     deft
+     dash
+     (shell :variables
+            shell-default-term-shell "/usr/local/bin/zsh")
+     fasd
+     pandoc
+     ranger
+     ;; languages
+     shell-scripts
+     (python :variables
+             python-test-runner 'pytest)
+     sql
+     (c-c++ :variables
+            c-c++-enable-clang-support t
+            c-c++-default-mode-for-headers 'c++-mode)
      (html :variables
            css-indent-offset 2
            web-mode-code-indent-offset 2
            web-mode-markup-indent-offset 2
            web-mode-css-indent-offset 2)
+     (latex :variables
+            latex-build-command "LatexMk"
+            latex-enable-auto-fill t)
+     emacs-lisp
+     lua
+     clojure
      javascript
-     deft
-     dash
      ess
-     haskell
-     shell
+     markdown
+     yaml
+     ;; the rest
+     puppet
      themes-megapack
      )
    ;; List of additional packages that will be installed without being
@@ -88,7 +114,7 @@ values."
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
-   dotspacemacs-editing-style 'vim
+   dotspacemacs-editing-style 'hybrid
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -99,14 +125,14 @@ values."
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
    ;; List of items to show in the startup buffer. If nil it is disabled.
-   ;; Possible values are: `recents' `bookmarks' `projects'.
+   ;; Possible values are: `recents' `bookmarks' `projects' `agenda' `todos'.
    ;; (default '(recents projects))
    dotspacemacs-startup-lists '(recents projects)
    ;; Number of recent files to show in the startup buffer. Ignored if
    ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
    dotspacemacs-startup-recent-list-size 5
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'org-mode
+   dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -178,7 +204,7 @@ values."
    dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-micro-state nil
+   dotspacemacs-enable-paste-transient-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -209,16 +235,20 @@ values."
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-inactive-transparency 70
+   ;; If non nil show the titles of transient states. (default t)
+   dotspacemacs-show-transient-state-title t
+   ;; If non nil show the color guide hint for transient state keys. (default t)
+   dotspacemacs-show-transient-state-color-guide t
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
    dotspacemacs-mode-line-unicode-symbols t
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
-   ;; scrolling overrides the default behavior of Emacs which recenters the
-   ;; point when it reaches the top or bottom of the screen. (default t)
+   ;; scrolling overrides the default behavior of Emacs which recenters point
+   ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers 'relative
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -251,11 +281,6 @@ It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
   (setq use-package-verbose t)
-
-  ;; Only start server mode if I'm not root
-  (unless (string-equal "root" (getenv "USER"))
-    (require 'server)
-    (unless (server-running-p) (server-start)))
   )
 
 (defun dotspacemacs/user-config ()
@@ -282,8 +307,8 @@ layers configuration. You are free to put any user code."
   ;; size the window upon start
   (when (display-graphic-p)
     (if (> (x-display-pixel-width) 1280)
-           (add-to-list 'default-frame-alist (cons 'width 120))
-           (add-to-list 'default-frame-alist (cons 'width 80)))
+           (add-to-list 'default-frame-alist (cons 'width 160))
+           (add-to-list 'default-frame-alist (cons 'width 100)))
     ;; for the height, subtract a couple hundred pixels
     ;; from the screen height (for panels, menubars and
     ;; whatnot), then divide by the height of a char to
@@ -322,167 +347,86 @@ layers configuration. You are free to put any user code."
              '("^[^\\*].*[^\\*]$" display-buffer-same-window) t)
 
   ;;;; Org settings
-  (setq org-return-follows-link t)
-  (setq org-directory "/Users/Shared/notes/")
-  (setq org-agenda-files (quote ("/Users/Shared/notes/todo.org"
-                                 "/Users/Shared/notes/notes.org")))
-  (setq org-agenda-window-setup 'current-window)
+  (with-eval-after-load 'org
+    (setq org-return-follows-link t)
+    (setq org-directory (concat user-home-directory "notes/"))
+    (setq org-agenda-files (quote ((concat user-home-directory "notes/todo.org")
+                                   (concat user-home-directory "notes/notes.org"))))
+    (setq org-agenda-window-setup 'current-window)
 
-  ;; tell org to use listings
-  ; (setq org-latex-listings t)
+    ;; Use the current window for indirect buffer display
+    (setq org-indirect-buffer-display 'current-window)
 
-  ;; you must include the listings package
-  ; (add-to-list 'org-latex-packages-alist '("" "listings"))
+    ;; active Babel languages
+    ;; (org-babel-do-load-languages
+    ;;  'org-babel-load-languages
+    ;;  '((R . t)
+    ;;    (dot . t)
+    ;;    (haskell . t)
+    ;;    (java . t)
+    ;;    (js . t)
+    ;;    (latex . t)
+    ;;    (ruby . t)
+    ;;    (sh . t)
+    ;;    (emacs-lisp . t)
+    ;;    (C . t)
+    ;;    ))
+    (setq org-confirm-babel-evaluate nil)
 
-  ;; if you want colored source code then you need to include the color package
-  ; (add-to-list 'org-latex-packages-alist '("" "color"))
+    ;; tell org to use listings
+    (setq org-latex-listings t)
 
-  ;; would be nice to add something like this:
-  ;; https://github.com/abo-abo/org-download
+    ;; you must include the listings package
+    (add-to-list 'org-latex-packages-alist '("" "listings"))
 
-  ; org-mode journal
-  (setq journal-file "/Users/Shared/notes/journal.org")
+    ;; if you want colored source code then you need to include the color package
+    (add-to-list 'org-latex-packages-alist '("" "color"))
 
-  (defun start-journal-entry ()
-    "Start a new journal entry."
-    (interactive)
-    (find-file journal-file)
-    (goto-char (point-min))
-    (org-insert-heading)
-    (org-insert-time-stamp (current-time) t)
-    (open-line 2)
-    (insert " "))
+    ;; would be nice to add something like this:
+    ;; https://github.com/abo-abo/org-download
 
-  (global-set-key (kbd "C-c j") 'start-journal-entry)
-  ;(define-key global-map "\C-cc" 'org-capture)
-  ;(define-key global-map "\C-ca" 'org-agenda)
+    ;; org-mode journal
+    (setq journal-file (concat user-home-directory "notes/work-journal.org"))
 
-  ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-  (setq org-refile-targets (quote ((nil :maxlevel . 9)
-                                   (org-agenda-files :maxlevel . 9))))
+    (defun start-journal-entry ()
+      "Start a new journal entry."
+      (interactive)
+      (find-file journal-file)
+      (goto-char (point-min))
+      (org-insert-heading)
+      (org-insert-time-stamp (current-time) t)
+      (open-line 2)
+      (insert " "))
 
-  ;; Use full outline paths for refile targets - we file directly with IDO
-  ;(setq org-refile-use-outline-path t)
+    (global-set-key (kbd "C-c j") 'start-journal-entry)
+                                        ;(define-key global-map "\C-cc" 'org-capture)
+                                        ;(define-key global-map "\C-ca" 'org-agenda)
 
-  ;; Targets complete directly with IDO
-  ;(setq org-outline-path-complete-in-steps nil)
+    ;; org-mode Today-I-Learned (til)
+    (setq til-file (concat user-home-directory "notes/til.org"))
 
-  ;; Allow refile to create parent tasks with confirmation
-  ;(setq org-refile-allow-creating-parent-nodes (quote confirm))
+    (defun start-til-entry ()
+      "Start a new today-I-learned entry."
+      (interactive)
+      (find-file til-file)
+      (goto-char (point-min))
+      (org-insert-heading)
+      (org-insert-time-stamp (current-time) t)
+      (open-line 2)
+      (insert " "))
 
-  ;; Use the current window for indirect buffer display
-  (setq org-indirect-buffer-display 'current-window)
-
-  ;; Refile settings
-  ;; Exclude DONE state tasks from refile targets
-  (defun bh/verify-refile-target ()
-    "Exclude todo keywords with a done state from refile targets"
-    (not (member (nth 2 (org-heading-components)) org-done-keywords)))
-
-  ;(setq org-refile-target-verify-function 'bh/verify-refile-target)
-
-  ;; active Babel languages
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((R . t)
-     (dot . t)
-     (haskell . t)
-     (java . t)
-     (js . t)
-     (latex . t)
-     (ruby . t)
-     (sh . t)
-     (emacs-lisp . t)
-     (C . t)
-     ))
-  (setq org-confirm-babel-evaluate nil)
-
-  ;; source: http://www.lunaryorn.com/2015/04/29/the-power-of-display-buffer-alist.html
-  (add-to-list 'display-buffer-alist
-               `(,(rx bos "*Flycheck errors*" eos)
-                 (display-buffer-reuse-window
-                  display-buffer-in-side-window)
-                 ;(reusable-frames . visible)
-                 (side            . bottom)
-                 (window-height   . 0.4)))
-
-  ;; source:
-  ;; http://pragmaticemacs.com/emacs/wrap-text-in-an-org-mode-block/
-  (defun org-begin-template ()
-  "Wrap a text in an org mode block. Make a template at point."
-  (interactive)
-  (if (org-at-table-p)
-      (call-interactively 'org-table-rotate-recalc-marks)
-    (let* ((choices '(("s" . "SRC")
-                      ("e" . "EXAMPLE")
-                      ("q" . "QUOTE")
-                      ("v" . "VERSE")
-                      ("c" . "CENTER")
-                      ("l" . "LaTeX")
-                      ("h" . "HTML")
-                      ("a" . "ASCII")))
-           (key
-            (key-description
-             (vector
-              (read-key
-               (concat (propertize "Template type: " 'face 'minibuffer-prompt)
-                       (mapconcat (lambda (choice)
-                                    (concat (propertize (car choice) 'face 'font-lock-type-face)
-                                            ": "
-                                            (cdr choice)))
-                                  choices
-                                  ", ")))))))
-      (let ((result (assoc key choices)))
-        (when result
-          (let ((choice (cdr result)))
-            (cond
-             ((region-active-p)
-              (let ((start (region-beginning))
-                    (end (region-end)))
-                (goto-char end)
-                (insert "#+END_" choice "\n")
-                (goto-char start)
-                (insert "#+BEGIN_" choice "\n")))
-             (t
-              (insert "#+BEGIN_" choice "\n")
-              (save-excursion (insert "#+END_" choice))))))))))
+    (global-set-key (kbd "C-c t") 'start-til-entry)
+    )
 
   ;; deft configuration
   (setq deft-extensions '("org" "md" "markdown" "txt"))
-  (setq deft-directory "/Users/Shared/notes")
+  (setq deft-directory (concat user-home-directory "notes"))
 
   ;; (setq deft-extension "org")
   (setq deft-text-mode 'org-mode )
   (setq deft-use-filename-as-title t)
   (setq deft-use-filter-string-for-filename t)
   (setq deft-auto-save-interval 0)
-
-  ;; https://cestdiego.github.io/blog/2015/08/19/org-protocol/
-  (require 'org-capture)
-  (require 'org-protocol)
-
-;;; Org Capture
-;;;; Thank you random guy from StackOverflow
-;;;; http://stackoverflow.com/questions/23517372/hook-or-advice-when-aborting-org-capture-before-template-selection
-
-  (defadvice org-capture
-      (after make-full-window-frame activate)
-    "Advise capture to be the only window when used as a popup"
-    (if (equal "emacs-capture" (frame-parameter nil 'name))
-        (delete-other-windows)))
-
-  (defadvice org-capture-finalize
-      (after delete-capture-frame activate)
-    "Advise capture-finalize to close the frame"
-    (if (equal "emacs-capture" (frame-parameter nil 'name))
-        (delete-frame)))
-
-;;; Capture Templates
-;;;; Add idea, mind-onanism, contacts, movies to download das
-  (setq org-capture-templates
-        '(("l" "Temp Links from the interwebs" item
-           (file+headline "links.org" "Temporary Links")
-           "%?\nEntered on %U\n \%i\n %a")))
 
   ;;advise deft-new-file-named to replace spaces in file names with -
   (defun knl/deft-strip-spaces (args)
@@ -491,92 +435,21 @@ layers configuration. You are free to put any user code."
       (list (replace-regexp-in-string " " "-" (car args) " ")))
   (advice-add 'deft-new-file-named :filter-args #'knl/deft-strip-spaces)
 
+  ;; source: http://www.lunaryorn.com/2015/04/29/the-power-of-display-buffer-alist.html
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*Flycheck errors*" eos)
+                 (display-buffer-reuse-window
+                  display-buffer-in-side-window)
+                                        ;(reusable-frames . visible)
+                 (side            . bottom)
+                 (window-height   . 0.4)))
+
   ;; switch between Skim & Okular
   (cond
    ((string-equal system-type "darwin")
     (progn (setq TeX-view-program-selection '((output-pdf "Skim")))))
    ((string-equal system-type "gnu/linux")
     (progn (setq TeX-view-program-selection '((output-pdf "Okular"))))))
-
-  ;; LaTeX Sync
-  (setq TeX-source-correlate-mode t)
-  (setq TeX-source-correlate-start-server t)
-  (setq TeX-source-correlate-method 'synctex)
-  (setq TeX-view-program-list
-        '(("Okular" "okular --unique %o#src:%n%b")
-          ("Skim" "displayline -b -g %n %o %b")))
-
-  ;; Default packages included in every tex file, pdflatex or xelatex
-  (setq org-latex-packages-alist
-        '(("" "graphicx" t)
-          ("" "longtable" nil)
-          ("" "float" nil)))
-
-  ;; source: https://lists.gnu.org/archive/html/emacs-orgmode/2013-06/msg00240.html
-  (defun my-auto-tex-cmd (backend)
-    "When exporting from .org with latex,
-    automatically run latex, pdflatex, or xelatex as appropriate,
-    using latexmk."
-    (let ((texcmd))
-      (setq texcmd "latexmk -pdf %f")
-      (if (string-match "LATEX_CMD: pdflatex" (buffer-string))
-          (progn
-            (setq texcmd "latexmk -pdf -pdflatex='pdflatex -file-line-error -synctex=1' %f")
-            (setq org-latex-default-packages-alist
-                  '(("AUTO" "inputenc" t)
-                    ("T1"   "fontenc"   t)
-                    (""     "fixltx2e"  nil)
-                    (""     "wrapfig"   nil)
-                    (""     "soul"      t)
-                    (""     "textcomp"  t)
-                    (""     "marvosym"  t)
-                    (""     "wasysym"   t)
-                    (""     "latexsym"  t)
-                    (""     "amssymb"   t)
-                    (""     "hyperref"  nil)))))
-      (if (string-match "LATEX_CMD: pdflatex-shell-escape" (buffer-string))
-          (setq texcmd "latexmk -pdf -pdflatex='pdflatex -file-line-error --shell-escape -synctex=1' %f"))
-      (if (string-match "LATEX_CMD: xelatex" (buffer-string))
-          (progn
-            (setq texcmd "latexmk -pdflatex='xelatex -file-line-error --shell-escape -synctex=1' -pdf %f")
-            (setq org-latex-default-packages-alist
-                  '(("" "fontspec" t)
-                    ("" "xunicode" t)
-                    ("" "url" t)
-                    ;; ("" "rotating" t)
-                    ;; ("" "memoir-article-styles" t)
-                    ;; ("american" "babel" t)
-                    ;; ("babel" "csquotes" t)
-                    ;; ("" "listings" nil)
-                    ("svgnames" "xcolor" t)
-                    ("" "soul" t)
-                    ("xetex, colorlinks=true, urlcolor=FireBrick, plainpages=false, pdfpagelabels, bookmarksnumbered" "hyperref" nil)
-                    ))
-            (setq org-latex-classes
-                  (cons '("memarticle"
-                          "\\documentclass[11pt,oneside,article]{memoir}"
-                          ("\\section{%s}" . "\\section*{%s}")
-                          ("\\subsection{%s}" . "\\subsection*{%s}")
-                          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                          ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                          ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-                        org-latex-classes))))
-
-      (setq org-latex-pdf-process (list texcmd))))
-  (add-hook 'org-export-before-parsing-hook 'my-auto-tex-cmd)
-
-  (eval-after-load 'ox '(require 'ox-koma-letter))
-  (eval-after-load 'ox-koma-letter
-    '(progn
-       (add-to-list 'org-latex-classes
-                    '("my-letter"
-                      "\\documentclass[a4paper,10pt,DIV=9]\{scrlttr2\}
-     \\usepackage[english]{babel}
-     \[DEFAULT-PACKAGES]
-     \[PACKAGES]
-     \[EXTRA]"))
-
-       (setq org-koma-letter-default-class "my-letter")))
 
   ;; a bit of python stuff
   ;; source: http://ssbb.me/emacs-pyenv-auto-activation-en.html
@@ -593,3 +466,19 @@ layers configuration. You are free to put any user code."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
+ '(flycheck-clang-language-standard "c++11")
+ '(org-agenda-files (quote ((concat user-home-directory "notes/todo.org"))))
+ '(paradox-github-token t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
