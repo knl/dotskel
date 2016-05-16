@@ -42,7 +42,27 @@
 # KSDiff is just a more compact version of difftool -y -t Kaleidoscope for
 # people who don't use Kaleidoscope as the default difftool.
 	ksdiff = difftool -y -t Kaleidoscope
-
+# git for humans
+        branches = branch -a
+	tags = tag
+	stashes = stash list
+	unstage = reset -q HEAD --
+	discard = checkout --
+	uncommit = reset --mixed HEAD~
+	amend = commit --amend
+	nevermind = !git reset --hard HEAD && git clean -d -f
+	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+	prestage = diff -w --word-diff=color
+	precommit = diff --cached --diff-algorithm=minimal -w
+	unmerged = diff --name-only --diff-filter=U
+	remotes = remote -v
+	last = log -1 HEAD --format=format:"%Cred%H"
+	history = log -10 --format=format:'%Cgreen%h %Creset• %s (%cN, %ar)'
+	back = checkout "-"
+	discard = checkout --
+	mergetrail = log --ancestry-path --merges
+[credential]
+	helper = osxkeychain
 [core]
 	legacyheaders = false
 	excludesfile = ~/.gitignore
