@@ -1,6 +1,7 @@
 [user]
 	name = Nikola Knezevic
 	email = laladelausanne@gmail.com
+	signingkey = 45219865
 [color]
 	status = auto
 	diff = auto
@@ -19,7 +20,7 @@
 	ls = ls-files
 	w  = whatchanged
 # Show files ignored by git:
-    ign = ls-files -o -i --exclude-standard
+	ign = ls-files -o -i --exclude-standard
 # Word diffs
 	wd = diff --word-diff
 	lolo = log --pretty=oneline --abbrev-commit --graph --decorate
@@ -43,7 +44,7 @@
 # people who don't use Kaleidoscope as the default difftool.
 	ksdiff = difftool -y -t Kaleidoscope
 # git for humans
-        branches = branch -a
+	branches = branch -a
 	tags = tag
 	stashes = stash list
 	unstage = reset -q HEAD --
@@ -61,6 +62,7 @@
 	back = checkout "-"
 	discard = checkout --
 	mergetrail = log --ancestry-path --merges
+	precommit = diff --cached --diff-algorithm=minimal -w
 [credential]
 	helper = osxkeychain
 [core]
