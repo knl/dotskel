@@ -1,14 +1,12 @@
 #!/bin/sh
 
-FILES=' \
-    gitconfig \
+FILES='gitconfig \
     gitattributes \
     gitignore \
     ackrc \
     tmux.conf \
     hammerspoon \
-    spacemacs
-    '
+    spacemacs'
 
 SKELDIR=`pwd`
 
