@@ -16,9 +16,10 @@ rm -f ${HOME}/Library/Application\ Support/Quicksilver/Triggers.plist
 ln -sf ${SKELDIR}/quicksilver/Triggers.plist ${HOME}/Library/Application\ Support/Quicksilver/
 
 # spacemacs!
-# brew tap railwaycat/emacsmacport
-# brew install --with-spacemacs-icon --with-imagemagick --with-gnutls --with-ctags emacs-mac
-git clone --recursive http://github.com/syl20bnr/spacemacs $HOME/.emacs.d
+brew tap d12frosted/emacs-plus
+brew install emacs-plus
+brew linkapps emacs-plus
+git clone http://github.com/syl20bnr/spacemacs $HOME/.emacs.d
 
 # copy preferences
 for pref in preferences/*.plist; do
