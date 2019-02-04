@@ -9,12 +9,6 @@ FILES='gitconfig \
 
 SKELDIR=`pwd`
 
-# setup Karabiner
-mkdir -p ${HOME}/Library/Application\ Support/Karabiner/
-# ... remove files first
-rm -f ${HOME}/Library/Application\ Support/Karabiner/private.xml
-ln -sf ${SKELDIR}/karabiner/private.xml ${HOME}/Library/Application\ Support/Karabiner/
-
 # setup quicksilver
 mkdir -p ${HOME}/Library/Application\ Support/Quicksilver
 # .. remove files first
