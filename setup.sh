@@ -3,7 +3,6 @@
 FILES='gitconfig \
     gitattributes \
     gitignore \
-    ackrc \
     tmux.conf \
     hammerspoon \
     spacemacs'
