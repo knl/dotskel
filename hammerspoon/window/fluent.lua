@@ -1,1 +1,0 @@
-/Users/kne/work/hammerspoon/extensions/window/fluent.lua
