@@ -15,6 +15,7 @@ local cmdalt   = {"cmd", "alt"}
 local scmdalt  = {"cmd", "alt", "shift"}
 local ctcmdalt = {"cmd", "alt", "ctrl"}
 local ctalt    = {"alt", "ctrl"}
+local hyper    = {"cmd", "alt", "ctrl", "shift"}
 
 -- 2x2 grid
 hotkey.bind(cmdalt, 'k', grid22:focused():leftmost():topmost():widest():tall(1):act())
@@ -63,3 +64,11 @@ hotkey.bind(cmdalt, ']', win:focused():keep_proportions():nextscreen():move())
 -- hotkey.bind(scmdalt, ';', grille.autogrid():wider():resize())
 -- hotkey.bind(cmdalt, '\'', grille.autogrid():shorter():resize())
 -- hotkey.bind(scmdalt, '\'', grille.autogrid():taller():resize())
+
+-- Application starters
+hotkey.bind(hyper, "e", function() application.launchOrFocus("Emacs") end)
+hotkey.bind(hyper, "t", function() application.launchOrFocus("iTerm") end)
+hotkey.bind(hyper, "c", function() application.launchOrFocus("Calendar") end)
+hotkey.bind(hyper, "m", function() application.launchOrFocus("Mail") end)
+hotkey.bind(hyper, "h", function() application.launchOrFocus("Dash") end)
+hotkey.bind(hyper, "s", function() application.launchOrFocus("Slack") end)
