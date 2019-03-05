@@ -46,7 +46,7 @@ This function should only modify configuration layer settings."
      git
      markdown
      ;; multiple-cursors
-     treemacs
+     (treemacs :variables treemacs-use-follow-mode t)
      org
      (shell :variables
             shell-default-height 30
@@ -58,6 +58,8 @@ This function should only modify configuration layer settings."
      haskell
      (python :variables
              python-test-runner 'pytest)
+     (javascript :variables
+                 javascript-disable-tern-port-files nil)
      lua
      go
      html
@@ -66,7 +68,10 @@ This function should only modify configuration layer settings."
      nixos
      emacs-lisp
      shell-scripts
-
+     javascript
+     perl5
+     ;; just so
+     themes-megapack
      )
 
    ;; List of additional packages that will be installed without being
@@ -76,7 +81,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(direnv nimbus-theme)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -199,7 +204,9 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(ujelly
+                         nimbus
+                         spacemacs-dark
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -217,8 +224,8 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Iosevka Term SS08"
+                               :size 14
                                :weight normal
                                :width normal)
 
@@ -360,13 +367,12 @@ It should only modify the values of Spacemacs settings."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers '(:relative nil
+   dotspacemacs-line-numbers '(:relative t
+                               :enable-for-modes prog-mode
+                                                 text-mode
                                :disabled-for-modes dired-mode
                                                    doc-view-mode
-                                                   markdown-mode
-                                                   org-mode
                                                    pdf-view-mode
-                                                   text-mode
                                :size-limit-kb 1000)
 
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -475,27 +481,57 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;; FIXME: workaround
+  ;; https://github.com/syl20bnr/spacemacs/issues/11798
+  (when (version<= "9.2" (org-version))
+    (require 'org-tempo))
+
+  ;; Code based mostly on file+headline part of org-capture-set-target-location
+  ;; Look for a headline that matches whatever *my-journal-headline-format* is
+  ;; If it's not there insert it; otherwise position the cursor at the end of the
+  ;; subtree.
+  (defconst *my-journal-headline-format* "%A, %Y-%m-%d")
+  (defun knl/find-todays-journal-point ()
+    "Find or create the current project's header and insert the todo template"
+    (goto-char (point-min))
+    (let ((todo-header (concat "* " (format-time-string *my-journal-headline-format*))))
+      (if (re-search-forward todo-header nil t 1)
+          (match-string-no-properties 0)
+        (goto-char (point-max))
+        (newline 2)
+        (insert todo-header)
+        (newline 1)
+        (knl/find-todays-journal-point))))
+
+  (setq org-capture-templates
+        '(("t" "Todo"
+           entry
+           (file+headline "~/notes/todo.org" "Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("l" "Today I learned"
+           entry
+           (file "~/notes/til.org")
+           "* %? %^g")
+          ("j" "Journal Entry"
+           plain
+           (file+function "~/notes/journal.org" knl/find-todays-journal-point)
+           "** [%<%H:%M>] %^{Title}\n %?"
+           :empty-lines-after 1)
+          ))
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
+
+  (defun knl/new-buffer-frame ()
+    "Create a new frame with a new empty buffer."
+    (interactive)
+    (let ((buffer (get-buffer-create "*scratch*")))
+      (display-buffer buffer '(display-buffer-pop-up-frame . nil))))
+  (spacemacs/set-leader-keys "Fn" 'knl/new-buffer-frame)
+
+  (use-package direnv
+    :config
+    (direnv-mode))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (insert-shebang flycheck-bashate fish-mode company-shell yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-evil toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode prettier-js popwin pippel pipenv pip-requirements persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file nix-mode nameless multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum live-py-mode link-hint indent-guide importmagic impatient-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-nixos-options helm-mode-manager helm-make helm-hoogle helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish diff-hl define-word cython-mode counsel-projectile company-web company-terraform company-statistics company-nixos-options company-lua company-go company-ghci company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
