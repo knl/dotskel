@@ -3,3 +3,4 @@
 
 eval "$(direnv hook zsh)"
 eval "$(lua ~/bin/z.lua --init zsh fzf once)"
+eval "$(lua ~/work/github.com/knl/rh/rh.lua --init zsh ~/work)"
