@@ -8,7 +8,7 @@ brew tap d12frosted/emacs-plus
 brew install emacs-plus
 brew linkapps emacs-plus
 
-brew install zsh fzf direnv fd ripgrep fasd
+brew install zsh fzf direnv fd ripgrep lua
 
 brew tap twpayne/taps
 brew install twpayne/taps/chezmoi

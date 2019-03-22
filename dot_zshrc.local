@@ -1,5 +1,5 @@
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias r='cd $(FZF_DEFAULT_COMMAND="fd -t d -H ^\\.git$ ~/work|xargs -n1 dirname" fzf)'
 
 eval "$(direnv hook zsh)"
+eval "$(lua ~/bin/z.lua --init zsh fzf once)"
