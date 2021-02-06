@@ -284,6 +284,10 @@ in
   # Karabiner's config file
   xdg.configFile."karabiner/karabiner.json".source = ./karabiner/karabiner.json;
 
+  # iTerm2 settings
+  # Use link here, so when something changes, it gets propagated back
+  xdg.configFile."iterm2/com.googlecode.iterm2.plist".source = link ./preferences/com.googlecode.iterm2.plist;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
