@@ -281,6 +281,9 @@ in
   home.file.".hammerspoon/grille.lua".source = "${sources.hs-grille}/grille.lua";
   home.file.".hammerspoon/winter.lua".source = "${sources.hs-winter}/winter.lua";
 
+  # Karabiner's config file
+  xdg.configFile."karabiner/karabiner.json".source = ./karabiner/karabiner.json;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
