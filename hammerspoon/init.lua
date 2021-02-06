@@ -16,6 +16,7 @@ local cmdalt   = {"cmd", "alt"}
 local scmdalt  = {"cmd", "alt", "shift"}
 local ctcmdalt = {"cmd", "alt", "ctrl"}
 local ctalt    = {"alt", "ctrl"}
+local hyper    = {"cmd", "alt", "shift", "ctrl"}
 
 -- 2x2 grid
 hotkey.bind(cmdalt, 'k', grid22:focused():leftmost():topmost():widest():tall(1):act())
@@ -49,3 +50,27 @@ hotkey.bind(scmdalt, '=', win:focused():widest():tallest():resize())
 -- push to different screen
 hotkey.bind(cmdalt, '[', win:focused():prevscreen():move())
 hotkey.bind(cmdalt, ']', win:focused():nextscreen():move())
+
+-- Application starter
+hotkey.bind(hyper, 'e', function() application.launchOrFocus("Emacs") end)
+hotkey.bind(hyper, 'f', function() application.launchOrFocus("Firefox") end)
+hotkey.bind(hyper, 'h', function() application.launchOrFocus("Dash") end)
+hotkey.bind(hyper, 'k', function() application.launchOrFocus("Cobook") end)
+hotkey.bind(hyper, 'm', function() application.launchOrFocus("Postbox") end)
+hotkey.bind(hyper, 'o', function() application.launchOrFocus("Trello") end)
+hotkey.bind(hyper, 't', function() application.launchOrFocus("iTerm") end)
+
+-- Automatically reload config
+function reloadConfig(files)
+  doReload = false
+  for _,file in pairs(files) do
+    if file:sub(-4) == ".lua" then
+      doReload = true
+    end
+  end
+  if doReload then
+    hs.reload()
+  end
+end
+myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
+hs.alert.show("Hammerspoon config loaded")
