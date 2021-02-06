@@ -1,0 +1,45 @@
+[alias]
+	st = status
+	ss = status -sb
+	ci = commit
+	co = checkout
+	br = branch
+	dc = diff --cached
+	lg = log -p
+	ls = ls-files
+	w  = whatchanged
+# Show files ignored by git:
+	ign = ls-files -o -i --exclude-standard
+# Word diffs
+	wd = diff --word-diff
+	lolo = log --pretty=oneline --abbrev-commit --graph --decorate
+	hist = log --pretty=format:'%Cblue%h %Cgreen%ad%Creset | %s%d [%an]' --graph --date=short
+	lol = log --pretty=tformat:'%Cblue%h %Cgreen[%cr]%Creset%d * %s' --color --abbrev-commit --graph --decorate
+	distclean = clean -dxf
+# For merging, to pick files wholesale
+	ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
+	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+# To ignore certain files during work, for example password files
+	assume   = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+# git for humans
+	branches = branch -a
+	tags = tag
+	stashes = stash list
+	unstage = reset -q HEAD --
+	discard = checkout --
+	uncommit = reset --mixed HEAD~
+	amend = commit --amend
+	nevermind = !git reset --hard HEAD && git clean -d -f
+	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %cr) %Cred%d' --date-order
+	prestage = diff -w --word-diff=color
+	precommit = diff --cached --diff-algorithm=minimal -w
+	unmerged = diff --name-only --diff-filter=U
+	remotes = remote -v
+	last = log -1 HEAD --format=format:"%Cred%H"
+	history = log -10 --format=format:'%Cgreen%h %Creset• %s (%cN, %ar)'
+	back = checkout "-"
+	discard = checkout --
+	mergetrail = log --ancestry-path --merges
+	precommit = diff --cached --diff-algorithm=minimal -w
