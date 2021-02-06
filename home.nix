@@ -276,6 +276,11 @@ in
   };
   home.file.".p10k.zsh".source = ./p10k.zsh;
 
+  # It's Hammerspoon time
+  home.file.".hammerspoon/init.lua".source = ./hammerspoon/init.lua;
+  home.file.".hammerspoon/grille.lua".source = "${sources.hs-grille}/grille.lua";
+  home.file.".hammerspoon/winter.lua".source = "${sources.hs-winter}/winter.lua";
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 

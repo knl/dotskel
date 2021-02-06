@@ -11,6 +11,30 @@
         "url": "https://github.com/nix-community/home-manager/archive/63d5d28db6068e58c24afa4089f13941500d5fe8.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "hs-grille": {
+        "branch": "master",
+        "description": "A module for moving/resizing your windows along a virtual and horizontal grid(s), using a fluent interface.",
+        "homepage": "",
+        "owner": "knl",
+        "repo": "hs.grille",
+        "rev": "90cef41bce4d30903f33a8d71c29475810c6a909",
+        "sha256": "0lps81vh7jp59aqj52mw8dnghslgxy21n5kmxd81kj6s0p8l18kn",
+        "type": "tarball",
+        "url": "https://github.com/knl/hs.grille/archive/90cef41bce4d30903f33a8d71c29475810c6a909.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "hs-winter": {
+        "branch": "master",
+        "description": "A mjolnir/hammerspoon module for moving/resizing windows using a fluent interface.",
+        "homepage": null,
+        "owner": "knl",
+        "repo": "hs.winter",
+        "rev": "94505beb073d4ba0f003b1374dae48e0b6314baa",
+        "sha256": "12nznfaazglk8nhkni32y29ifjb9kva1d5bcqkhly0h69lri3jnj",
+        "type": "tarball",
+        "url": "https://github.com/knl/hs.winter/archive/94505beb073d4ba0f003b1374dae48e0b6314baa.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
