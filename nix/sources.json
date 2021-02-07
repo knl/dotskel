@@ -107,6 +107,13 @@
         "url": "https://github.com/syl20bnr/spacemacs/archive/7276970c914af32f7e3d3f45e654eaa2e04bf81e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "unar": {
+        "sha256": "1af8p0i13655fylllyrk268a36z4szcaiv7lvbd6rs5kbkdf4gql",
+        "type": "file",
+        "url": "https://cdn.theunarchiver.com/downloads/unarMac.zip",
+        "url_template": "https://cdn.theunarchiver.com/downloads/unarMac.zip",
+        "version": "4.2.4"
+    },
     "zsh-async": {
         "branch": "master",
         "description": "Because your terminal should be able to perform tasks asynchronously without external tools!",

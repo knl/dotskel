@@ -2,20 +2,39 @@
 
 let
   sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { };
+  overlays = let path = ./overlays; in with builtins;
+    map (n: import (path + ("/" + n)))
+      (filter (n: match ".*\\.nix" n != null ||
+                  pathExists (path + ("/" + n + "/default.nix")))
+        (attrNames (readDir path)));
+  pkgs = import sources.nixpkgs {
+    # Get all files in overlays
+    overlays = [
+       (_self: super: { inherit sources; })
+    ] ++ overlays;
+  };
   link = config.lib.file.mkOutOfStoreSymlink;
 in
-{
+rec {
   # Allow non-free (as in beer) packages
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnsupportedSystem = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnsupportedSystem = true;
+    };
   };
 
-  xdg.enable = true;
+  xdg = {
+    enable = true;
+
+    configHome = "${home.homeDirectory}/.config";
+    dataHome   = "${home.homeDirectory}/.local/share";
+    cacheHome  = "${home.homeDirectory}/.cache";
+  };
 
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
+    bat
     exa
     fd
     fortune
@@ -41,6 +60,7 @@ in
     shellcheck
     shfmt
     tree
+    unar
     xz
     zstd
   ];
@@ -143,6 +163,11 @@ in
 
   programs.zsh = {
     enable = true;
+
+    # This way, my functions could be stored under
+    # .config/zsh/lib
+    dotDir = ".config/zsh";
+
     enableAutosuggestions = true;
     enableCompletion = true;
     history.extended = true;
@@ -153,9 +178,15 @@ in
 
       NVIM_TUI_ENABLE_TRUE_COLOR = "1";
 
+      BROWSER = if pkgs.stdenv.isDarwin then "open" else "xdg-open";
+
       EDITOR = "vim";
       VISUAL = EDITOR;
       GIT_EDITOR = EDITOR;
+
+      XDG_CONFIG_HOME = xdg.configHome;
+      XDG_CACHE_HOME = xdg.cacheHome;
+      XDG_DATA_HOME = xdg.dataHome;
 
       GOPATH = "$HOME/go";
       PATH = "$HOME/bin:$GOPATH/bin:$PATH";
@@ -163,16 +194,19 @@ in
 
       LESS = "-F -g -i -M -R -S -w -X -z-4";
 
-      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=8";
-
       # This is to make `z my-dir` work with z.lua
       _ZL_HYPHEN = "1";
+    };
 
+    localVariables = {
       # This way, C-w deletes words (path elements)
       WORDCHARS = "*?_-.[]~&;!#$%^(){}<>";
+
+      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=8";
     };
 
     shellAliases = {
+      l = "exa --color auto";
       ls = "exa -G --color auto -a -s type";
       ll = "exa -l --color always -a -s type";
       "]" = "open";
@@ -181,8 +215,46 @@ in
       p = "pushd";
       pd = "perldoc";
       mkdir = "nocorrect mkdir";
+      cat = "bat";
+      x = "unar";
+
+      # commonly used git aliases (lifted from prezto)
+      g = "git";
+      ga = "git add";
+      gai = "git add -i";
+      gap = "git add --patch";
+      gau = "git add --update";
+      gb = "git branch";
+      gbx = "git branch -x";
+      gbX = "git branch -X";
+      gba = "git branch -a";
+      gbm = "git branch -m";
+      gc = "git commit --verbose";
+      gcm = "git commit --message";
+      gcf = "git commit --amend --reuse-message HEAD";
+      gco = "git checkout";
+      gd = "git diff";
+      gl = "git pull";
+      gm = "git merge";
+      gma = "git merge --abort";
+      gcpa = "git cherry-pick --abort";
+      gp = "git push -u";
+      gpf = "git push -u --force-with-lease";
+      gpa = "git push --all && git push --tags";
+      gr = "git rebase";
+      gri = "git rebase --interactive";
+      gra = "git rebase --abort";
+      grc = "git rebase --continue";
+      grs = "git rebase --skip";
+      gst = "git status";
+      gt = "git tag";
+      gup = "git fetch -p && git rebase --autostash origin/master";
+      stash = "git stash";
+      unstash = "git stash pop";
+      staged = "git diff --no-ext-diff --cached";
     };
 
+    # initExtraBeforeCompInit?
     initExtraFirst = ''
       DIRSTACKSIZE=10
 

@@ -1,0 +1,11 @@
+#
+# Deletes the current branch and switches to the main branch.
+#
+
+# function gclose {
+
+local branchName="$(git symbolic-ref --short HEAD)"
+git checkout "$(git symbolic-ref --short refs/remotes/origin/HEAD | cut -d/ -f2)"
+git branch -D "${branchName}"
+
+# }

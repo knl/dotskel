@@ -1,0 +1,18 @@
+#
+# Creates a new branch off of the current (remote) main.
+#
+
+# function gnew {
+
+if (( $# == 0 )); then
+  cat >&2 <<EOF
+usage: $0 branch_name
+
+EOF
+fi
+
+local name="${1}"
+
+git checkout -b "$name" "$(git symbolic-ref --short refs/remotes/origin/HEAD)"
+
+# }
