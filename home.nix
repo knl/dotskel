@@ -1,16 +1,17 @@
 { config, pkgs, ... }:
-
 let
   sources = import ./nix/sources.nix;
-  overlays = let path = ./overlays; in with builtins;
+  overlays = let path = ./overlays; in
+    with builtins;
     map (n: import (path + ("/" + n)))
-      (filter (n: match ".*\\.nix" n != null ||
-                  pathExists (path + ("/" + n + "/default.nix")))
+      (filter
+        (n: match ".*\\.nix" n != null ||
+          pathExists (path + ("/" + n + "/default.nix")))
         (attrNames (readDir path)));
   pkgs = import sources.nixpkgs {
     # Get all files in overlays
     overlays = [
-       (_self: super: { inherit sources; })
+      (_self: super: { inherit sources; })
     ] ++ overlays;
   };
   link = config.lib.file.mkOutOfStoreSymlink;
@@ -28,8 +29,8 @@ rec {
     enable = true;
 
     configHome = "${home.homeDirectory}/.config";
-    dataHome   = "${home.homeDirectory}/.local/share";
-    cacheHome  = "${home.homeDirectory}/.cache";
+    dataHome = "${home.homeDirectory}/.local/share";
+    cacheHome = "${home.homeDirectory}/.cache";
   };
 
   # Packages in alphabetical order, as I can't do categories
@@ -50,6 +51,7 @@ rec {
     ncdu
     netcat
     niv
+    nixpkgs-fmt
     p7zip
     paperkey
     python3
@@ -100,9 +102,9 @@ rec {
   };
 
   home.file.".emacs.d" = {
-      source = sources.spacemacs;
-      recursive = true;
-    };
+    source = sources.spacemacs;
+    recursive = true;
+  };
   # This creates a symlink to the file, so I can easily edit it
   # Not for the faint of heart, though...
   home.file.".spacemacs".source = link ./spacemacs;
@@ -112,8 +114,8 @@ rec {
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-	  userEmail = "nikola@knezevic.ch";
-	  userName = "Nikola Knezevic";
+    userEmail = "nikola@knezevic.ch";
+    userName = "Nikola Knezevic";
     # aliases are defined in ~/.gitaliases
     extraConfig = {
       color = {
@@ -151,14 +153,14 @@ rec {
     ];
     # see home.file.".gitaliases".source below
     includes = [
-        { path = "~/.gitaliases"; }
+      { path = "~/.gitaliases"; }
     ];
   };
   home.file.".gitaliases".source = ./gitaliases;
 
   programs.z-lua = {
     enable = true;
-    options = ["once" "fzf"];
+    options = [ "once" "fzf" ];
   };
 
   programs.zsh = rec {
