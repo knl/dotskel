@@ -161,7 +161,7 @@ rec {
     options = ["once" "fzf"];
   };
 
-  programs.zsh = {
+  programs.zsh = rec {
     enable = true;
 
     # This way, my functions could be stored under
@@ -170,7 +170,14 @@ rec {
 
     enableAutosuggestions = true;
     enableCompletion = true;
-    history.extended = true;
+    history = {
+      size = 50000;
+      save = 500000;
+      path = "${dotDir}/history";
+      extended = true;
+      ignoreDups = true;
+      share = true;
+    };
 
     sessionVariables = rec {
       LANG = "en_US.UTF-8";
