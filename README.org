@@ -1,0 +1,70 @@
+This repository holds my dotfiles setup. It is based on [[https://github.com/nix-community/home-manager][home-manager]], a [[https://nixos.org/][Nix]]
+based approach to handling all dependencies and setup. This means that all
+dotfiles are actually symlinked to the nix store, and are immutable. This in
+turn means I'll have to deploy changes every time I want to change something,
+but I can live with it.
+
+* Installation
+** Command Line Tools
+
+   Command Line Tools are needed to build various things, and bring in git.
+
+   #+begin_src bash
+     xcode-select --install
+   #+end_src
+
+** =nix=
+
+   Because I neither have macOS 10.15+ nor T2 machine, I just use:
+   #+begin_src bash
+     sh <(curl -L https://nixos.org/nix/install)
+     source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+   #+end_src
+
+   Otherwise, I would've used:
+   #+begin_src bash
+     sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+     source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+   #+end_src
+
+** Applications
+
+   These tools can't be installed by home-manager, because they are macOS
+   applications. So, install them manually.
+
+   - [[https://iterm2.com/downloads.html][iTerm2]]
+   - [[https://github.com/Hammerspoon/hammerspoon/releases/latest][Hammerspoon]]
+   - [[https://qsapp.com/download.php][Quicksilver]]
+   - [[https://karabiner-elements.pqrs.org/][Karabiner-Elements]]
+   - [[https://1password.com/downloads/mac/][1Password]]
+   - [[https://www.mozilla.org/en-US/firefox/new/][Firefox]]
+   - [[https://download.bjango.com/istatmenus/][iStat Menus]]
+   - [[https://justgetflux.com/dlmac.html][f.lux]]
+
+*** Emacs
+
+    Until I find a better solution, use emacs-plus from [[https://brew.sh][homebrew]], which in turn means installing it.
+
+    #+begin_src bash
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      brew install --with-spacemacs-icon emacs-plus
+    #+end_src
+
+** Misc
+
+One can't live without good fonts. I prefer Iosevka:
+
+Download [[https://github.com/be5invis/Iosevka/releases][Iosevka Term SS08]].
+
+** dotfiles
+
+   Finally, just run the following command:
+
+   #+begin_src bash
+     nix-shell
+     home-manager switch
+   #+end_src
+
+* References
+
+- https://hugoreeves.com/posts/2019/nix-home/
