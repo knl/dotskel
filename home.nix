@@ -107,9 +107,7 @@ rec {
   };
   # This creates a symlink to the file, so I can easily edit it
   # Not for the faint of heart, though...
-  home.file.".spacemacs".source = link ./spacemacs;
-
-  # home.file.".p10k.zsh".source = ./p10k.zsh;
+  home.file.".spacemacs".source = link ./configs/spacemacs;
 
   programs.git = {
     enable = true;
@@ -156,7 +154,7 @@ rec {
       { path = "~/.gitaliases"; }
     ];
   };
-  home.file.".gitaliases".source = ./gitaliases;
+  home.file.".gitaliases".source = ./configs/gitaliases;
 
   programs.z-lua = {
     enable = true;
@@ -282,11 +280,6 @@ rec {
       fi
       # Autocomplete for various utilities
       eval "$(lua ~/work/github.com/knl/rh/rh.lua --init zsh ~/work)"
-      # Theme
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-      source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
 
       # expands .... to ../..
       function expand-dot-to-parent-directory-path {
@@ -314,15 +307,6 @@ rec {
       # Expand history on space.
       bindkey -M emacs ' ' magic-space
 
-      # Execute code only if STDERR is bound to a TTY.
-      if [[ -o INTERACTIVE && -t 2 ]]; then
-        # Print a random, hopefully interesting, adage.
-        if (( $+commands[fortune] )); then
-          fortune -s
-          print
-        fi
-      fi >&2
-
       fpath=(${config.xdg.configHome}/zsh/functions(-/FN) $fpath)
       # functions must be autoloaded, do it in a function to isolate
       function {
@@ -337,7 +321,22 @@ rec {
         done
       }
 
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+      # Theme (custom built on powerlevel10k)
+      # First load all variables
+      [[ ! -f ${config.xdg.configHome}/zsh/p10k.zsh ]] || source ${config.xdg.configHome}/zsh/p10k.zsh
+      # Then source the theme
+      source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
+    '';
+
+    loginExtra = ''
+      # Execute code only if STDERR is bound to a TTY.
+      if [[ -o INTERACTIVE && -t 2 ]]; then
+        # Print a random, hopefully interesting, adage.
+        if (( $+commands[fortune] )); then
+          fortune -s
+          print
+        fi
+      fi >&2
     '';
 
     plugins = [
@@ -368,16 +367,16 @@ rec {
       }
     ];
   };
-  home.file.".p10k.zsh".source = ./p10k.zsh;
+  xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
 
   # It's Hammerspoon time
-  home.file.".hammerspoon/init.lua".source = ./hammerspoon/init.lua;
+  home.file.".hammerspoon/init.lua".source = ./configs/hammerspoon/init.lua;
   home.file.".hammerspoon/grille.lua".source = "${sources.hs-grille}/grille.lua";
   home.file.".hammerspoon/winter.lua".source = "${sources.hs-winter}/winter.lua";
 
   # Karabiner's config file
-  xdg.configFile."karabiner/karabiner.json".source = ./karabiner/karabiner.json;
+  xdg.configFile."karabiner/karabiner.json".source = ./configs/karabiner/karabiner.json;
 
   # iTerm2 settings
   # Use link here, so when something changes, it gets propagated back
