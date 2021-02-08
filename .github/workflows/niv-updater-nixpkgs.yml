@@ -11,11 +11,11 @@ on:
     types: niv-updater-nixpkgs-nudge
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # Run every Friday at 08:04, but we use the dispatch to trigger when urgent
-    - cron:  '04 08 * * 5'
+    # Run every Monday at 01:17, but we use the dispatch to trigger when urgent
+    - cron:  '17 01 * * 1'
 jobs:
   niv-updater:
-    name: 'Check for updates'
+    name: 'Check for updates (weekly)'
     runs-on: ubuntu-latest
     steps:
       - name: niv-updater-action
