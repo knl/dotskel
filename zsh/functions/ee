@@ -1,0 +1,28 @@
+#
+# Opens emacs properly
+#
+
+# returns true if there is at least one emacs server running
+function check_emacs_server {
+  local serverdir="${TMPDIR:-/tmp}/emacs${UID}"
+  [[ ! -d ${serverdir} ]] && return 1
+  [[ ! -n ${serverdir}/*(#qN) ]] && return 1
+  for file in ${serverdir}/*; do
+    if [[ -S ${file} ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+function ee {
+  if ( ! check_emacs_server ); then
+    echo "starting emacs: make tea..."
+    open -a Emacs.app --args "$@"
+  else
+    echo "using emacsclient"
+    emacsclient "$@"
+  fi;
+}
+
+ee "$@"
