@@ -267,9 +267,18 @@ rec {
       setopt   notify globdots correct cdablevars autolist
       setopt   correctall autocd recexact longlistjobs
       setopt   autoresume
-      setopt   extendedglob rcquotes mailwarning
-      unsetopt bgnice autoparamslash
+      setopt   rcquotes mailwarning
+      unsetopt bgnice
       setopt   autopushd pushdminus pushdsilent pushdtohome pushdignoredups
+
+      setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
+      setopt ALWAYS_TO_END       # Move cursor to the end of a completed word.
+      setopt AUTO_MENU           # Show completion menu on a successive tab press.
+      setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
+      setopt EXTENDED_GLOB       # Needed for file modification glob modifiers with compinit
+      unsetopt AUTO_PARAM_SLASH    # If completed parameter is a directory, do not add a trailing slash.
+      unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
+      unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
     '';
 
     # Called whenever zsh is initialized
@@ -280,6 +289,9 @@ rec {
       fi
       # Autocomplete for various utilities
       eval "$(lua ~/work/github.com/knl/rh/rh.lua --init zsh ~/work)"
+
+      # Completion settings
+      source ${config.xdg.configHome}/zsh/completion.zsh
 
       # expands .... to ../..
       function expand-dot-to-parent-directory-path {
@@ -323,7 +335,7 @@ rec {
 
       # Theme (custom built on powerlevel10k)
       # First load all variables
-      [[ ! -f ${config.xdg.configHome}/zsh/p10k.zsh ]] || source ${config.xdg.configHome}/zsh/p10k.zsh
+      source ${config.xdg.configHome}/zsh/p10k.zsh
       # Then source the theme
       source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
     '';
@@ -369,6 +381,7 @@ rec {
   };
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
+  xdg.configFile."zsh/completion.zsh".source = ./zsh/completion.zsh;
 
   # It's Hammerspoon time
   home.file.".hammerspoon/init.lua".source = ./configs/hammerspoon/init.lua;
