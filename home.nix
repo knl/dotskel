@@ -224,6 +224,8 @@ rec {
       mkdir = "nocorrect mkdir";
       cat = "bat";
       x = "unar";
+      zb = "z -b";
+      zh = "z -I -t";
 
       # commonly used git aliases (lifted from prezto)
       g = "git";
