@@ -225,7 +225,7 @@ rec {
       cat = "bat";
       x = "unar";
       zb = "z -b";
-      zh = "z -I -t";
+      zh = "z -I -t .";
 
       # commonly used git aliases (lifted from prezto)
       g = "git";
