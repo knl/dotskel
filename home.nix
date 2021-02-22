@@ -256,6 +256,7 @@ rec {
       gst = "git status";
       gt = "git tag";
       gup = "git fetch -p && git rebase --autostash origin/master";
+      gfa = "git fetch --all -v";
       stash = "git stash";
       unstash = "git stash pop";
       staged = "git diff --no-ext-diff --cached";
