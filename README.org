@@ -68,3 +68,4 @@ Download [[https://github.com/be5invis/Iosevka/releases][Iosevka Term SS08]].
 * References
 
 - https://hugoreeves.com/posts/2019/nix-home/
+- https://github.com/ryantm/home-manager-template/blob/master/shell.nix
