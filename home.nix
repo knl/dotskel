@@ -234,8 +234,8 @@ rec {
       gap = "git add --patch";
       gau = "git add --update";
       gb = "git branch";
-      gbx = "git branch -x";
-      gbX = "git branch -X";
+      gbx = "git branch -d";
+      gbX = "git branch -D";
       gba = "git branch -a";
       gbm = "git branch -m";
       gc = "git commit --verbose";
@@ -257,7 +257,7 @@ rec {
       grs = "git rebase --skip";
       gst = "git status";
       gt = "git tag";
-      gup = "git fetch -p && git rebase --autostash origin/master";
+      gup = ''git fetch -p && git rebase --autostash "''${$(git symbolic-ref refs/remotes/origin/HEAD)#refs/remotes/}'';
       gfa = "git fetch --all -v";
       stash = "git stash";
       unstash = "git stash pop";
