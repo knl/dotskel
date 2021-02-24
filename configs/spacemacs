@@ -580,13 +580,15 @@ before packages are loaded."
            "* TODO %?\n  %i\n  %a")
           ("l" "Today I learned"
            entry
-           (file "~/notes/til.org")
-           "* %? %^g")
+           (file+olp+datetree "~/notes/til.org")
+           "* %?"
+           :unnarrowed t)
           ("j" "Journal Entry"
            plain
            (file+function "~/notes/journal.org" knl/find-todays-journal-point)
            "** [%<%H:%M>] %^{Title}\n %?"
-           :empty-lines-after 1)
+           :empty-lines-after 1
+           :unnarrowed t)
           ))
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
