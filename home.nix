@@ -380,6 +380,10 @@ rec {
         name = "powerlevel10k";
         src = sources.powerlevel10k;
       }
+      {
+        name = "zsh-you-should-use";
+        src = sources.zsh-you-should-use;
+      }
     ];
   };
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;

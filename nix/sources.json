@@ -173,5 +173,17 @@
         "type": "tarball",
         "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/5eb494852ebb99cf5c2c2bffee6b74e6f1bf38d0.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "zsh-you-should-use": {
+        "branch": "master",
+        "description": "📎 ZSH plugin that reminds you to use existing aliases for commands you just typed",
+        "homepage": "",
+        "owner": "MichaelAquilina",
+        "repo": "zsh-you-should-use",
+        "rev": "b4aec740f23d195116d1fddec91d67b5e9c2c5c7",
+        "sha256": "0bq15d6jk750cdbbjfdmdijp644d1pn2z80pk1r1cld6qqjnsaaq",
+        "type": "tarball",
+        "url": "https://github.com/MichaelAquilina/zsh-you-should-use/archive/b4aec740f23d195116d1fddec91d67b5e9c2c5c7.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
