@@ -47,6 +47,7 @@ but I can live with it.
 
     #+begin_src bash
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      brew tap d12frosted/emacs-plus
       brew install --with-spacemacs-icon emacs-plus
     #+end_src
 
