@@ -52,6 +52,7 @@ rec {
     netcat
     niv
     nixpkgs-fmt
+    nmap
     p7zip
     paperkey
     python3
