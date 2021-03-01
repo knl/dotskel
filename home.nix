@@ -292,7 +292,7 @@ rec {
         . ~/.nix-profile/etc/profile.d/nix.sh
       fi
       # Autocomplete for various utilities
-      eval "$(lua ~/work/github.com/knl/rh/rh.lua --init zsh ~/work)"
+      eval "$(lua ${sources.rh}/rh.lua --init zsh ~/work)"
 
       # Completion settings
       source ${config.xdg.configHome}/zsh/completion.zsh

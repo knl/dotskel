@@ -95,6 +95,18 @@
         "url": "https://github.com/knl/prezto/archive/515b611bb31f1f3f3c14ca4f606e701acff84f6e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "rh": {
+        "branch": "master",
+        "description": "A hierarchy aware `cd` command for easier navigation to your repositories",
+        "homepage": "",
+        "owner": "knl",
+        "repo": "rh",
+        "rev": "9dc9c35f04749e9564dbb8311526d7093f4070ee",
+        "sha256": "1ghsg5h34rnbgkv3nm3sq8qmxx9a83ww3wllhycx697jw1qqmnqm",
+        "type": "tarball",
+        "url": "https://github.com/knl/rh/archive/9dc9c35f04749e9564dbb8311526d7093f4070ee.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "spacemacs": {
         "branch": "develop",
         "description": "A community-driven Emacs distribution - The best editor is neither Emacs nor Vim,  it's Emacs *and* Vim!",
