@@ -257,7 +257,7 @@ rec {
       grs = "git rebase --skip";
       gst = "git status";
       gt = "git tag";
-      gup = ''git fetch -p && git rebase --autostash "''${$(git symbolic-ref refs/remotes/origin/HEAD)#refs/remotes/}'';
+      gup = ''git fetch -p && git rebase --autostash "''${$(git symbolic-ref refs/remotes/origin/HEAD)#refs/remotes/}"'';
       gfa = "git fetch --all -v";
       stash = "git stash";
       unstash = "git stash pop";
