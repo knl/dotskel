@@ -40,6 +40,7 @@ but I can live with it.
    - [[https://www.mozilla.org/en-US/firefox/new/][Firefox]]
    - [[https://download.bjango.com/istatmenus/][iStat Menus]]
    - [[https://justgetflux.com/dlmac.html][f.lux]]
+   - [[https://cdn.textexpander.com/mac/TextExpander_5.1.6.zip?ignore=ignore][TextExpander]]
 
 *** Emacs
 
