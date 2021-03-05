@@ -590,22 +590,53 @@ before packages are loaded."
           org-src-preserve-indentation t ;; do not put two spaces on the left
           org-src-tab-acts-natively nil)
 
-    (setq org-capture-templates
-          '(("t" "Todo"
-             entry
-             (file+headline "~/notes/todo.org" "Tasks")
-             "* TODO %?\n  %i\n  %a")
-            ("l" "Today I learned"
-             entry
-             (file+olp+datetree "~/notes/til.org")
-             "* %?"
+    (setq org-roam-directory "~/notes/roam"
+          org-roam-dailies-directory "daily/" ;; relative to the org-roam-directory
+          org-roam-db-location "~/notes/roam/org-roam.db"
+          org-roam-db-update-method 'immediate)
+    (setq org-roam-title-to-slug-function  #'knl/org-roam-title-to-slug-with-dashes)
+    (setq org-roam-capture-templates
+          '(("d" "default" plain (function org-roam--capture-get-point)
+             "%?"
+             :file-name "%<%Y-%m-%d>-${slug}"
+             :head "#+title: ${title}\n#+ROAM_TAGS: %^{org-roam-tags}\n#+created: %u\n#+last_modified: %U\n\n"
+             :unnarrowed t
+             :jump-to-captured t)
+            ("l" "today-i-learned" plain (function org-roam--capture-get-point)
+             "%?"
+             :file-name "%<%Y-%m-%d>-til-${slug}"
+             :head "#+title: ${title}\n#+ROAM_TAGS: til %^{org-roam-tags}\n#+created: %u\n#+last_modified: %U\n\n"
              :unnarrowed t)
-            ("j" "Journal Entry"
-             plain
-             (file+olp+datetree "~/notes/journal.org")
-             "**** [%<%H:%M>] %^{Title}\n %?"
-             :tree-type week)
             ))
+    (setq org-roam-dailies-capture-templates
+          (let ((head "#+title: %<%Y-%m-%d %A>\n#+startup: showall\n\n* [/] Do Today\n* [/] Maybe Do Today\n* Journal\n")
+                (fname "daily/%<%Y-%m-%d>"))
+            `(("j" "journal" entry
+               #'org-roam-capture--get-point
+               "* %<%H:%M> %?"
+               :file-name ,fname
+               :head ,head
+               :olp ("Journal"))
+              ("t" "do today" item
+               #'org-roam-capture--get-point
+               "[ ] %(princ as/agenda-captured-link)"
+               :file-name ,fname
+               :head ,head
+               :olp ("Do Today")
+               :immediate-finish t)
+              ("m" "maybe do today" item
+               #'org-roam-capture--get-point
+               "[ ] %(princ as/agenda-captured-link)"
+               :file-name ,fname
+               :head ,head
+               :olp ("Maybe Do Today")
+               :immediate-finish t))))
+    (global-set-key [f12] 'org-roam-find-file)
+    (global-set-key [f11] 'org-roam-buffer-toggle-display)
+    (global-set-key [f10] 'org-roam-dailies-find-today)
+
+    (defun knl/org-roam-title-to-slug-with-dashes (str)
+      (string-join (split-string (org-roam--title-to-slug str) "_") "-"))
     )
 
   (setq-default js2-basic-offset 2)
