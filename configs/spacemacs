@@ -588,7 +588,7 @@ before packages are loaded."
           org-src-window-setup 'current-window ;; edit in current window
           org-src-strip-leading-and-trailing-blank-lines t
           org-src-preserve-indentation t ;; do not put two spaces on the left
-          org-src-tab-acts-natively t)
+          org-src-tab-acts-natively nil)
 
     (setq org-capture-templates
           '(("t" "Todo"
