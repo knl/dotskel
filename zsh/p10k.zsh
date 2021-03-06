@@ -30,17 +30,20 @@
   # restarting zsh. Edit ~/.p10k.zsh and type `source ~/.p10k.zsh`.
   unset -m 'POWERLEVEL9K_*'
 
-  # The list of segments shown on the left. Fill it with the most important segments.
+  # Left prompt segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-      # =========================[ Line #1 ]=========================
-      # os_icon               # os identifier
-      dir                     # current directory
-      vcs                     # git status
-      # =========================[ Line #2 ]=========================
-      newline
-      status                  # exit code of the last command
-      context                 # user@hostname
-      prompt_char             # prompt symbol
+    # os_icon               # os identifier
+    dir                     # current directory
+    vcs                     # git status
+    newline
+
+    # This line is shown only when there is a readable non-empty ./.note file.
+    my_note                 # Print a note
+    newline
+
+    status                  # exit code of the last command
+    context                 # user@hostname
+    prompt_char             # prompt symbol
   )
 
   # The list of segments shown on the right. Fill it with less important segments.
@@ -815,6 +818,23 @@
   # Type `p10k help segment` for documentation and a more sophisticated example.
   function prompt_example() {
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
+  }
+
+  # Shows the content of ./.note file if it exists, readable and non-empty.
+  function prompt_my_note() {
+    [[ -s .note && -f .note ]] || return
+    local note
+    note=$(<.note) || return
+    [[ -n $note ]] || return
+    p10k segment -f 242 -t "${note//\%/%%}"  # escape '%'
+  }
+  
+  function p10k-on-pre-prompt() {
+    if [[ -s .note && -f .note ]]; then
+        p10k display '2'=show
+    else
+        p10k display '2'=hide
+    fi
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
