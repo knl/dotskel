@@ -41,6 +41,7 @@ but I can live with it.
    - [[https://download.bjango.com/istatmenus/][iStat Menus]]
    - [[https://justgetflux.com/dlmac.html][f.lux]]
    - [[https://cdn.textexpander.com/mac/TextExpander_5.1.6.zip?ignore=ignore][TextExpander]]
+   - [[https://frankfurt.kapeli.com/downloads/v6/Dash.zip][Dash]]
 
 *** Emacs
 
