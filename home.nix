@@ -227,6 +227,8 @@ rec {
       x = "unar";
       zb = "z -b";
       zh = "z -I -t .";
+      # fd's default of not searching hidden files is annoying
+      f = "fd -H --no-ignore";
 
       # commonly used git aliases (lifted from prezto)
       g = "git";
