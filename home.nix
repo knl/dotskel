@@ -36,6 +36,7 @@ rec {
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
     bat
+    duf
     exa
     fd
     fortune
