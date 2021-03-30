@@ -65,10 +65,10 @@
         "homepage": "https://nix-community.github.io/nixpkgs-fmt/",
         "owner": "nix-community",
         "repo": "nixpkgs-fmt",
-        "rev": "851b39bffdd86d8852372100bfe4bfc46bc0e346",
-        "sha256": "1c5kis36cmq14x2lpizn7lrhkdxnjxmwmrnqzdb6lxpnaqmmr5q6",
+        "rev": "148ec47877499e3d671f6366f9eed812db181b40",
+        "sha256": "0dqirvn8pq6ssxjlf6rkqcsx6ndasws93lz2v9f9s01k9ny8x8mq",
         "type": "tarball",
-        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/851b39bffdd86d8852372100bfe4bfc46bc0e346.tar.gz",
+        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/148ec47877499e3d671f6366f9eed812db181b40.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerlevel10k": {
