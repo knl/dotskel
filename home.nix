@@ -35,6 +35,10 @@ rec {
 
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
+    aspell # needed for emacs
+    aspellDicts.en
+    aspellDicts.en-computers
+    aspellDicts.en-science
     bat
     duf
     exa
@@ -393,6 +397,15 @@ rec {
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
   xdg.configFile."zsh/completion.zsh".source = ./zsh/completion.zsh;
+
+
+  # Setting up aspell
+  home.file.".aspell.conf".text = ''
+     data-dir ${builtins.getEnv "HOME"}/.nix-profile/lib/aspell
+     master en_US
+     extra-dicts en-computers.rws
+     add-extra-dicts en_US-science.rws
+  '';
 
   # It's Hammerspoon time
   home.file.".hammerspoon/init.lua".source = ./configs/hammerspoon/init.lua;
