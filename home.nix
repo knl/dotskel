@@ -179,7 +179,12 @@ rec {
     history = {
       size = 50000;
       save = 500000;
-      path = "${dotDir}/history";
+      # Put the ZSH history into the same directory as the configuration.
+      # Also, the path must be absolute, relative paths just make new directories
+      # wherever you're working from.
+      path = let
+        inherit (config.home) homeDirectory;
+        in "${homeDirectory}/${dotDir}/history";
       extended = true;
       ignoreDups = true;
       share = true;
