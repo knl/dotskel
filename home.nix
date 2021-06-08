@@ -532,8 +532,13 @@ rec {
         }
         {
           InputSourceKind = "Keyboard Layout";
-          "KeyboardLayout ID" = "-19521";
+          "KeyboardLayout ID" = -19521;
           "KeyboardLayout Name" = "Serbian-Latin";
+        }
+        {
+          InputSourceKind = "Keyboard Layout";
+          "KeyboardLayout ID" = -1;
+          "KeyboardLayout Name" = "Unicode Hex Input";
         }
       ];
       AppleSelectedInputSources = [
