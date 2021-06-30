@@ -5,10 +5,10 @@
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1375fd4a030c27e6c6208b31b8189ca41da01fb0",
-        "sha256": "12pqfnjj15l17vvddwrip58j56vs3rdn6rfv4215lzp9h8f58rpw",
+        "rev": "9b7a90daa17022c428e3b6da36814f5f9a804a35",
+        "sha256": "1r3kxdnqzapkylsnhiw0xz1qdi3mglppnkqmv35j70ilma5j52bp",
         "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/1375fd4a030c27e6c6208b31b8189ca41da01fb0.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/9b7a90daa17022c428e3b6da36814f5f9a804a35.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "hs-grille": {
@@ -65,10 +65,10 @@
         "homepage": "https://nix-community.github.io/nixpkgs-fmt/",
         "owner": "nix-community",
         "repo": "nixpkgs-fmt",
-        "rev": "d5809df4def9f47421c871101e34b917b76f2118",
-        "sha256": "1f1bg739di1fmgasp105j45x1zbf3walngfv834ns0qw7zabwm2b",
+        "rev": "1d773768ba9941c934f55a8815260cadd27ea9bd",
+        "sha256": "14s7i0q5mqnx4v8k5b8hafs51fw1d4dsr97ip5yq5jygcw2mzk3x",
         "type": "tarball",
-        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/d5809df4def9f47421c871101e34b917b76f2118.tar.gz",
+        "url": "https://github.com/nix-community/nixpkgs-fmt/archive/1d773768ba9941c934f55a8815260cadd27ea9bd.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerlevel10k": {
@@ -77,10 +77,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "717573d845944c32e8a42059d21052e72972b4f2",
-        "sha256": "0ysp23b3bxqh3mhszhgmgzxkqkjnbqlshp382pajwfl49hw5hfqr",
+        "rev": "0c862a130710b351e34720fcbc90684239bd9d6c",
+        "sha256": "05zivrwglbs4xr1fy2157jyx2hqyjzw5spazx0swp8l3b57z38gz",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/717573d845944c32e8a42059d21052e72972b4f2.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/0c862a130710b351e34720fcbc90684239bd9d6c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "prezto": {
@@ -113,10 +113,10 @@
         "homepage": "http://spacemacs.org",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "2fd3eb3edbc7c09b825892ce53721120bb999504",
-        "sha256": "00jpk6vhz3r2zbnm0xvqrglgd72m59xj6744r3p2canz0w9kkyhg",
+        "rev": "64fed6f7daba47144b09403a4982f26eb79b8ec6",
+        "sha256": "0f6qyjhc9yff6559w8qz5037q5b1yvbz9zdb7x9dxvrn31qrh7ki",
         "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/2fd3eb3edbc7c09b825892ce53721120bb999504.tar.gz",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/64fed6f7daba47144b09403a4982f26eb79b8ec6.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "unar": {
@@ -156,10 +156,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "9dfd5c667072a9aef13a237fe3c3cc857ca9917f",
-        "sha256": "1l3lqbl17yjaf1kcs58rkv7mz7rq89bgww427ykkip2fb55zbyn3",
+        "rev": "a736cfe8e534fc5a5739c1062b2f80e8381ce8fc",
+        "sha256": "1zqwk15ipyrk5p7pb5y3q4xbnv3iialz654g0ifyz9gcr1xqkqqc",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/9dfd5c667072a9aef13a237fe3c3cc857ca9917f.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-completions/archive/a736cfe8e534fc5a5739c1062b2f80e8381ce8fc.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-history-substring-search": {
@@ -180,10 +180,10 @@
         "homepage": "github.com/zsh-users/zsh-syntax-highlighting",
         "owner": "zsh-users",
         "repo": "zsh-syntax-highlighting",
-        "rev": "0e1bb14452e3fc66dcc81531212e1061e02c1a61",
-        "sha256": "09ncmyqlk9a3h470z0wgbkrznb5zyc9dj96011wm89rdxc1irxk2",
+        "rev": "f0e6a8ef5c90ff3e1e9516df666e36e02d0f362d",
+        "sha256": "1imcxz5fxhmkjjbrqikk01zh07kjal7nrgfwf2q2dprsiasy7jv3",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/0e1bb14452e3fc66dcc81531212e1061e02c1a61.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/f0e6a8ef5c90ff3e1e9516df666e36e02d0f362d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-you-should-use": {
