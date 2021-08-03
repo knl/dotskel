@@ -168,10 +168,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-history-substring-search",
-        "rev": "0f80b8eb3368b46e5e573c1d91ae69eb095db3fb",
-        "sha256": "0y8va5kc2ram38hbk2cibkk64ffrabfv1sh4xm7pjspsba9n5p1y",
+        "rev": "4abed97b6e67eb5590b39bcd59080aa23192f25d",
+        "sha256": "0s8xdddb6zppc5lj28w44nl4n45wg9ic8x3b5pm1139cv038yj7j",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/0f80b8eb3368b46e5e573c1d91ae69eb095db3fb.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/4abed97b6e67eb5590b39bcd59080aa23192f25d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-syntax-highlighting": {
