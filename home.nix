@@ -56,7 +56,6 @@ rec {
     ncdu
     netcat
     niv
-    nixpkgs-fmt
     nmap
     p7zip
     paperkey
