@@ -46,12 +46,16 @@ rec {
     fortune
     gitAndTools.gitFull
     gitAndTools.hub
+    glances
     gnused
     htop
+    hyperfine
     imagemagick
     jq
     loc
     lua
+    mcfly
+    moreutils
     mtr
     ncdu
     netcat
@@ -59,16 +63,20 @@ rec {
     nmap
     p7zip
     paperkey
+    procs
     python3
     python3Packages.tvnamer
     readline
     ripgrep
     rsync
+    sd
     shellcheck
     shfmt
     tree
     unar
     xz
+    yq-go
+    watch
     zstd
   ];
 
