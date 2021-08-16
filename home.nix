@@ -86,7 +86,7 @@ rec {
   programs.fzf.enable = true;
   programs.direnv = {
     enable = true;
-    enableNixDirenvIntegration = true;
+    nix-direnv.enable = true;
   };
   programs.neovim = {
     enable = true;
