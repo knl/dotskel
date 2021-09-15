@@ -342,6 +342,11 @@ rec {
       # Expand history on space.
       bindkey -M emacs ' ' magic-space
 
+      fpath=(${config.xdg.configHome}/zsh/plugins/zsh-completions/src \
+             ${config.xdg.configHome}/zsh/vendor-completions \
+             ${config.xdg.configHome}/zsh/plugins/nix-zsh-completions \
+             $fpath)
+
       fpath=(${config.xdg.configHome}/zsh/functions(-/FN) $fpath)
       # functions must be autoloaded, do it in a function to isolate
       function {
@@ -361,6 +366,8 @@ rec {
       source ${config.xdg.configHome}/zsh/p10k.zsh
       # Then source the theme
       source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
+
+      autoload -U compinit && compinit
     '';
 
     loginExtra = ''
@@ -392,6 +399,10 @@ rec {
         src = sources.zsh-completions;
       }
       {
+        name = "nix-zsh-completions";
+        src = sources.nix-zsh-completions;
+      }
+      {
         name = "async";
         src = sources.zsh-async;
       }
@@ -409,6 +420,13 @@ rec {
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
   xdg.configFile."zsh/completion.zsh".source = ./zsh/completion.zsh;
+  xdg.configFile."zsh/vendor-completions".source =
+     pkgs.runCommandNoCC "kubectl-completions" {} ''
+      mkdir -p $out
+      for cfile in $(${pkgs.fd}/bin/fd -t f '^_[^.]+$' ${pkgs.lib.concatStringsSep " " home.packages} --exec ${pkgs.ripgrep}/bin/rg -l '^#compdef' {}); do
+        cp $cfile $out/
+      done
+     '';
 
 
   # Setting up aspell
