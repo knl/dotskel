@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(graphviz
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -214,6 +214,9 @@ It should only modify the values of Spacemacs settings."
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
+
+   ;; Show numbers before the startup list lines. (default t)
+   dotspacemacs-show-startup-list-numbers t
 
    ;; The minimum delay in seconds between number key presses. (default 0.4)
    dotspacemacs-startup-buffer-multi-digit-delay 0.4
@@ -515,6 +518,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-use-clean-aindent-mode t
 
+   ;; Accept SPC as y for prompts if non nil. (default nil)
+   dotspacemacs-use-SPC-as-y nil
+
    ;; If non-nil shift your number row to match the entered keyboard layout
    ;; (only in insert state). Currently supported keyboard layouts are:
    ;; `qwerty-us', `qwertz-de' and `querty-ca-fr'.
@@ -551,7 +557,8 @@ See the header of this file for more information."
 This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
-If you are unsure, try setting them in `dotspacemacs/user-config' first.")
+If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  (setq org-roam-v2-ack t))
 
 
 (defun dotspacemacs/user-load ()
@@ -584,23 +591,6 @@ before packages are loaded."
     :config
     (direnv-mode))
 
-  ;; Code based mostly on file+headline part of org-capture-set-target-location
-  ;; Look for a headline that matches whatever *my-journal-headline-format* is
-  ;; If it's not there insert it; otherwise position the cursor at the end of the
-  ;; subtree.
-  (defconst *my-journal-headline-format* "%A, %Y-%m-%d")
-  (defun knl/find-todays-journal-point ()
-    "Find or create the current project's header and insert the todo template"
-    (goto-char (point-min))
-    (let ((todo-header (concat "* " (format-time-string *my-journal-headline-format*))))
-      (if (re-search-forward todo-header nil t 1)
-          (match-string-no-properties 0)
-        (goto-char (point-max))
-        (newline 2)
-        (insert todo-header)
-        (newline 1)
-        (knl/find-todays-journal-point))))
-
   (with-eval-after-load 'org
     (setq org-agenda-files '("~/notes/journal.org"
                              "~/notes/todo.org"))
@@ -625,50 +615,92 @@ before packages are loaded."
           org-roam-dailies-directory "daily/" ;; relative to the org-roam-directory
           org-roam-db-location "~/notes/roam/org-roam.db"
           org-roam-db-update-method 'immediate)
-    (setq org-roam-title-to-slug-function  #'knl/org-roam-title-to-slug-with-dashes)
+
     (setq org-roam-capture-templates
-          '(("d" "default" plain (function org-roam--capture-get-point)
-             "%?"
-             :file-name "%<%Y-%m-%d>-${slug}"
-             :head "#+title: ${title}\n#+ROAM_TAGS: %^{org-roam-tags}\n#+created: %u\n#+last_modified: %U\n\n"
+          '(("d" "default" plain "* %?"
+             :target (file+head "%<%Y-%m-%d>-${slug}.org"
+                                "#+title: ${title}\n#+file_tags: %^{org-roam-tags}\n#+created: %u\n#+last_modified: %U\n\n"
              :unnarrowed t
-             :jump-to-captured t)
-            ("l" "today-i-learned" plain (function org-roam--capture-get-point)
-             "%?\n\n[[file:til.org][TIL]]"
-             :file-name "%<%Y-%m-%d>-til-${slug}"
-             :head "#+title: ${title}\n#+ROAM_TAGS: til %^{org-roam-tags}\n#+created: %u\n#+last_modified: %U\n\n"
-             :unnarrowed t)
-            ))
+             :jump-to-captured t))))
     (setq org-roam-dailies-capture-templates
-          (let ((head "#+title: %<%Y-%m-%d %A>\n#+startup: showall\n\n* [/] Do Today\n* [/] Maybe Do Today\n* Journal\n")
-                (fname "daily/%<%Y-%m-%d>"))
-            `(("j" "journal" entry
-               #'org-roam-capture--get-point
-               "* %<%H:%M> %?"
-               :file-name ,fname
-               :head ,head
-               :olp ("Journal"))
-              ("t" "do today" item
-               #'org-roam-capture--get-point
-               "[ ] %(princ as/agenda-captured-link)"
-               :file-name ,fname
-               :head ,head
-               :olp ("Do Today")
-               :immediate-finish t)
-              ("m" "maybe do today" item
-               #'org-roam-capture--get-point
-               "[ ] %(princ as/agenda-captured-link)"
-               :file-name ,fname
-               :head ,head
-               :olp ("Maybe Do Today")
+          (let ((head (concat "#+title: %<%Y-%m-%d %A>\n"
+                              "#+startup: showall\n\n"
+                              "* [/] Do Today\n"
+                              "* [/] Maybe Do Today\n"
+                              "* [/] Exercise\n"
+                              "  - [ ] Weights\n"
+                              "  - [ ] Walk\n"
+                              "  - [ ] Planking\n"
+                              "* Journal\n"))
+                (fname "%<%Y-%m-%d>.org"))
+            `(("d" "default" entry
+               "** %<%H:%M> %?"
+               :if-new (file+head ,fname ,head)
                :immediate-finish t))))
-    (global-set-key [f12] 'org-roam-find-file)
-    (global-set-key [f11] 'org-roam-buffer-toggle-display)
+    ;; (global-set-key [f12] 'org-roam-node-file)
+    (global-set-key [f11] 'org-roam-buffer-toggle)
     (global-set-key [f10] 'org-roam-dailies-find-today)
     (global-set-key (kbd "C-H-M-S-<f10>") 'org-roam-dailies-find-today)
 
-    (defun knl/org-roam-title-to-slug-with-dashes (str)
-      (string-join (split-string (org-roam--title-to-slug str) "_") "-"))
+    ;; use dashes rather than underscores for the slugs
+    (cl-defmethod org-roam-node-slug ((node org-roam-node))
+      "Return the slug of NODE."
+      (let ((title (org-roam-node-title node))
+            (slug-trim-chars '(;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
+                               768 ; U+0300 COMBINING GRAVE ACCENT
+                               769 ; U+0301 COMBINING ACUTE ACCENT
+                               770 ; U+0302 COMBINING CIRCUMFLEX ACCENT
+                               771 ; U+0303 COMBINING TILDE
+                               772 ; U+0304 COMBINING MACRON
+                               774 ; U+0306 COMBINING BREVE
+                               775 ; U+0307 COMBINING DOT ABOVE
+                               776 ; U+0308 COMBINING DIAERESIS
+                               777 ; U+0309 COMBINING HOOK ABOVE
+                               778 ; U+030A COMBINING RING ABOVE
+                               780 ; U+030C COMBINING CARON
+                               795 ; U+031B COMBINING HORN
+                               803 ; U+0323 COMBINING DOT BELOW
+                               804 ; U+0324 COMBINING DIAERESIS BELOW
+                               805 ; U+0325 COMBINING RING BELOW
+                               807 ; U+0327 COMBINING CEDILLA
+                               813 ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                               814 ; U+032E COMBINING BREVE BELOW
+                               816 ; U+0330 COMBINING TILDE BELOW
+                               817 ; U+0331 COMBINING MACRON BELOW
+                               )))
+        (cl-flet* ((nonspacing-mark-p (char)
+                                      (memq char slug-trim-chars))
+                   (strip-nonspacing-marks (s)
+                                           (ucs-normalize-NFC-string
+                                            (apply #'string (seq-remove #'nonspacing-mark-p
+                                                                        (ucs-normalize-NFD-string s)))))
+                   (cl-replace (title pair)
+                               (replace-regexp-in-string (car pair) (cdr pair) title)))
+          (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
+                          ("--*" . "-")                   ;; remove sequential dashes
+                          ("^-" . "")                     ;; remove starting dashes
+                          ("-$" . "")))                   ;; remove ending dashes
+                 (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
+            (downcase slug)))))
+
+    ;; preface the filenames just with ISO date, not datetime
+    (setq org-roam-extract-new-file-path "%<%Y-%m-%d>-${slug}.org")
+
+    ;; show the number of backlinks in org-roam-node-find
+    ;; source: https://github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#showing-the-number-of-backlinks-for-each-node-in-org-roam-node-find
+    (cl-defmethod org-roam-node-directories ((node org-roam-node))
+      (if-let ((dirs (file-name-directory (file-relative-name (org-roam-node-file node) org-roam-directory))))
+          (format "(%s)" (car (f-split dirs)))
+        ""))
+    (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
+      (let* ((count (caar (org-roam-db-query
+                           [:select (funcall count source)
+                                    :from links
+                                    :where (= dest $s1)
+                                    :and (= type "id")]
+                           (org-roam-node-id node)))))
+        (format "[%d]" count)))
+    (setq org-roam-node-display-template "${directories:10} ${tags:10} ${title:100} ${backlinkscount:6}") 
     )
 
   (setq-default js2-basic-offset 2)
