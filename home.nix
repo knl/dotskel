@@ -452,7 +452,7 @@ rec {
   home.file.".hammerspoon/winter.lua".source = "${sources.hs-winter}/winter.lua";
 
   # Karabiner's config file
-  xdg.configFile."karabiner/karabiner.json".source = ./configs/karabiner/karabiner.json;
+  xdg.configFile."karabiner/karabiner.json".source = link ./configs/karabiner/karabiner.json;
 
   # iTerm2 settings
   # Use link here, so when something changes, it gets propagated back
