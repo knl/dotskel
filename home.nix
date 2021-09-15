@@ -135,7 +135,6 @@ rec {
         branch = "auto";
         ui = "auto";
       };
-      rerere.enabled = "true";
       credential.helper = "osxkeychain";
       core.whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
       repack.usedeltabaseoffset = "true";
@@ -148,6 +147,16 @@ rec {
       push.default = "current";
       merge.stat = "true";
       pull.ff = "only";
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+      };
+      rerere = {
+        autoupdate = true;
+        enabled = true;
+      };
+      # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
+      tag.sort = "version:refname";
     };
     # Replaces ~/.gitignore
     ignores = [
