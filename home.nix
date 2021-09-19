@@ -214,6 +214,9 @@ rec {
 
       BROWSER = if pkgs.stdenv.isDarwin then "open" else "xdg-open";
 
+      # use the same nixpkgs for the rest of the system as we use here
+      NIX_PATH = "nixpkgs=${sources.nixpkgs}:home-manager=${sources."home-manager"}";
+
       EDITOR = "vim";
       VISUAL = EDITOR;
       GIT_EDITOR = EDITOR;
