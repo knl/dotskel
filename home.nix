@@ -432,14 +432,14 @@ rec {
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
   xdg.configFile."zsh/completion.zsh".source = ./zsh/completion.zsh;
-  xdg.configFile."zsh/vendor-completions".source =
-     pkgs.runCommandNoCC "kubectl-completions" {} ''
+  xdg.configFile."zsh/vendor-completions".source = with pkgs;
+     runCommandNoCC "vendored-zsh-completions" {} ''
       mkdir -p $out
-      for cfile in $(${pkgs.fd}/bin/fd -t f '^_[^.]+$' ${pkgs.lib.concatStringsSep " " home.packages} --exec ${pkgs.ripgrep}/bin/rg -l '^#compdef' {}); do
-        cp $cfile $out/
-      done
+      ${fd}/bin/fd -t f '^_[^.]+$' \
+        ${lib.escapeShellArgs home.packages} \
+        --exec ${ripgrep}/bin/rg -0l '^#compdef' {} \
+        | xargs -0 cp -t $out/
      '';
-
 
   # Setting up aspell
   home.file.".aspell.conf".text = ''
