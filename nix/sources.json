@@ -35,6 +35,18 @@
         "url": "https://github.com/knl/hs.winter/archive/94505beb073d4ba0f003b1374dae48e0b6314baa.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "mac-zsh-completions": {
+        "branch": "master",
+        "description": "macOS specific additional completion definitions for Zsh.",
+        "homepage": null,
+        "owner": "scriptingosx",
+        "repo": "mac-zsh-completions",
+        "rev": "3d62a062d3b1860e7f3ec9e93b2fed8ca50bb1df",
+        "sha256": "1v5rw7pqkyyd2xy124kmdzbmgh0adx94kbkwj7afd6vjg5kv9yl6",
+        "type": "tarball",
+        "url": "https://github.com/scriptingosx/mac-zsh-completions/archive/3d62a062d3b1860e7f3ec9e93b2fed8ca50bb1df.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",

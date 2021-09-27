@@ -357,6 +357,7 @@ rec {
       fpath=(${config.xdg.configHome}/zsh/plugins/zsh-completions/src \
              ${config.xdg.configHome}/zsh/vendor-completions \
              ${config.xdg.configHome}/zsh/plugins/nix-zsh-completions \
+             ${config.xdg.configHome}/zsh/plugins/mac-zsh-completions/completions \
              $fpath)
 
       fpath=(${config.xdg.configHome}/zsh/functions(-/FN) $fpath)
@@ -413,6 +414,10 @@ rec {
       {
         name = "nix-zsh-completions";
         src = sources.nix-zsh-completions;
+      }
+      {
+        name = "mac-zsh-completions";
+        src = sources.mac-zsh-completions;
       }
       {
         name = "async";
