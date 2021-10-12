@@ -144,10 +144,10 @@
         "homepage": null,
         "owner": "mafredri",
         "repo": "zsh-async",
-        "rev": "a61239dd55028eec173374883809f439c93d292b",
-        "sha256": "1knvz6091a2isify9zq24a7nvh15zgsacqmlv1dx3ppc8jxl0cgc",
+        "rev": "3ba6e2d1ea874bfb6badb8522ab86c1ae272923d",
+        "sha256": "1hbzaydsdvabwnyh7aj13qcd9mz4abx081s9jva5wcizpxf5j66y",
         "type": "tarball",
-        "url": "https://github.com/mafredri/zsh-async/archive/a61239dd55028eec173374883809f439c93d292b.tar.gz",
+        "url": "https://github.com/mafredri/zsh-async/archive/3ba6e2d1ea874bfb6badb8522ab86c1ae272923d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-autosuggestions": {
