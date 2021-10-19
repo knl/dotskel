@@ -41,6 +41,7 @@ rec {
     aspellDicts.en-science
     bat
     duf
+    emacsMacport
     exa
     fd
     fortune
