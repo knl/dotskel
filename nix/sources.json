@@ -125,10 +125,10 @@
         "homepage": "http://spacemacs.org",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "63056ecb50f93808781b97feab1c3225d35c7aa1",
-        "sha256": "038rfnyd404bzv83h5l0fbp3mn9c6qpn4h2liyf5baqc8wsmzg7x",
+        "rev": "5c88c3b089c132997bf9f571a0207d93739efef1",
+        "sha256": "0axmrbl0w016p4fc962i4bk318l4sk4fn7v4wli0fz0zj0zns4nz",
         "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/63056ecb50f93808781b97feab1c3225d35c7aa1.tar.gz",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/5c88c3b089c132997bf9f571a0207d93739efef1.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "unar": {
