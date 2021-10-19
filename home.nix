@@ -466,6 +466,15 @@ rec {
   # Use link here, so when something changes, it gets propagated back
   xdg.configFile."iterm2/com.googlecode.iterm2.plist".source = link ./preferences/com.googlecode.iterm2.plist;
 
+  # Use cachix to speed up some fetches (niv, specifically)
+  xdg.configFile."nix/nix.conf".text = ''
+    # experimental-features = nix-command flakes
+    keep-outputs = true
+    keep-derivations = true
+    substituters = https://niv.cachix.org https://cache.nixos.org
+    trusted-public-keys = niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+  '';
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
