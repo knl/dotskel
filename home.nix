@@ -65,7 +65,6 @@ rec {
     paperkey
     procs
     python3
-    python3Packages.tvnamer
     readline
     ripgrep
     rsync
@@ -73,6 +72,7 @@ rec {
     shellcheck
     shfmt
     tree
+    # tvnamer
     unar
     xz
     yq-go
