@@ -315,6 +315,16 @@ rec {
       unsetopt AUTO_PARAM_SLASH    # If completed parameter is a directory, do not add a trailing slash.
       unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
       unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
+
+      # Completion settings
+      source ${config.xdg.configHome}/zsh/completion.zsh
+
+      fpath=(${config.xdg.configHome}/zsh/plugins/zsh-completions/src \
+             ${config.xdg.configHome}/zsh/vendor-completions \
+             ${config.xdg.configHome}/zsh/plugins/mac-zsh-completions/completions \
+             $fpath)
+
+      # compinit will be called after this block
     '';
 
     # Called whenever zsh is initialized
@@ -323,11 +333,6 @@ rec {
       if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
         . ~/.nix-profile/etc/profile.d/nix.sh
       fi
-      # Autocomplete for various utilities
-      eval "$(lua ${sources.rh}/rh.lua --init zsh ~/work)"
-
-      # Completion settings
-      source ${config.xdg.configHome}/zsh/completion.zsh
 
       # expands .... to ../..
       function expand-dot-to-parent-directory-path {
@@ -355,12 +360,6 @@ rec {
       # Expand history on space.
       bindkey -M emacs ' ' magic-space
 
-      fpath=(${config.xdg.configHome}/zsh/plugins/zsh-completions/src \
-             ${config.xdg.configHome}/zsh/vendor-completions \
-             ${config.xdg.configHome}/zsh/plugins/nix-zsh-completions \
-             ${config.xdg.configHome}/zsh/plugins/mac-zsh-completions/completions \
-             $fpath)
-
       fpath=(${config.xdg.configHome}/zsh/functions(-/FN) $fpath)
       # functions must be autoloaded, do it in a function to isolate
       function {
@@ -375,13 +374,37 @@ rec {
         done
       }
 
+      eval "$(lua ${sources.rh}/rh.lua --init zsh ~/work)"
+
       # Theme (custom built on powerlevel10k)
       # First load all variables
       source ${config.xdg.configHome}/zsh/p10k.zsh
       # Then source the theme
       source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
 
-      autoload -U compinit && compinit
+      # zsh-histdb start
+      HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
+
+      source ''${ZDOTDIR}/plugins/zsh-histdb/sqlite-history.zsh
+
+      source ''${ZDOTDIR}/plugins/zsh-histdb-fzf/fzf-histdb.zsh
+      bindkey '^R' histdb-fzf-widget
+
+      _zsh_autosuggest_strategy_histdb_top() {
+          local query="
+              select commands.argv from history
+              left join commands on history.command_id = commands.rowid
+              left join places on history.place_id = places.rowid
+              where commands.argv LIKE '$(sql_escape $1)%'
+              group by commands.argv, places.dir
+              order by places.dir != '$(sql_escape $PWD)', count(*) desc
+              limit 1
+          "
+          suggestion=$(_histdb_query "$query")
+      }
+
+      ZSH_AUTOSUGGEST_STRATEGY=histdb_top
+      # zsh-histdb end
     '';
 
     loginExtra = ''
@@ -401,8 +424,8 @@ rec {
         src = sources.zsh-autosuggestions;
       }
       {
-        name = "zsh-syntax-highlighting";
-        src = sources.zsh-syntax-highlighting;
+        name = "fast-syntax-highlighting";
+        src = sources.fast-syntax-highlighting;
       }
       {
         name = "zsh-history-substring-search";
@@ -432,6 +455,14 @@ rec {
       {
         name = "zsh-you-should-use";
         src = sources.zsh-you-should-use;
+      }
+      {
+        name = "zsh-histdb";
+        src = sources.zsh-histdb;
+      }
+      {
+        name = "zsh-histdb-fzf";
+        src = sources.zsh-histdb-fzf;
       }
     ];
   };
