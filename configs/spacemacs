@@ -608,20 +608,32 @@ before packages are loaded."
     (setq deft-directory "~/notes")
     (setq deft-recursive t)
     (setq deft-use-filename-as-title t)
-    (global-set-key [f8] 'spacemacs/deft)
-    (global-set-key (kbd "C-M-S-H-<f8>") 'spacemacs/deft)
+
+    (defun knl/search-notes ()
+      "Search in notes directory with `rg'."
+      (interactive)
+      (spacemacs/helm-files-do-rg "~/notes"))
+
+    (defun knl/search-notes-region-or-symbol ()
+      "Search in ~/notes with `rg' with a default input."
+      (interactive)
+      (spacemacs//helm-do-ag-region-or-symbol 'spacemacs/helm-files-do-rg "~/notes"))
+
+    (global-set-key [f8] 'knl/search-notes)
+    (global-set-key (kbd "S-<f8>") 'knl/search-notes-region-or-symbol)
+    (global-set-key (kbd "C-M-S-H-<f8>") 'knl/search-notes)
 
     (setq org-roam-directory "~/notes/roam"
           org-roam-dailies-directory "daily/" ;; relative to the org-roam-directory
           org-roam-db-location "~/notes/roam/org-roam.db"
           org-roam-db-update-method 'immediate)
 
-    (setq org-roam-capture-templates
-          '(("d" "default" plain "* %?"
-             :target (file+head "%<%Y-%m-%d>-${slug}.org"
-                                "#+title: ${title}\n#+file_tags: %^{org-roam-tags}\n#+created: %u\n#+last_modified: %U\n\n"
-             :unnarrowed t
-             :jump-to-captured t))))
+    ;; (setq org-roam-capture-templates
+    ;;       '(("d" "default" plain "* %?"
+    ;;          :target (file+head "%<%Y-%m-%d>-${slug}.org"
+    ;;                             "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n\n"
+    ;;          :unnarrowed t
+    ;;          :immediate-finish t))))
     (setq org-roam-dailies-capture-templates
           (let ((head (concat "#+title: %<%Y-%m-%d %A>\n"
                               "#+startup: showall\n\n"
@@ -700,8 +712,7 @@ before packages are loaded."
                                     :and (= type "id")]
                            (org-roam-node-id node)))))
         (format "[%d]" count)))
-    (setq org-roam-node-display-template "${directories:10} ${tags:10} ${title:100} ${backlinkscount:6}") 
-    )
+    (setq org-roam-node-display-template "${directories:10} ${tags:10} ${title:100} ${backlinkscount:6}"))
 
   (setq-default js2-basic-offset 2)
   (setq-default js-indent-level 2)
@@ -712,6 +723,16 @@ before packages are loaded."
     (let ((buffer (get-buffer-create "*scratch*")))
       (display-buffer buffer '(display-buffer-pop-up-frame . nil))))
   (spacemacs/set-leader-keys "Fn" 'knl/new-buffer-frame)
+
+  (defun switch-to-buffer--hack (orig-fun &rest args)
+    "Display BUFFER in the selected window. If BUFFER is displayed in an
+existing window, select that window instead."
+    (if-let ((win (get-buffer-window (car args))))
+        (select-window win)
+      (apply orig-fun args)))
+
+  (advice-add 'switch-to-buffer :around #'switch-to-buffer--hack)
+  (advice-add 'ivy--switch-to-buffer :around #'switch-to-buffer--hack)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

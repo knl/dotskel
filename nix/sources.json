@@ -202,12 +202,12 @@
         "branch": "master",
         "description": "A zsh histdb fzf integration",
         "homepage": null,
-        "owner": "m42e",
+        "owner": "knl",
         "repo": "zsh-histdb-fzf",
-        "rev": "2d61785bc0982b3402e06d455fcc872a96e8ac22",
-        "sha256": "07awy9k4m86lqzr75plbaymbyn9cjxnjx0vay6kbb95q7m413hys",
+        "rev": "68dcc99127f862ed15c8747621064a550195931b",
+        "sha256": "0r8azgqh7j87m0rc5qjp30g9hg3wq5bi3vmxb5f2lladyi0vx30h",
         "type": "tarball",
-        "url": "https://github.com/m42e/zsh-histdb-fzf/archive/2d61785bc0982b3402e06d455fcc872a96e8ac22.tar.gz",
+        "url": "https://github.com/knl/zsh-histdb-fzf/archive/68dcc99127f862ed15c8747621064a550195931b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-history-substring-search": {

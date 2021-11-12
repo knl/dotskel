@@ -40,18 +40,20 @@ rec {
     aspellDicts.en-computers
     aspellDicts.en-science
     bat
+    curl
     duf
     emacsMacport
     exa
     fd
     fortune
-    gitAndTools.gitFull
+    gitAndTools.gitSVN
     gitAndTools.hub
     glances
     gnused
     htop
     hyperfine
     imagemagick
+    jc
     jq
     loc
     lua
@@ -75,6 +77,7 @@ rec {
     tree
     # tvnamer
     unar
+    visidata
     xz
     yq-go
     watch
@@ -90,7 +93,6 @@ rec {
   # istatmenus
   # trello
   # busycall
-  # emacs
 
   programs.fzf.enable = true;
   programs.direnv = {
@@ -387,9 +389,6 @@ rec {
 
       source ''${ZDOTDIR}/plugins/zsh-histdb/sqlite-history.zsh
 
-      source ''${ZDOTDIR}/plugins/zsh-histdb-fzf/fzf-histdb.zsh
-      bindkey '^R' histdb-fzf-widget
-
       _zsh_autosuggest_strategy_histdb_top() {
           local query="
               select commands.argv from history
@@ -404,6 +403,9 @@ rec {
       }
 
       ZSH_AUTOSUGGEST_STRATEGY=histdb_top
+
+      # need to rebind the key again, since plugins are sourced before sourcing fzf
+      bindkey '^R' histdb-fzf-widget
       # zsh-histdb end
     '';
 
