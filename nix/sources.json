@@ -5,10 +5,10 @@
         "homepage": null,
         "owner": "zdharma-continuum",
         "repo": "fast-syntax-highlighting",
-        "rev": "9a5a4a5199e7e480009e10433d0d8c5be91f31d4",
-        "sha256": "16vvmb18qny78sdrild4ksxp4776hlajps5al5b985x7zis7iqjd",
+        "rev": "585c089968caa1c904cbe926ff04a1be9e3d8f42",
+        "sha256": "1lc9mhi25ybkcn0747j3i8y2hrmakv5mxndglf6yfiipxpd05vn7",
         "type": "tarball",
-        "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/9a5a4a5199e7e480009e10433d0d8c5be91f31d4.tar.gz",
+        "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/585c089968caa1c904cbe926ff04a1be9e3d8f42.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
