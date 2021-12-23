@@ -502,7 +502,7 @@ rec {
 
   # Use cachix to speed up some fetches (niv, specifically)
   xdg.configFile."nix/nix.conf".text = ''
-    # experimental-features = nix-command flakes
+    experimental-features = nix-command flakes
     keep-outputs = true
     keep-derivations = true
     substituters = https://niv.cachix.org https://cache.nixos.org
