@@ -26,7 +26,6 @@ jobs:
           branch_prefix: 'update/'
           # The latest niv as of 2021-12-27, to fix the issue with net/http
           niv_version: '5830a4dd348d77e39a0f3c4c762ff2663b602d4c'
-          debug_output: true
         env:
           GITHUB_TOKEN: ${{ secrets.NIV_UPDATER_TOKEN }}
 
