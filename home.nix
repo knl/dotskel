@@ -46,6 +46,7 @@ rec {
     exa
     fd
     fortune
+    gitAndTools.delta
     gitAndTools.gitSVN
     gitAndTools.hub
     glances
