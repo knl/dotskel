@@ -477,7 +477,7 @@ rec {
       mkdir -p $out
       ${fd}/bin/fd -t f '^_[^.]+$' \
         ${lib.escapeShellArgs home.packages} \
-        --exec ${ripgrep}/bin/rg -0l '^#compdef' {} \
+        | xargs -0 -I {} bash -c '${ripgrep}/bin/rg -0l "^#compdef" $@ || :' _ {} \
         | xargs -0 cp -t $out/
      '';
 
