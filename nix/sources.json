@@ -180,10 +180,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "546fa7e5bbadafedc1a965456ed9c18a309643a0",
-        "sha256": "0a57v0d5ljvxdzv65w4dy89r0zmrkagbglg32vzwzlsab3qby8g7",
+        "rev": "298020e4e310f0dac5ee1475694a46cff19eccb6",
+        "sha256": "0dps1mlmigm8vkgpavqrdzp61ksps5r7mnjgqxr795ljqr2gysjn",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/546fa7e5bbadafedc1a965456ed9c18a309643a0.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-completions/archive/298020e4e310f0dac5ee1475694a46cff19eccb6.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
