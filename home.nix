@@ -352,6 +352,9 @@ rec {
       bindkey -M emacs '\e[3~' delete-char
       bindkey -M emacs "^P" history-substring-search-up
       bindkey -M emacs "^N" history-substring-search-down
+      # also bind to keys up and down
+      bindkey '^[[A' history-substring-search-up
+      bindkey '^[[B' history-substring-search-down
       # expand .... to ../..
       bindkey -M emacs "." expand-dot-to-parent-directory-path
       # but not during incremental search
