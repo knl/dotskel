@@ -83,6 +83,7 @@ rec {
     yq-go
     watch
     zstd
+    (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { })
   ];
 
   # TODO:
