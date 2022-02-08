@@ -15,6 +15,16 @@ let
     ] ++ overlays;
   };
   link = config.lib.file.mkOutOfStoreSymlink;
+  # Darwin specific run-or-raise style script for emacs.
+  osascript = ''
+    command -v osascript > /dev/null 2>&1 && \
+        osascript -e 'tell application "Emacs" to activate' 2>/dev/null
+    command -v osascript > /dev/null 2>&1 && \
+        osascript -e 'tell application "System Events" to tell process "Emacs"
+        set frontmost to true
+        windows where title contains "Emacs"
+        if result is not {} then perform action "AXRaise" of item 1 of result
+    end tell' &> /dev/null || exit 0'';
 in
 rec {
   # Allow non-free (as in beer) packages
@@ -84,6 +94,17 @@ rec {
     watch
     zstd
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { })
+    # Use my own bespoke wrapper for `emacsclient`.
+    (writeShellScriptBin "emacs.bash" (''
+      ${emacsMacport}/bin/emacsclient --no-wait --eval \
+        "(if (> (length (frame-list)) 0) 't)" 2> /dev/null | grep -q t
+      if [[ "$?" -eq 1 ]]; then
+        ${emacsMacport}/bin/emacsclient \
+          --quiet --create-frame --alternate-editor="" "$@"
+      else
+        ${emacsMacport}/bin/emacsclient --quiet "$@"
+      fi
+    '' + lib.optionalString pkgs.stdenv.isDarwin osascript))
   ];
 
   # TODO:
