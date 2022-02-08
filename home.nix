@@ -263,6 +263,9 @@ rec {
       zh = "z -I -t .";
       # fd's default of not searching hidden files is annoying
       f = "fd -H --no-ignore";
+      k = "kubectl";
+      hm = "home-manager";
+      d = "direnv";
 
       # commonly used git aliases (lifted from prezto)
       g = "git";
