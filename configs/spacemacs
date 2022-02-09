@@ -652,10 +652,6 @@ before packages are loaded."
                               "#+startup: showall\n\n"
                               "* [/] Do Today\n"
                               "* [/] Maybe Do Today\n"
-                              "* [/] Exercise\n"
-                              "  - [ ] Weights\n"
-                              "  - [ ] Walk\n"
-                              "  - [ ] Planking\n"
                               "* Journal\n"))
                 (fname "%<%Y-%m-%d>.org"))
             `(("d" "default" entry
