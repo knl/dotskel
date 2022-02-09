@@ -87,7 +87,12 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(direnv nimbus-theme)
+   dotspacemacs-additional-packages
+   '(
+     direnv
+     nimbus-theme
+     exec-path-from-shell
+     )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -574,6 +579,14 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (use-package exec-path-from-shell
+    :demand t
+    :config
+    (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE" "NIX_SSL_CERT_FILE" "NIX_PATH"))
+      (add-to-list 'exec-path-from-shell-variables var))
+    (setq explicit-shell-file-name "/bin/zsh")
+    (setq shell-file-name "zsh"))
+
   ;; FIXME: workaround
   ;; https://github.com/syl20bnr/spacemacs/issues/11798
   (when (version<= "9.2" (org-version))
