@@ -53,10 +53,10 @@
         "homepage": null,
         "owner": "scriptingosx",
         "repo": "mac-zsh-completions",
-        "rev": "3d62a062d3b1860e7f3ec9e93b2fed8ca50bb1df",
-        "sha256": "1v5rw7pqkyyd2xy124kmdzbmgh0adx94kbkwj7afd6vjg5kv9yl6",
+        "rev": "303f25c8b30f3c7351a7bcaaf4b6f01818c3f1ad",
+        "sha256": "0j9npy2xivgr9blcnnig8dzikac9y5j1qsl75b6k4zbcwrd89afk",
         "type": "tarball",
-        "url": "https://github.com/scriptingosx/mac-zsh-completions/archive/3d62a062d3b1860e7f3ec9e93b2fed8ca50bb1df.tar.gz",
+        "url": "https://github.com/scriptingosx/mac-zsh-completions/archive/303f25c8b30f3c7351a7bcaaf4b6f01818c3f1ad.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
