@@ -13,17 +13,11 @@ jobs:
       - id: set_var
         run: |
           content=$(jq .nixpkgs.url <./nix/sources.json)
-          # end of optional handling for multi line json
-          echo "THIS IS THE URL: $content"
           echo "::set-output name=nivSourcesJson::$content"
-      - run: echo Got this HERE $foobar
-        env:
-          foobar: ${{ steps.set_var.outputs.nivSourcesJson }}
       - name: "Install Nix"
         uses: cachix/install-nix-action@v16
         with:
-          # nix_path: ${{ format('nixpkgs={0}', fromJson(steps.set_var.outputs.nivSourcesJson).nixpkgs.url) }}
-          nix_path: nixpkgs=channel:nixos-unstable
+          nix_path: ${{ format('nixpkgs={0}', steps.set_var.outputs.nivSourcesJson) }}
       - name: "Install Cachix"
         uses: cachix/cachix-action@v10
         with:
