@@ -19,11 +19,12 @@ jobs:
             content="${content//$'\r'/'%0D'}"
             # end of optional handling for multi line json
             echo "::set-output name=nivSourcesJson::$content"
-      - name: "Install Nix ❄️"
-        uses: cachix/install-nix-action@v15
+      - name: "Install Nix"
+        uses: cachix/install-nix-action@v16
         with:
-          nix_path: ${{ format('nixpkgs={0}', fromJson(steps.set_var.outputs.nivSourcesJson).nixpkgs.url) }}
-      - name: "Install Cachix ❄️"
+          # nix_path: ${{ format('nixpkgs={0}', fromJson(steps.set_var.outputs.nivSourcesJson).nixpkgs.url) }}
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: "Install Cachix"
         uses: cachix/cachix-action@v10
         with:
           name: knl
