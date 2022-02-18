@@ -19,6 +19,10 @@ jobs:
             content="${content//$'\r'/'%0D'}"
             # end of optional handling for multi line json
             echo "::set-output name=nivSourcesJson::$content"
+      - run: |
+          echo "Got this HERE: $foobar"
+        env:
+          foobar: ${{ fromJson(steps.set_var.outputs.nivSourcesJson).nixpkgs.url }}
       - name: "Install Nix"
         uses: cachix/install-nix-action@v16
         with:
