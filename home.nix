@@ -78,7 +78,7 @@ rec {
     p7zip
     paperkey
     procs
-    python3
+    (python3.withPackages(ps: [ps.ipython ps.pip ps.virtualenv]))
     readline
     ripgrep
     rsync
