@@ -69,7 +69,6 @@ rec {
     jq
     loc
     lua
-    mcfly
     moreutils
     mtr
     ncdu
