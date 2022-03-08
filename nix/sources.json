@@ -107,18 +107,6 @@
         "url": "https://github.com/romkatv/powerlevel10k/archive/f07d7baea36010bfa74708844d404517ea6ac473.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "prezto": {
-        "branch": "master",
-        "description": "My zsh settings, based on prezto from Sorin. Since github doesn't track my own work if I fork, this is done as a standalone repo.",
-        "homepage": null,
-        "owner": "knl",
-        "repo": "prezto",
-        "rev": "515b611bb31f1f3f3c14ca4f606e701acff84f6e",
-        "sha256": "1mb29d3jbkgqya0nwkc14ia5h3m749y0am0rbx8i7cwhgmxcg5z6",
-        "type": "tarball",
-        "url": "https://github.com/knl/prezto/archive/515b611bb31f1f3f3c14ca4f606e701acff84f6e.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "rh": {
         "branch": "master",
         "description": "A hierarchy aware `cd` command for easier navigation to your repositories",
