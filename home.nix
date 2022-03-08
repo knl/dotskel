@@ -25,6 +25,10 @@ let
         windows where title contains "Emacs"
         if result is not {} then perform action "AXRaise" of item 1 of result
     end tell' &> /dev/null || exit 0'';
+
+  python3Custom = pkgs.python3.buildEnv.override {
+    extraLibs = with pkgs.python3Packages; [ ipython pip virtualenv ];
+  };
 in
 rec {
   # Allow non-free (as in beer) packages
@@ -78,7 +82,7 @@ rec {
     p7zip
     paperkey
     procs
-    (python3.withPackages(ps: [ps.ipython ps.pip ps.virtualenv]))
+    python3Custom
     readline
     ripgrep
     rsync
