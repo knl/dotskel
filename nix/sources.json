@@ -1,4 +1,16 @@
 {
+    "emacs-overlay": {
+        "branch": "master",
+        "description": "Bleeding edge emacs overlay [maintainer=@adisbladis] ",
+        "homepage": "",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "0985a6dfa8918641e7c0bc7d86254c46bc103d2a",
+        "sha256": "0c5l0zz4nw1nsfwbbc5m0m794flbg5j95mhp1cg1sa6drkimzyb3",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/0985a6dfa8918641e7c0bc7d86254c46bc103d2a.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "fast-syntax-highlighting": {
         "branch": "master",
         "description": "Feature rich syntax highlighting for Zsh.",
