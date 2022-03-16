@@ -33,7 +33,6 @@ jobs:
         run: |
           shopt -s nocasematch
           echo ${GITHUB_EVENT_NAME} 
-          echo ${{ toJson(github.event) }}
           if [ ${GITHUB_EVENT_NAME} == 'workflow_dispatch' ];
           then
             echo "::set-output name=with_debug::${{ github.event.inputs.with_debug }}"
