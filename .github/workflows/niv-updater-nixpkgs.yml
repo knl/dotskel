@@ -6,9 +6,19 @@ on:
   #  --request POST \
   #  --data '{"event_type": "niv-updater-nixpkgs-nudge", "client_payload": {}}' \
   #  https://api.github.com/repos/knl/dotskel/dispatches
+  #
   # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
+  # If you need to debug the output, pass this data:
+  # '{"event_type": "niv-updater-nixpkgs-nudge", "client_payload": { "with_debug": true }}'
   repository_dispatch:
     types: niv-updater-nixpkgs-nudge
+  # this is to trigger the workflow manually from the Github page
+  workflow_dispatch:
+    inputs:
+      with_debug:
+        description: Enable debugging output
+        required: false
+        default: false
   schedule:
     # * is a special character in YAML so you have to quote this string
     # Run every Monday at 01:17, but we use the dispatch to trigger when urgent
@@ -26,6 +36,7 @@ jobs:
           branch_prefix: 'update/'
           # The latest niv as of 2021-12-27, to fix the issue with net/http
           niv_version: '5830a4dd348d77e39a0f3c4c762ff2663b602d4c'
+          debug_output: ${{ github.event.client_payload.with_debug || github.event.inputs.with_debug || false }}
         env:
           GITHUB_TOKEN: ${{ secrets.NIV_UPDATER_TOKEN }}
 
