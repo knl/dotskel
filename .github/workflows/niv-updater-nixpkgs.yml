@@ -25,9 +25,25 @@ on:
     - cron:  '17 01 * * 1'
 jobs:
   niv-updater:
-    name: 'Check for updates (weekly)'
+    name: 'Check for nixpkgs updates (weekly)'
     runs-on: ubuntu-latest
     steps:
+      - name: Set Variables
+        id: setvariables         
+        run: |
+          shopt -s nocasematch
+          echo ${GITHUB_EVENT_NAME} 
+          echo ${{ toJson(github.event) }}
+          if [ ${GITHUB_EVENT_NAME} == 'workflow_dispatch' ];
+          then
+            echo "::set-output name=with_debug::${{ github.event.inputs.with_debug }}"
+          elif [ ${GITHUB_EVENT_NAME} == 'repository_dispatch' ];
+          then
+            echo "::set-output name=with_debug::${{ github.event.client_payload.with_debug }}"
+          else
+            echo "Unknown Event Trigger ${GITHUB_EVENT_NAME}, setting with_debug to false."
+            echo "::set-output name=with_debug::false"
+          fi;
       - name: niv-updater-action
         uses: knl/niv-updater-action@main
         with:
@@ -36,7 +52,7 @@ jobs:
           branch_prefix: 'update/'
           # The latest niv as of 2021-12-27, to fix the issue with net/http
           niv_version: '5830a4dd348d77e39a0f3c4c762ff2663b602d4c'
-          debug_output: ${{ github.event.client_payload.with_debug || github.event.inputs.with_debug || false }}
+          debug_output: ${{ steps.setvariables.outputs.with_debug }}
         env:
           GITHUB_TOKEN: ${{ secrets.NIV_UPDATER_TOKEN }}
 
