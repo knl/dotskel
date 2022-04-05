@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "a162b8f8420c640d78b7ef3ab9d49197666f309a",
-        "sha256": "09fvjypxivh8l9g3qx6z55dcsfccf7clrv8q54slpxqfifv0dp55",
+        "rev": "d32cf21820f0c14bb4dc7911e4d8d81b891a8f82",
+        "sha256": "045bqf15lxba75lzp95l1xg6ah5cl7p04gkyihsxl3a9j9ngr219",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/a162b8f8420c640d78b7ef3ab9d49197666f309a.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/d32cf21820f0c14bb4dc7911e4d8d81b891a8f82.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fast-syntax-highlighting": {
@@ -77,10 +77,10 @@
         "homepage": "https://github.com/nmattia/niv",
         "owner": "nmattia",
         "repo": "niv",
-        "rev": "5912c378c2f87e911f1bc7236202f69581406c9d",
-        "sha256": "1jhs562k3pk0xgwyf0m1h2bck4rivv9f3aznz8dslgby9g5mdnda",
+        "rev": "df49d53b71ad5b6b5847b32e5254924d60703c46",
+        "sha256": "1j5p8mi1wi3pdcq0lfb881p97i232si07nb605dl92cjwnira88c",
         "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/5912c378c2f87e911f1bc7236202f69581406c9d.tar.gz",
+        "url": "https://github.com/nmattia/niv/archive/df49d53b71ad5b6b5847b32e5254924d60703c46.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nix-zsh-completions": {
@@ -113,10 +113,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "65599411ec83505a091f68489617316dec355510",
-        "sha256": "0sjnfxmykygqps9am7kx6hylqy6mln120sm212y5qmhxdgni5v4h",
+        "rev": "657e184e0d01da186f305e51be781ec36191d6bb",
+        "sha256": "07s230kfjj3zwnpz0r34gj0zc2djgrf8nqlgz9gqkfasgk43lffr",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/65599411ec83505a091f68489617316dec355510.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/657e184e0d01da186f305e51be781ec36191d6bb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "rh": {
@@ -137,10 +137,10 @@
         "homepage": "http://spacemacs.org",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "c2a9aaedffdebb511651e0e2299fc0282521ee73",
-        "sha256": "0yxkd24a23bzjpi5653z5zrhhk0w4lj8dw19z9a3x0ycs97a8c5f",
+        "rev": "d79b12e7b4634f1212c4f5aaad756851335aa008",
+        "sha256": "1nh25aa0nvaiaiwrqi20hmq9q3c414dc5v0wahd5khya53hyv9di",
         "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/c2a9aaedffdebb511651e0e2299fc0282521ee73.tar.gz",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/d79b12e7b4634f1212c4f5aaad756851335aa008.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "unar": {
@@ -180,10 +180,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "55d07cc57750eb90f8b02be3ddf42c206ecf17b1",
-        "sha256": "0p1zpk55c7wr0j9zj1fc68r52g2vib03hbzp36x4l680k9f357j6",
+        "rev": "6db5ddc6559ad8f66ca22a29365b34ad8d573884",
+        "sha256": "0q87xxw6dv55djxf55f0lh3cm4lpmza3sg848b5nz0hfd383raxq",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/55d07cc57750eb90f8b02be3ddf42c206ecf17b1.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-completions/archive/6db5ddc6559ad8f66ca22a29365b34ad8d573884.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
