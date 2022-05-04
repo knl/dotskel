@@ -58,7 +58,10 @@ rec {
     cachix
     curl
     duf
+    du-dust
     # emacsMacport
+    entr
+    # espanso # FIXME: make it compilable on macos
     exa
     fd
     fortune
@@ -67,10 +70,12 @@ rec {
     gitAndTools.hub
     glances
     gnused
+    gron
     htop
     hyperfine
     imagemagick
     jc
+    jless
     jq
     loc
     lua
@@ -297,6 +302,9 @@ rec {
       k = "kubectl";
       hm = "home-manager";
       d = "direnv";
+
+      df = "duf";
+      du = "ncdu -qrr";
 
       # commonly used git aliases (lifted from prezto)
       g = "git";
