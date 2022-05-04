@@ -12,6 +12,7 @@ let
     # Get all files in overlays
     overlays = [
       (_self: super: { inherit sources; })
+      (import sources.emacs-overlay)
     ] ++ overlays;
   };
   link = config.lib.file.mkOutOfStoreSymlink;
@@ -57,7 +58,7 @@ rec {
     cachix
     curl
     duf
-    emacsMacport
+    # emacsMacport
     exa
     fd
     fortune
@@ -100,13 +101,13 @@ rec {
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { })
     # Use my own bespoke wrapper for `emacsclient`.
     (writeShellScriptBin "emacs.bash" (''
-      ${emacsMacport}/bin/emacsclient --no-wait --eval \
+      ${pkgs.emacsMacport}/bin/emacsclient --no-wait --eval \
         "(if (> (length (frame-list)) 0) 't)" 2> /dev/null | grep -q t
       if [[ "$?" -eq 1 ]]; then
-        ${emacsMacport}/bin/emacsclient \
+        ${pkgs.emacsMacport}/bin/emacsclient \
           --quiet --create-frame --alternate-editor="" "$@"
       else
-        ${emacsMacport}/bin/emacsclient --quiet "$@"
+        ${pkgs.emacsMacport}/bin/emacsclient --quiet "$@"
       fi
     '' + lib.optionalString pkgs.stdenv.isDarwin osascript))
   ];
@@ -121,6 +122,11 @@ rec {
   # trello
   # busycall
 
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacsMacport;
+    # extraPackages = (epkgs: [epkgs.pdf-tools] );
+  };
   programs.fzf.enable = true;
   programs.direnv = {
     enable = true;
