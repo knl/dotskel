@@ -87,7 +87,6 @@ rec {
     nmap
     p7zip
     paperkey
-    procs
     python3Custom
     readline
     ripgrep
