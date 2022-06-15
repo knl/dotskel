@@ -68,7 +68,6 @@ rec {
     gitAndTools.delta
     gitAndTools.gitSVN
     gitAndTools.hub
-    glances
     gnused
     gron
     htop
