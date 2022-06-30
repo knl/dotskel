@@ -13,13 +13,13 @@ jobs:
   test-and-build:
     runs-on: macos-10.15
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - id: set_var
         run: |
           content=$(jq -r .nixpkgs.url <./nix/sources.json)
           echo "::set-output name=nivSourcesJson::$content"
       - name: "Install Nix"
-        uses: cachix/install-nix-action@v16
+        uses: cachix/install-nix-action@v17
         with:
           nix_path: ${{ format('nixpkgs={0}', steps.set_var.outputs.nivSourcesJson) }}
       - name: "Install Cachix"
