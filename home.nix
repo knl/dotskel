@@ -96,7 +96,11 @@ rec {
     tree
     # tvnamer
     unar
-    visidata
+    # problems with fastparquet, hence the override
+    # problems with building skia-pathops (dep of fonttools, dep of visidata), hence comment out
+    # (visidata.overrideAttrs (old: rec {
+    #  propagatedBuildInputs = old.propagatedBuildInputs ++ [ python3Packages.pyarrow python3Packages.fastparquet ];
+    # }))
     xz
     yq-go
     watch
