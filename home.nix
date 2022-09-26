@@ -522,7 +522,8 @@ rec {
   xdg.configFile."zsh/functions".source = ./zsh/functions;
   xdg.configFile."zsh/completion.zsh".source = ./zsh/completion.zsh;
   xdg.configFile."zsh/vendor-completions".source = with pkgs;
-     runCommandNoCC "vendored-zsh-completions" {} ''
+     runCommand "vendored-zsh-completions" {} ''
+      set -euo pipefail
       mkdir -p $out
       ${fd}/bin/fd -t f '^_[^.]+$' \
         ${lib.escapeShellArgs home.packages} \
