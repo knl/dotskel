@@ -17,10 +17,10 @@
         "homepage": null,
         "owner": "zdharma-continuum",
         "repo": "fast-syntax-highlighting",
-        "rev": "13dd94ba828328c18de3f216ec4a746a9ad0ef55",
-        "sha256": "1l7szi9lc1b0g0c0p1c1pqhbvgz66wp1a1ib6rhsly4vdz8y5ksm",
+        "rev": "770bcd986620d6172097dc161178210855808ee0",
+        "sha256": "1rkdlip487q6jii327s5jjgc5dg46m1xh8hj47ms4spvnjjk92ag",
         "type": "tarball",
-        "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/13dd94ba828328c18de3f216ec4a746a9ad0ef55.tar.gz",
+        "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/770bcd986620d6172097dc161178210855808ee0.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
