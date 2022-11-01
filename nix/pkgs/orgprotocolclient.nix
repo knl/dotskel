@@ -1,4 +1,4 @@
-{ lib, stdenv, pkgs, writeText }:
+{ lib, stdenv, pkgs, writeText, emacs ? pkgs.emacsMacport }:
 
 stdenv.mkDerivation rec {
   pname = "OrgProtocolClient";
@@ -137,7 +137,7 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/Applications
     /usr/bin/osacompile -o $out/Applications/OrgProtocolClient.app ${scpt}
-    cp ${pkgs.emacsMacport}/Applications/Emacs.app/Contents/Resources/{document,Emacs}.icns $out/Applications/OrgProtocolClient.app/Contents/Resources/
+    cp ${emacs}/Applications/Emacs.app/Contents/Resources/{document,Emacs}.icns $out/Applications/OrgProtocolClient.app/Contents/Resources/
     cp -f ${plist} $out/Applications/OrgProtocolClient.app/Contents/Info.plist
   '';
 

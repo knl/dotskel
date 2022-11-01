@@ -30,6 +30,22 @@ let
   python3Custom = pkgs.python3.buildEnv.override {
     extraLibs = with pkgs.python3Packages; [ ipython pip virtualenv ];
   };
+
+  wrapEmacsclient = { emacs }:
+	  pkgs.writeShellScriptBin "emacs.bash" (''
+	      ${emacs}/bin/emacsclient --no-wait --eval \
+		"(if (> (length (frame-list)) 0) 't)" 2> /dev/null | grep -q t
+	      if [[ "$?" -eq 1 ]]; then
+		${emacs}/bin/emacsclient \
+		  --quiet --create-frame --alternate-editor="" "$@"
+	      else
+		${emacs}/bin/emacsclient --quiet "$@"
+	      fi
+	    ''
+	    + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
+	    ;
+
+  myEmacs = pkgs.emacsGitNativeComp;
 in
 rec {
   # Allow non-free (as in beer) packages
@@ -106,18 +122,9 @@ rec {
     yq-go
     watch
     zstd
-    (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { })
+    (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = myEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
-    (writeShellScriptBin "emacs.bash" (''
-      ${pkgs.emacsMacport}/bin/emacsclient --no-wait --eval \
-        "(if (> (length (frame-list)) 0) 't)" 2> /dev/null | grep -q t
-      if [[ "$?" -eq 1 ]]; then
-        ${pkgs.emacsMacport}/bin/emacsclient \
-          --quiet --create-frame --alternate-editor="" "$@"
-      else
-        ${pkgs.emacsMacport}/bin/emacsclient --quiet "$@"
-      fi
-    '' + lib.optionalString pkgs.stdenv.isDarwin osascript))
+    (wrapEmacsclient { emacs = myEmacs; })
   ];
 
   # TODO:
@@ -132,7 +139,7 @@ rec {
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsMacport;
+    package = myEmacs;
     # extraPackages = (epkgs: [epkgs.pdf-tools] );
   };
   programs.fzf.enable = true;
