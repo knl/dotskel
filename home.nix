@@ -56,6 +56,9 @@ rec {
     };
   };
 
+  # fix for https://github.com/nix-community/home-manager/issues/3344
+  manual.manpages.enable = false;
+
   xdg = {
     enable = true;
 
