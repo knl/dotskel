@@ -11,17 +11,17 @@ concurrency:
 
 jobs:
   test-and-build:
-    runs-on: macos-10.15
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v3
       - id: set_var
         run: |
           content=$(jq -r .nixpkgs.url <./nix/sources.json)
-          echo "::set-output name=nivSourcesJson::$content"
+          echo "nivSourcesJson=$content" >> $GITHUB_ENV
       - name: "Install Nix"
         uses: cachix/install-nix-action@v18
         with:
-          nix_path: ${{ format('nixpkgs={0}', steps.set_var.outputs.nivSourcesJson) }}
+          nix_path: ${{ format('nixpkgs={0}', env.nivSourcesJson) }}
       - name: "Install Cachix"
         uses: cachix/cachix-action@v11
         with:
