@@ -4,7 +4,7 @@ dotfiles are actually symlinked to the nix store, and are immutable. This in
 turn means I'll have to deploy changes every time I want to change something,
 but I can live with it.
 
-[https://github.com/knl/dotskel/actions/workflows/build.yml][https://github.com/knl/dotskel/actions/workflows/build.yml/badge.svg]
+[[https://github.com/knl/dotskel/actions/workflows/build.yml][https://github.com/knl/dotskel/actions/workflows/build.yml/badge.svg]]
 
 * Installation
 ** Command Line Tools
