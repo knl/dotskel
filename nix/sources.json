@@ -17,10 +17,10 @@
         "homepage": null,
         "owner": "zdharma-continuum",
         "repo": "fast-syntax-highlighting",
-        "rev": "770bcd986620d6172097dc161178210855808ee0",
-        "sha256": "1rkdlip487q6jii327s5jjgc5dg46m1xh8hj47ms4spvnjjk92ag",
+        "rev": "7c390ee3bfa8069b8519582399e0a67444e6ea61",
+        "sha256": "0gh4is2yzwiky79bs8b5zhjq9khksrmwlaf13hk3mhvpgs8n1fn0",
         "type": "tarball",
-        "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/770bcd986620d6172097dc161178210855808ee0.tar.gz",
+        "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/7c390ee3bfa8069b8519582399e0a67444e6ea61.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -113,10 +113,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "bc5983543a10cff2eac30cced9208bbfd91428b8",
-        "sha256": "0s8ndbpmlqakg7s7hryyi1pqij1h5dv0xv9xvr2qwwyhyj6zrx2i",
+        "rev": "cf83ab21e440ffa276a13ab5fd63b6372b674b5e",
+        "sha256": "0wp6f7x294hdvlhgzz3yrdnpzsk0hjxrngiijkxz1df5whbv4504",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/bc5983543a10cff2eac30cced9208bbfd91428b8.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/cf83ab21e440ffa276a13ab5fd63b6372b674b5e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "rh": {
@@ -137,10 +137,10 @@
         "homepage": "http://spacemacs.org",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "57a7a0e63c4aecf810b19ca3fd49e5ae1a838126",
-        "sha256": "1lwbjfldysqfi4cf7i0fs9gz3iy83zlam45cdvlg0j0279ixbl6b",
+        "rev": "913962b3edde7984df78d91ab94d8b8e109e93f1",
+        "sha256": "1qbljd4vvw7d9ysbd6p8vdz26z44ljs96zszkpvqmmb0mhfzkbzk",
         "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/57a7a0e63c4aecf810b19ca3fd49e5ae1a838126.tar.gz",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/913962b3edde7984df78d91ab94d8b8e109e93f1.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "unar": {
@@ -180,10 +180,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "7916ba50ed3633b2e85d9d7c4d323c5ec75b39b0",
-        "sha256": "07sklvx32zqk7c1bhajz5niknnhiwqxfm0ki8c38v33fn033s6ms",
+        "rev": "6a5b7245bed56083839c037aa0d37d8bd30df281",
+        "sha256": "1gasv6jpshnszjcfmixcrb40kgn9jdzfx1nli5rz8rr56df6ra38",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/7916ba50ed3633b2e85d9d7c4d323c5ec75b39b0.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-completions/archive/6a5b7245bed56083839c037aa0d37d8bd30df281.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
