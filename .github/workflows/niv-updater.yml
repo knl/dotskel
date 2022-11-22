@@ -9,6 +9,13 @@ on:
   # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
   repository_dispatch:
     types: niv-updater-nudge
+  # this is to trigger the workflow manually from the Github page
+  workflow_dispatch:
+    inputs:
+      with_debug:
+        description: Enable debugging output
+        required: false
+        default: false
   schedule:
     # * is a special character in YAML so you have to quote this string
     # Run every Tuesday at 06:30, but we use the dispatch to trigger when urgent
@@ -16,7 +23,7 @@ on:
     - cron:  '30 6 * * 2'
 jobs:
   niv-updater:
-    name: 'Check for updates (daily)'
+    name: 'Check for updates (weekly)'
     runs-on: ubuntu-latest
     steps:
       - name: niv-updater-action
