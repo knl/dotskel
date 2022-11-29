@@ -15,6 +15,8 @@ let
       (import sources.emacs-overlay)
     ] ++ overlays;
   };
+  devenv = import sources.devenv;
+  niv = import sources.niv { };
   link = config.lib.file.mkOutOfStoreSymlink;
   # Darwin specific run-or-raise style script for emacs.
   osascript = ''
@@ -76,9 +78,9 @@ rec {
     bat
     cachix
     curl
+    devenv.default
     duf
     du-dust
-    # emacsMacport
     entr
     # espanso # FIXME: make it compilable on macos
     exa
@@ -102,7 +104,7 @@ rec {
     mtr
     ncdu
     netcat
-    niv
+    niv.niv
     nmap
     p7zip
     paperkey
@@ -566,8 +568,8 @@ rec {
     experimental-features = nix-command flakes
     keep-outputs = true
     keep-derivations = true
-    substituters = https://knl.cachix.org https://niv.cachix.org https://cache.nixos.org https://nix-community.cachix.org
-    trusted-public-keys = knl.cachix.org-1:/iqUbqBexzvcDn5ee7Q3Kj1MBh6P9RTwEVh6hh9SDE0= niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+    substituters = https://knl.cachix.org https://niv.cachix.org https://cache.nixos.org https://nix-community.cachix.org https://fzakaria.cachix.org https://devenv.cachix.org
+    trusted-public-keys = knl.cachix.org-1:/iqUbqBexzvcDn5ee7Q3Kj1MBh6P9RTwEVh6hh9SDE0= niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= fzakaria.cachix.org-1:SpQviPuoJ3GnCVG40vwTp/r9y1/cbwP808SbMJ/XlGo= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
   '';
 
   # Let Home Manager install and manage itself.

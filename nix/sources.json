@@ -1,4 +1,16 @@
 {
+    "devenv": {
+        "branch": "main",
+        "description": "Fast, Declarative, Reproducible, and Composable Developer Environments",
+        "homepage": "https://devenv.sh",
+        "owner": "cachix",
+        "repo": "devenv",
+        "rev": "2316585d14b256a77044ebef5d3e61a14339eecd",
+        "sha256": "0n4ka9kal30zhdd1wr4wq96hyld4riapwnby668hbdbw260vmfvz",
+        "type": "tarball",
+        "url": "https://github.com/cachix/devenv/archive/2316585d14b256a77044ebef5d3e61a14339eecd.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "emacs-overlay": {
         "branch": "master",
         "description": "Bleeding edge emacs overlay [maintainer=@adisbladis] ",
