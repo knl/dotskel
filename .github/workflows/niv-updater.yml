@@ -32,7 +32,5 @@ jobs:
           blacklist: 'nixpkgs'
           keep_updating: true
           branch_prefix: 'update/'
-          # Last good version that doesn't require rebuilding the world
-          niv_version: 'af958e8057f345ee1aca714c1247ef3ba1c15f5e'
         env:
           GITHUB_TOKEN: ${{ secrets.NIV_UPDATER_TOKEN }}
