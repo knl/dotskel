@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "178e41ebc708a2f11d9a87d54d519d24ab9a69ca",
-        "sha256": "1n7dxxznqxq947gc7si6zmbk6n649idw9c2hhw2r5q1zzl2p17pi",
+        "rev": "fc341b52fe5837ef313cfe79eea7e2a05b6efffa",
+        "sha256": "1s4kh044jx4890zzfv7lbf2r5z86alha592bkcj6fhzs8ml3w32w",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/178e41ebc708a2f11d9a87d54d519d24ab9a69ca.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/fc341b52fe5837ef313cfe79eea7e2a05b6efffa.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fast-syntax-highlighting": {
@@ -125,10 +125,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "33916e91a743a73472a15f3fc27dd0aa9f7abbdf",
-        "sha256": "0slrihns6rn5hwk4933z300q4884l9qjsziw9gi80piq5xr3xvsd",
+        "rev": "35165798a83e2e4f2f0aa6c820e2f7fba23e0179",
+        "sha256": "1i8v2sv4zch2f16bv0qvhwpacmvwf79imli4wgy9329l45360f5m",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/33916e91a743a73472a15f3fc27dd0aa9f7abbdf.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/35165798a83e2e4f2f0aa6c820e2f7fba23e0179.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "rh": {
@@ -149,10 +149,10 @@
         "homepage": "http://spacemacs.org",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "1100ee841aa616d80cb04fdd6a25d6a41afcdd78",
-        "sha256": "1rlqa825ns5mzvqjn9p3kz625fmnrvhn66zrbb8wmkybjsfqw8xn",
+        "rev": "c828fd31bc013a98e78b9169594ec827b2cf2808",
+        "sha256": "1kxrhnpyvx8llgxzp2yss09syjrfqs59dx3vmwfhny9jhswh91ar",
         "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/1100ee841aa616d80cb04fdd6a25d6a41afcdd78.tar.gz",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/c828fd31bc013a98e78b9169594ec827b2cf2808.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "unar": {
@@ -192,10 +192,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "b46602db397bf1af6bb6906e1a749da09fdda27d",
-        "sha256": "1ddxkhmpfx5blwfhp43j1cxy3zy06zs58h4gzdr7aalfk5vvc15f",
+        "rev": "1204f45161b0e53a275f6226d0cfbc71c176ad38",
+        "sha256": "16aq5y38rba1lh9261435pl9qh1virldm51kz4bx24yqb5mpy1sg",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/b46602db397bf1af6bb6906e1a749da09fdda27d.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-completions/archive/1204f45161b0e53a275f6226d0cfbc71c176ad38.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
@@ -228,10 +228,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-history-substring-search",
-        "rev": "4abed97b6e67eb5590b39bcd59080aa23192f25d",
-        "sha256": "0s8xdddb6zppc5lj28w44nl4n45wg9ic8x3b5pm1139cv038yj7j",
+        "rev": "400e58a87f72ecec14f783fbd29bc6be4ff1641c",
+        "sha256": "0vjw4s0h4sams1a1jg9jx92d6hd2swq4z908nbmmm2qnz212y88r",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/4abed97b6e67eb5590b39bcd59080aa23192f25d.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/400e58a87f72ecec14f783fbd29bc6be4ff1641c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-syntax-highlighting": {
