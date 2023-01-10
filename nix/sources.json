@@ -228,10 +228,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-history-substring-search",
-        "rev": "4abed97b6e67eb5590b39bcd59080aa23192f25d",
-        "sha256": "0s8xdddb6zppc5lj28w44nl4n45wg9ic8x3b5pm1139cv038yj7j",
+        "rev": "400e58a87f72ecec14f783fbd29bc6be4ff1641c",
+        "sha256": "0vjw4s0h4sams1a1jg9jx92d6hd2swq4z908nbmmm2qnz212y88r",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/4abed97b6e67eb5590b39bcd59080aa23192f25d.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/400e58a87f72ecec14f783fbd29bc6be4ff1641c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-syntax-highlighting": {
