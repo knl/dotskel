@@ -47,7 +47,7 @@ let
 	    + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
 	    ;
 
-  myEmacs = pkgs.emacsGitNativeComp;
+  myEmacs = with pkgs; ((emacsPackagesFor emacsGit).emacsWithPackages (epkgs: [ epkgs.vterm ]));
 in
 rec {
   # Allow non-free (as in beer) packages
@@ -71,16 +71,14 @@ rec {
 
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
-    aspell # needed for emacs
-    aspellDicts.en
-    aspellDicts.en-computers
-    aspellDicts.en-science
+    (aspellWithDicts (dicts: with dicts; [en en-computers en-science])) # needed for emacs
     bat
     cachix
     curl
     devenv.default
     duf
     du-dust
+    emacs-all-the-icons-fonts
     entr
     # espanso # FIXME: make it compilable on macos
     exa
@@ -95,6 +93,8 @@ rec {
     htop
     hyperfine
     imagemagick
+    (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
+    # (iosevka-bin.override { variant = "iosevka-term-ss08"; })
     jc
     jless
     jq
