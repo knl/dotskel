@@ -57,9 +57,9 @@ but I can live with it.
 
 ** Misc
 
-One can't live without good fonts. I prefer Iosevka:
-
-Download [[https://github.com/be5invis/Iosevka/releases][Iosevka Term SS08]].
+    One can't live without good fonts. I prefer Iosevka:
+    [[https://github.com/be5invis/Iosevka/releases][Iosevka Term SS08]]. This font
+    will be installed by home-manager.
 
 ** dotfiles
 
