@@ -645,8 +645,9 @@ before packages are loaded."
 
     (setq deft-directory "~/notes")
     (setq deft-recursive t)
-    (setq deft-use-filename-as-title t)
+    (setq deft-use-filename-as-title t))
 
+  (with-eval-after-load 'org-roam
     (defun knl/search-notes ()
       "Search in notes directory with `rg'."
       (interactive)
