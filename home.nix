@@ -93,8 +93,8 @@ rec {
     htop
     hyperfine
     imagemagick
-    (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
-    # (iosevka-bin.override { variant = "iosevka-term-ss08"; })
+    # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
+    (iosevka-bin.override { variant = "sgr-iosevka-term-ss08"; })
     jc
     jless
     jq
