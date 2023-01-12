@@ -48,6 +48,18 @@ let
 	    ;
 
   myEmacs = with pkgs; ((emacsPackagesFor emacsGit).emacsWithPackages (epkgs: [ epkgs.vterm ]));
+
+  myFonts = with pkgs; [
+    emacs-all-the-icons-fonts
+    fira-code
+    font-awesome
+    # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
+    (iosevka-bin.override { variant = "sgr-iosevka-term-ss08"; })
+    (iosevka-bin.override { variant = "etoile"; })
+    powerline-fonts
+    powerline-symbols
+    source-code-pro
+  ];
 in
 rec {
   # Allow non-free (as in beer) packages
@@ -78,7 +90,6 @@ rec {
     devenv.default
     duf
     du-dust
-    emacs-all-the-icons-fonts
     entr
     # espanso # FIXME: make it compilable on macos
     exa
@@ -93,8 +104,6 @@ rec {
     htop
     hyperfine
     imagemagick
-    # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
-    (iosevka-bin.override { variant = "sgr-iosevka-term-ss08"; })
     jc
     jless
     jq
@@ -130,7 +139,7 @@ rec {
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = myEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
     (wrapEmacsclient { emacs = myEmacs; })
-  ];
+  ] ++ myFonts;
 
   # TODO:
   # Install the following apps (might need nix-darwin)
