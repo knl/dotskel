@@ -134,6 +134,9 @@ rec {
     # }))
     xz
     yq-go
+    yubico-piv-tool
+    yubikey-manager
+    yubikey-personalization
     watch
     zstd
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = myEmacs; })
