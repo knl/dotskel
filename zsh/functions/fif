@@ -1,0 +1,16 @@
+#
+# Find in files and open a preview window in bat using fzf
+#
+
+rg  \
+--column \
+--line-number \
+--no-column \
+--no-heading \
+--fixed-strings \
+--ignore-case \
+--hidden \
+--follow \
+--glob '!.git/*' "$@" \
+| awk -F  ":" '/1/ {wh = int('$(tput lines)'/2-5); start = $2<wh ? 0 : $2 - wh; end = $2 + wh; print $1 " " $2 " " start ":" end}' \
+| fzf --preview 'bat --wrap character --color always {1} --highlight-line {2} --line-range {3}' --preview-window wrap
