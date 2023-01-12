@@ -85,7 +85,7 @@ hotkey.bind({}, 'pad+', win:focused():widest():tallest():resize())
 
 
 -- Application starter
-hotkey.bind(hyper, 'e', function() application.launchOrFocus("Emacs") end)
+hotkey.bind(hyper, 'e', function() application.launchOrFocus(os.getenv('HOME') .. '/Applications/Home Manager Apps/Emacs.app') end)
 hotkey.bind(hyper, 'f', function() application.launchOrFocus("Firefox") end)
 hotkey.bind(hyper, 'h', function() application.launchOrFocus("Dash") end)
 hotkey.bind(hyper, 'k', function() application.launchOrFocus("Cobook") end)
