@@ -1,14 +1,17 @@
-name: Automatically update niv-managed dependencies
+name: Automatically update emacs overlay 
 on:
   # Manual override, one can start the workflow by running:
   # curl -H "Accept: application/vnd.github.everest-preview+json" \
   #  -H "Authorization: token <your-token-here>" \
   #  --request POST \
-  #  --data '{"event_type": "niv-updater-nudge", "client_payload": {}}' \
+  #  --data '{"event_type": "niv-updater-emacs-nudge", "client_payload": {}}' \
   #  https://api.github.com/repos/knl/dotskel/dispatches
+  #
   # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
+  # If you need to debug the output, pass this data:
+  # '{"event_type": "niv-updater-nixpkgs-nudge", "client_payload": { "with_debug": true }}'
   repository_dispatch:
-    types: niv-updater-nudge
+    types: niv-updater-emacs-nudge
   # this is to trigger the workflow manually from the Github page
   workflow_dispatch:
     inputs:
@@ -18,19 +21,19 @@ on:
         default: false
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # Run every Tuesday at 06:30, but we use the dispatch to trigger when urgent
-    # This used to run every day, but that is way too many changes...
-    - cron:  '30 6 * * 2'
+    # Run every first of the month at 01:17, but we use the dispatch to trigger when urgent
+    - cron:  '1 0 1 * *'
 jobs:
   niv-updater:
-    name: 'Check for updates (weekly)'
+    name: 'Check for emacs overlay updates (monthly)'
     runs-on: ubuntu-latest
     steps:
       - name: niv-updater-action
         uses: knl/niv-updater-action@main
         with:
-          blacklist: 'emacs-overlay,nixpkgs'
+          whitelist: 'emacs-overlay'
           keep_updating: true
           branch_prefix: 'update/'
         env:
           GITHUB_TOKEN: ${{ secrets.NIV_UPDATER_TOKEN }}
+
