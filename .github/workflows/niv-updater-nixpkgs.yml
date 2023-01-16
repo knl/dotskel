@@ -35,13 +35,13 @@ jobs:
           echo ${GITHUB_EVENT_NAME} 
           if [ ${GITHUB_EVENT_NAME} == 'workflow_dispatch' ];
           then
-            echo "::set-output name=with_debug::${{ github.event.inputs.with_debug }}"
+            echo "name=with_debug::${{ github.event.inputs.with_debug }}" >> $GITHUB_OUTPUT
           elif [ ${GITHUB_EVENT_NAME} == 'repository_dispatch' ];
           then
-            echo "::set-output name=with_debug::${{ github.event.client_payload.with_debug }}"
+            echo "name=with_debug::${{ github.event.client_payload.with_debug }}" >> $GITHUB_OUTPUT
           else
             echo "Unknown Event Trigger ${GITHUB_EVENT_NAME}, setting with_debug to false."
-            echo "::set-output name=with_debug::false"
+            echo "name=with_debug::false" >> $GITHUB_OUTPUT
           fi;
       - name: niv-updater-action
         uses: knl/niv-updater-action@main
