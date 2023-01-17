@@ -29,7 +29,7 @@ jobs:
       - name: niv-updater-action
         uses: knl/niv-updater-action@main
         with:
-          blacklist: 'emacs-overlay,nixpkgs'
+          blacklist: 'emacs-overlay,spacemacs,nixpkgs'
           keep_updating: true
           branch_prefix: 'update/'
         env:
