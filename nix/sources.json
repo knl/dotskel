@@ -101,10 +101,10 @@
         "homepage": null,
         "owner": "spwhitt",
         "repo": "nix-zsh-completions",
-        "rev": "468d8cf752a62b877eba1a196fbbebb4ce4ebb6f",
-        "sha256": "16r0l7c1jp492977p8k6fcw2jgp6r43r85p6n3n1a53ym7kjhs2d",
+        "rev": "6a1bfc024481bdba568f2ced65e02f3a359a7692",
+        "sha256": "0jc0gh6zmbldx6al0g9yg3hpwwf1fagmzbkw3jcgp73r967asxv9",
         "type": "tarball",
-        "url": "https://github.com/spwhitt/nix-zsh-completions/archive/468d8cf752a62b877eba1a196fbbebb4ce4ebb6f.tar.gz",
+        "url": "https://github.com/spwhitt/nix-zsh-completions/archive/6a1bfc024481bdba568f2ced65e02f3a359a7692.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
