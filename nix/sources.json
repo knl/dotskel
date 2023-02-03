@@ -5,10 +5,10 @@
         "homepage": "https://devenv.sh",
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "c5519d64b6bbf59be0d37a26a801a2e9430bcb3f",
-        "sha256": "1l6h3p2ax4cf5lvaj81wxj492kcs1dwvj9bc422nnahjawjb38rm",
+        "rev": "2e20275b01464345c35d2aa42f8405fd8685a6e4",
+        "sha256": "1by2s84js48wn54d9fkig8rnr2paw7m6xkdsi21i9dfzdiinaqxx",
         "type": "tarball",
-        "url": "https://github.com/cachix/devenv/archive/c5519d64b6bbf59be0d37a26a801a2e9430bcb3f.tar.gz",
+        "url": "https://github.com/cachix/devenv/archive/2e20275b01464345c35d2aa42f8405fd8685a6e4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-overlay": {
@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "fc341b52fe5837ef313cfe79eea7e2a05b6efffa",
-        "sha256": "1s4kh044jx4890zzfv7lbf2r5z86alha592bkcj6fhzs8ml3w32w",
+        "rev": "f5689d4d9a0d1c4dd8fee769d137daec0f02dc4a",
+        "sha256": "1gcm3vlkzrrbzzqzhvlfydhy842rc7arm1lwqgf4yyh0f6j4axpx",
         "type": "tarball",
-        "url": "https://github.com/nix-community/emacs-overlay/archive/fc341b52fe5837ef313cfe79eea7e2a05b6efffa.tar.gz",
+        "url": "https://github.com/nix-community/emacs-overlay/archive/f5689d4d9a0d1c4dd8fee769d137daec0f02dc4a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fast-syntax-highlighting": {
@@ -101,10 +101,10 @@
         "homepage": null,
         "owner": "spwhitt",
         "repo": "nix-zsh-completions",
-        "rev": "468d8cf752a62b877eba1a196fbbebb4ce4ebb6f",
-        "sha256": "16r0l7c1jp492977p8k6fcw2jgp6r43r85p6n3n1a53ym7kjhs2d",
+        "rev": "6a1bfc024481bdba568f2ced65e02f3a359a7692",
+        "sha256": "0jc0gh6zmbldx6al0g9yg3hpwwf1fagmzbkw3jcgp73r967asxv9",
         "type": "tarball",
-        "url": "https://github.com/spwhitt/nix-zsh-completions/archive/468d8cf752a62b877eba1a196fbbebb4ce4ebb6f.tar.gz",
+        "url": "https://github.com/spwhitt/nix-zsh-completions/archive/6a1bfc024481bdba568f2ced65e02f3a359a7692.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -125,10 +125,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "0adbc1415bf1bad46a7fd111b39640d995294dad",
-        "sha256": "0i2f7442gndr1zg289zkyf3b9540hcypapz03xkzh8l7ap4i0207",
+        "rev": "a30145b0f82d06770e924e9eac064ed223a94e6b",
+        "sha256": "050zdvcpks5h8zx675q66zz2pphz1nd1cvbx9mhb4lmhphp5fxlf",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/0adbc1415bf1bad46a7fd111b39640d995294dad.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/a30145b0f82d06770e924e9eac064ed223a94e6b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "rh": {
@@ -149,10 +149,10 @@
         "homepage": "http://spacemacs.org",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "9e3fc598ad7f7c241b0d60cd3f165f4a34ecf4c2",
-        "sha256": "119fpnnb8j07m5hc9v5p0dwhpj2zw8qk5bdkp9acg6xfxc88m629",
+        "rev": "5b8a25a6b7cb9f070852144fc71824b1e01a5711",
+        "sha256": "0iibnmpv6lwkj5ckpw2fgs8r0gxirlkryqn6l5fazvpycfhgs05b",
         "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/9e3fc598ad7f7c241b0d60cd3f165f4a34ecf4c2.tar.gz",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/5b8a25a6b7cb9f070852144fc71824b1e01a5711.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "unar": {
@@ -192,10 +192,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "dd686f35d1314f9cfcf20fa13ac7bb33b1d424e1",
-        "sha256": "1pra64610k0a7g4m6sfrpa6rihs1y95qg3l2pvvkvsxqjlyydqij",
+        "rev": "3e3e2f97f2ff1b996092cf582e8eba33b46b8409",
+        "sha256": "1yhg610adw65ngqz21imkc4ir8868givnmq77ncjawisibn4v9s5",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/dd686f35d1314f9cfcf20fa13ac7bb33b1d424e1.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-completions/archive/3e3e2f97f2ff1b996092cf582e8eba33b46b8409.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
