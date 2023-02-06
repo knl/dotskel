@@ -88,8 +88,8 @@ rec {
     cachix
     curl
     devenv.default
+    dua
     duf
-    du-dust
     entr
     # espanso # FIXME: make it compilable on macos
     exa
@@ -111,7 +111,6 @@ rec {
     lua
     moreutils
     mtr
-    ncdu
     netcat
     niv.niv
     nmap
