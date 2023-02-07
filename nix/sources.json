@@ -240,10 +240,10 @@
         "homepage": "github.com/zsh-users/zsh-syntax-highlighting",
         "owner": "zsh-users",
         "repo": "zsh-syntax-highlighting",
-        "rev": "b2c910a85ed84cb7e5108e7cb3406a2e825a858f",
-        "sha256": "1b4hqdsfvcg87wm8jpvrh1005nzij2wgl0wbcrvgkcjqmxb2874p",
+        "rev": "754cefe0181a7acd42fdcb357a67d0217291ac47",
+        "sha256": "1kjh42payg8mwgpa91cy20ilkqxmqy36vy6brl8k35h9nixhys4i",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/b2c910a85ed84cb7e5108e7cb3406a2e825a858f.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/754cefe0181a7acd42fdcb357a67d0217291ac47.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-you-should-use": {
