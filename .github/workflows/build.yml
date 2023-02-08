@@ -19,7 +19,7 @@ jobs:
           content=$(jq -r .nixpkgs.url <./nix/sources.json)
           echo "nivSourcesJson=$content" >> $GITHUB_ENV
       - name: "Install Nix"
-        uses: cachix/install-nix-action@v18
+        uses: cachix/install-nix-action@v19
         with:
           nix_path: ${{ format('nixpkgs={0}', env.nivSourcesJson) }}
       - name: "Install Cachix"
