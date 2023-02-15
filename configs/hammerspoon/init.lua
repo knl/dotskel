@@ -83,6 +83,15 @@ hotkey.bind({}, 'pad/', win:focused():tallest():resize())
 hotkey.bind({}, 'pad-', win:focused():widest():resize())
 hotkey.bind({}, 'pad+', win:focused():widest():tallest():resize())
 
+-- center mouse on the current screen
+hotkey.bind(hyper, '`', function()
+  local screen = hs.screen.mainScreen()
+  local rect = screen:fullFrame()
+  local center = hs.geometry.rectMidPoint(rect)
+
+  hs.mouse.setAbsolutePosition(center)
+end)
+
 
 -- Application starter
 hotkey.bind(hyper, 'e', function() application.launchOrFocus(os.getenv('HOME') .. '/Applications/Home Manager Apps/Emacs.app') end)
