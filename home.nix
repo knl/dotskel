@@ -47,7 +47,18 @@ let
 	    + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
 	    ;
 
-  myEmacs = with pkgs; ((emacsPackagesFor emacsGit).emacsWithPackages (epkgs: [ epkgs.vterm ]));
+  theEmacs = ((pkgs.emacsPackagesFor pkgs.emacsGit).emacsWithPackages (epkgs: [
+    epkgs.vterm
+    pkgs.sqlite
+    pkgs.imagemagick
+    pkgs.fd
+    pkgs.coreutils
+    pkgs.binutils # native-comp needs 'as', provided by this
+    (pkgs.ripgrep.override {withPCRE2 = true;})
+    pkgs.zstd
+    pkgs.editorconfig-core-c
+    pkgs.git
+  ]));
 
   myFonts = with pkgs; [
     emacs-all-the-icons-fonts
@@ -138,9 +149,9 @@ rec {
     yubikey-personalization
     watch
     zstd
-    (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = myEmacs; })
+    (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = theEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
-    (wrapEmacsclient { emacs = myEmacs; })
+    (wrapEmacsclient { emacs = theEmacs; })
   ] ++ myFonts;
 
   # TODO:
@@ -155,7 +166,7 @@ rec {
 
   programs.emacs = {
     enable = true;
-    package = myEmacs;
+    package = theEmacs;
     # extraPackages = (epkgs: [epkgs.pdf-tools] );
   };
   programs.fzf.enable = true;
