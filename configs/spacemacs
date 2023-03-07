@@ -63,8 +63,8 @@ This function should only modify configuration layer settings."
      version-control
      (python :variables
              python-test-runner 'pytest)
-     (lsp :variables lsp-rust-server 'rust-analyzer)
-     rust
+     ;; (lsp :variables lsp-rust-server 'rust-analyzer)
+     ;; rust
      lua
      (go :variables go-format-before-save t)
      html
