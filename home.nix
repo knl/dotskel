@@ -47,17 +47,23 @@ let
 	    + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
 	    ;
 
-  theEmacs = ((pkgs.emacsPackagesFor pkgs.emacsGit).emacsWithPackages (epkgs: [
+  # theEmacs = with pkgs; ((emacsPackagesFor emacsGit).emacsWithPackages (epkgs: [ epkgs.vterm ]));
+  # doom likes 28 + nativeComp
+  theEmacs = ((pkgs.emacsPackagesFor pkgs.emacsMacport).emacsWithPackages (epkgs: [
     epkgs.vterm
-    pkgs.sqlite
-    pkgs.imagemagick
+    pkgs.graphviz
+    pkgs.imagemagick         # for image-dired
     pkgs.fd
-    pkgs.coreutils
-    pkgs.binutils # native-comp needs 'as', provided by this
+    pkgs.gnutls              # for TLS connectivity
+    pkgs.coreutils      # needed for gls for dired
+    pkgs.binutils       # native-comp needs 'as', provided by this
     (pkgs.ripgrep.override {withPCRE2 = true;})
     pkgs.zstd
-    pkgs.editorconfig-core-c
     pkgs.git
+    # :tools editorconfig
+    pkgs.editorconfig-core-c
+    # :tools lookup & :lang org +roam
+    pkgs.sqlite
   ]));
 
   myFonts = with pkgs; [
@@ -94,7 +100,6 @@ rec {
 
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
-    (aspellWithDicts (dicts: with dicts; [en en-computers en-science])) # needed for emacs
     bat
     cachix
     curl
@@ -199,6 +204,7 @@ rec {
   # This creates a symlink to the file, so I can easily edit it
   # Not for the faint of heart, though...
   home.file.".spacemacs".source = link ./configs/spacemacs;
+  home.file.".doom.d".source = link ./configs/doom;
 
   programs.git = {
     enable = true;
@@ -304,7 +310,7 @@ rec {
       XDG_DATA_HOME = xdg.dataHome;
 
       GOPATH = "$HOME/go";
-      PATH = "$HOME/bin:$GOPATH/bin:$PATH";
+      PATH = "$HOME/bin:$GOPATH/bin:$HOME/.emacs.d/bin:$PATH";
       TERM = "xterm-256color";
 
       LESS = "-F -g -i -M -R -S -w -X -z-4";

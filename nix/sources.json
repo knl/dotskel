@@ -11,6 +11,18 @@
         "url": "https://github.com/cachix/devenv/archive/8e0478018a410f47d947b4c16de0927170f226bf.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "doomemacs": {
+        "branch": "master",
+        "description": "An Emacs framework for the stubborn martian hacker",
+        "homepage": "",
+        "owner": "doomemacs",
+        "repo": "doomemacs",
+        "rev": "8f6b045dfdb6d00e5a324c3f9044dce773791502",
+        "sha256": "1fzgwxvj60dfjdgylibjbg407d1lb35269ykgy7jcjxdmmbfzl9b",
+        "type": "tarball",
+        "url": "https://github.com/doomemacs/doomemacs/archive/8f6b045dfdb6d00e5a324c3f9044dce773791502.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "emacs-overlay": {
         "branch": "master",
         "description": "Bleeding edge emacs overlay [maintainer=@adisbladis] ",
