@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "doomemacs",
         "repo": "doomemacs",
-        "rev": "8f6b045dfdb6d00e5a324c3f9044dce773791502",
-        "sha256": "1fzgwxvj60dfjdgylibjbg407d1lb35269ykgy7jcjxdmmbfzl9b",
+        "rev": "63586423dab6248d6e5acfc68dc4324c15f05d83",
+        "sha256": "02czkc8vzr5jzgap79qpnxr823skd2ndw6x88m5rc4g63fsgdvr1",
         "type": "tarball",
-        "url": "https://github.com/doomemacs/doomemacs/archive/8f6b045dfdb6d00e5a324c3f9044dce773791502.tar.gz",
+        "url": "https://github.com/doomemacs/doomemacs/archive/63586423dab6248d6e5acfc68dc4324c15f05d83.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-overlay": {
