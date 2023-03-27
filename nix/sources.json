@@ -125,10 +125,10 @@
         "homepage": "",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "fc8a1965d0aefd9d329adc6f4b6ac7e613d3b4cc",
-        "sha256": "1kd5g5lq3z5w7a9vd02vixach3qxjr8zvc2nd3vkm08anxwbc9c8",
+        "rev": "d241b99697eedd2caa1a6685cb76a0cbbd7054ee",
+        "sha256": "1qrx0ifxyvd9v98gsbwhf891rlk9jiv89j9jrfbs40csmwy7xhag",
         "type": "tarball",
-        "url": "https://github.com/nixos/nixpkgs/archive/fc8a1965d0aefd9d329adc6f4b6ac7e613d3b4cc.tar.gz",
+        "url": "https://github.com/nixos/nixpkgs/archive/d241b99697eedd2caa1a6685cb76a0cbbd7054ee.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerlevel10k": {
