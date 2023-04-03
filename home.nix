@@ -12,7 +12,8 @@ let
     # Get all files in overlays
     overlays = [
       (_self: super: { inherit sources; })
-      (import sources.emacs-overlay)
+      # temporarily disable as I'm trying out #doom
+      # (import sources.emacs-overlay)
     ] ++ overlays;
   };
   devenv = import sources.devenv;
@@ -197,13 +198,14 @@ rec {
     '';
   };
 
-  home.file.".emacs.d" = {
-    source = sources.spacemacs;
-    recursive = true;
-  };
+  # home.file.".emacs.d" = {
+  #   source = link sources.doomemacs;
+  #   recursive = true;
+  #   onChange = "${config.home.homeDirectory}/.emacs.d/bin/doom sync";
+  # };
+
   # This creates a symlink to the file, so I can easily edit it
   # Not for the faint of heart, though...
-  home.file.".spacemacs".source = link ./configs/spacemacs;
   home.file.".doom.d".source = link ./configs/doom;
 
   programs.git = {

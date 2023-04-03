@@ -155,18 +155,6 @@
         "url": "https://github.com/knl/rh/archive/9dc9c35f04749e9564dbb8311526d7093f4070ee.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "spacemacs": {
-        "branch": "develop",
-        "description": "A community-driven Emacs distribution - The best editor is neither Emacs nor Vim,  it's Emacs *and* Vim!",
-        "homepage": "http://spacemacs.org",
-        "owner": "syl20bnr",
-        "repo": "spacemacs",
-        "rev": "a529b0bfa8fb04c368e6d57059929806b9722e2f",
-        "sha256": "1yw16yhyh4gd1cr117b0dkf2bbhc19yni9b615zijiw8p7lq7src",
-        "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/a529b0bfa8fb04c368e6d57059929806b9722e2f.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "unar": {
         "sha256": "1af8p0i13655fylllyrk268a36z4szcaiv7lvbd6rs5kbkdf4gql",
         "type": "file",
