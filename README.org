@@ -38,22 +38,11 @@ but I can live with it.
    - [[https://github.com/Hammerspoon/hammerspoon/releases/latest][Hammerspoon]]
    - [[https://qsapp.com/download.php][Quicksilver]]
    - [[https://karabiner-elements.pqrs.org/][Karabiner-Elements]]
-   - [[https://1password.com/downloads/mac/][1Password]]
+   - [[https://app-updates.agilebits.com/download/OPM7][1Password 7]]
    - [[https://www.mozilla.org/en-US/firefox/new/][Firefox]]
    - [[https://download.bjango.com/istatmenus/][iStat Menus]]
-   - [[https://justgetflux.com/dlmac.html][f.lux]]
    - [[https://frankfurt.kapeli.com/downloads/v6/Dash.zip][Dash]]
    - [[https://espanso.org/install/][espanso]]
-
-*** Emacs
-
-    Until I find a better solution, use emacs-plus from [[https://brew.sh][homebrew]], which in turn means installing it.
-
-    #+begin_src bash
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      brew tap d12frosted/emacs-plus
-      brew install --with-spacemacs-icon emacs-plus
-    #+end_src
 
 ** Misc
 
@@ -68,6 +57,14 @@ but I can live with it.
    #+begin_src bash
      nix-shell
      home-manager switch
+   #+end_src
+   
+   Afterwards, it's just riding on the good wave of direnv and aliases:
+   #+begin_src bash
+     z skel
+     stash; gl --rebase; unstash
+     d reload
+     hm switch
    #+end_src
 
 * References
