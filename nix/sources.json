@@ -53,10 +53,10 @@
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "knl",
         "repo": "home-manager",
-        "rev": "ec94ad9198dbb7f6632ea24647003044358d131b",
-        "sha256": "0nb8fjdsi9hw1g9p6h7qi6rk7q221z8zp53rhbvgwnpkvw5xvg93",
+        "rev": "15dcd096762f884d06088b31f35310e606f76549",
+        "sha256": "0h8rf83qm8kp81lpx7h95q80mhfwjihrw9clxv7s9vl32sn9b4j2",
         "type": "tarball",
-        "url": "https://github.com/knl/home-manager/archive/ec94ad9198dbb7f6632ea24647003044358d131b.tar.gz",
+        "url": "https://github.com/knl/home-manager/archive/15dcd096762f884d06088b31f35310e606f76549.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "hs-grille": {
