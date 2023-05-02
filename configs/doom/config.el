@@ -93,38 +93,19 @@
   (setq org-roam-capture-templates
         `(("n" "note" plain
            ,(format "#+title: ${title}\n%%[%s/template/note.org]" org-roam-directory)
-           :target (file "note/%<%Y%m%d%H%M%S>-${slug}.org")
+           :target (file "%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
           ("r" "thought" plain
            ,(format "#+title: ${title}\n%%[%s/template/thought.org]" org-roam-directory)
            :target (file "thought/%<%Y%m%d%H%M%S>-${slug}.org")
            :unnarrowed t)
-          ("t" "topic" plain
-           ,(format "#+title: ${title}\n%%[%s/template/topic.org]" org-roam-directory)
-           :target (file "topic/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("c" "contact" plain
-           ,(format "#+title: ${title}\n%%[%s/template/contact.org]" org-roam-directory)
-           :target (file "contact/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
           ("p" "project" plain
            ,(format "#+title: ${title}\n%%[%s/template/project.org]" org-roam-directory)
            :target (file "project/%<%Y%m%d>-${slug}.org")
            :unnarrowed t)
-          ("i" "invoice" plain
-           ,(format "#+title: %%<%%Y%%m%%d>-${title}\n%%[%s/template/invoice.org]" org-roam-directory)
-           :target (file "invoice/%<%Y%m%d>-${slug}.org")
-           :unnarrowed t)
           ("f" "ref" plain
            ,(format "#+title: ${title}\n%%[%s/template/ref.org]" org-roam-directory)
            :target (file "ref/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("w" "works" plain
-           ,(format "#+title: ${title}\n%%[%s/template/works.org]" org-roam-directory)
-           :target (file "works/%<%Y%m%d%H%M%S>-${slug}.org")
-           :unnarrowed t)
-          ("s" "secret" plain "#+title: ${title}\n\n"
-           :target (file "secret/%<%Y%m%d%H%M%S>-${slug}.org.gpg")
            :unnarrowed t))
         ;; Use human readable dates for dailies titles
         org-roam-dailies-capture-templates
