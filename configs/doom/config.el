@@ -51,6 +51,7 @@
 (map!
       :o "o" #'evil-inner-symbol
       :leader
+      "0" #'+treemacs/toggle
       "h L" #'global-keycast-mode
       (:prefix "f"
        "t" #'find-in-dotfiles
