@@ -21,8 +21,7 @@ let
   link = config.lib.file.mkOutOfStoreSymlink;
   # Darwin specific run-or-raise style script for emacs.
   osascript = ''
-    command -v osascript > /dev/null 2>&1 && \
-        osascript -e 'tell application "Emacs" to activate' 2>/dev/null
+    open $HOME/.nix-profile/Applications/Emacs.app
     command -v osascript > /dev/null 2>&1 && \
         osascript -e 'tell application "System Events" to tell process "Emacs"
         set frontmost to true
@@ -50,22 +49,48 @@ let
 
   # theEmacs = with pkgs; ((emacsPackagesFor emacsGit).emacsWithPackages (epkgs: [ epkgs.vterm ]));
   # doom likes 28 + nativeComp
-  theEmacs = ((pkgs.emacsPackagesFor pkgs.emacsMacport).emacsWithPackages (epkgs: [
-    epkgs.vterm
-    pkgs.graphviz
-    pkgs.imagemagick         # for image-dired
-    pkgs.fd
-    pkgs.gnutls              # for TLS connectivity
-    pkgs.coreutils      # needed for gls for dired
-    pkgs.binutils       # native-comp needs 'as', provided by this
-    (pkgs.ripgrep.override {withPCRE2 = true;})
-    pkgs.zstd
-    pkgs.git
-    # :tools editorconfig
-    pkgs.editorconfig-core-c
-    # :tools lookup & :lang org +roam
-    pkgs.sqlite
-  ]));
+  theEmacs = let
+    emacsPkg = (pkgs.emacsPackagesFor pkgs.emacsMacport).emacsWithPackages (epkgs: with epkgs; [
+        vterm all-the-icons
+    ]);
+    deps = [
+        (pkgs.aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+        (pkgs.hunspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large ]))
+        (pkgs.nuspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large ]))
+        pkgs.graphviz-nox
+        pkgs.imagemagick         # for image-dired
+        pkgs.fd
+        pkgs.gnutls              # for TLS connectivity
+        pkgs.coreutils      # needed for gls for dired
+        pkgs.binutils       # native-comp needs 'as', provided by this
+        (pkgs.ripgrep.override {withPCRE2 = true;})
+        pkgs.zstd
+        pkgs.git
+        # :tools editorconfig
+        pkgs.editorconfig-core-c
+        # :tools lookup & :lang org +roam
+        pkgs.sqlite
+	# other goodies
+        pkgs.nixfmt
+        pkgs.shfmt
+        pkgs.jq
+    ];
+  in emacsPkg // (pkgs.symlinkJoin {
+    name = "my-doom-emacs";
+    paths = [ emacsPkg ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/Applications/Emacs.app/Contents/MacOS/Emacs \
+        --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+        --set LSP_USE_PLISTS true
+      wrapProgram $out/bin/emacs \
+        --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+        --set LSP_USE_PLISTS true
+      wrapProgram $out/bin/emacsclient \
+        --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+        --set LSP_USE_PLISTS true
+    '';
+  });
 
   myFonts = with pkgs; [
     emacs-all-the-icons-fonts
