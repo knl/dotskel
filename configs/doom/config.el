@@ -147,7 +147,24 @@
 (require 'treemacs-all-the-icons)
 (treemacs-load-theme "all-the-icons")
 
-(after! atomic-chrome
+(use-package! atomic-chrome
+  :defer 5                              ; since the entry of this
+                                        ; package is from Chrome
+  :config
+  (setq atomic-chrome-url-major-mode-alist
+        '(("github\\.com"        . gfm-mode)
+          ("emacs-china\\.org"   . gfm-mode)
+          ("stackexchange\\.com" . gfm-mode)
+          ("stackoverflow\\.com" . gfm-mode)))
+
+  (defun +my/atomic-chrome-mode-setup ()
+    (setq header-line-format
+          (substitute-command-keys
+           "Edit Chrome text area.  Finish \
+`\\[atomic-chrome-close-current-buffer]'.")))
+
+  (add-hook 'atomic-chrome-edit-mode-hook #'+my/atomic-chrome-mode-setup)
+
   (atomic-chrome-start-server))
 
 ;; (setq explicit-shell-file-name "/bin/zsh")
