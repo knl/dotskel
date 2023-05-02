@@ -126,7 +126,6 @@ rec {
 
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
-    bat
     cachix
     curl
     devenv.default
@@ -204,6 +203,12 @@ rec {
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+  programs.bat = {
+    enable = true;
+    config = {
+      style = "header,changes";
+    };
   };
   programs.neovim = {
     enable = true;
