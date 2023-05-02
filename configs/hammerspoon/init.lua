@@ -124,7 +124,7 @@ hotkey.bind(hyper, 't', function() application.launchOrFocus("iTerm") end)
 --
 -- Note that an arguably-better feature in OS X is the Command-Shift-? keyboard
 -- shortcut, which lets you search across menus.
-hs.hotkey.bind(hyper, ",", nil, function()
+hotkey.bind(hyper, ",", nil, function()
     hs.eventtap.keyStroke({"ctrl"}, "f3", 100)
     hs.eventtap.keyStroke({"ctrl"}, "f2", 100)
 end)
