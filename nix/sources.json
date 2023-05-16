@@ -192,10 +192,10 @@
         "homepage": "",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "64ec7994dc1ecf7aa36d35574a45a203fdbbb6ad",
-        "sha256": "0gdgqs04w45bpmlajih85k9js7p4bkj6gpx2gj6phc1wqandhlfx",
+        "rev": "449cc702dc0363cd8fc37cc2d1fdb422f6d4d0e8",
+        "sha256": "1ps0ixmlfdrpg0ikx97ikgpskrd7w49qjk22izzi5cw8ychgqi6r",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/64ec7994dc1ecf7aa36d35574a45a203fdbbb6ad.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-completions/archive/449cc702dc0363cd8fc37cc2d1fdb422f6d4d0e8.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
