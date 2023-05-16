@@ -208,6 +208,7 @@ rec {
     enable = true;
     config = {
       style = "header,changes";
+      theme = "Monokai Extended";
     };
   };
   programs.neovim = {
