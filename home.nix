@@ -38,10 +38,10 @@ let
 	      ${emacs}/bin/emacsclient --no-wait --eval \
 		"(if (> (length (frame-list)) 0) 't)" 2> /dev/null | grep -q t
 	      if [[ "$?" -eq 1 ]]; then
-		${emacs}/bin/emacsclient \
-		  --quiet --create-frame --alternate-editor="" "$@"
+		      ${emacs}/bin/emacsclient \
+		        --quiet --create-frame --alternate-editor="" "$@"
 	      else
-		${emacs}/bin/emacsclient --quiet "$@"
+		      ${emacs}/bin/emacsclient --quiet "$@"
 	      fi
 	    ''
 	    + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
