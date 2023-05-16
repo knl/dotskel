@@ -380,7 +380,7 @@ rec {
       d = "direnv";
 
       df = "duf";
-      du = "ncdu -qrr";
+      du = "dua";
 
       # commonly used git aliases (lifted from prezto)
       g = "git";
