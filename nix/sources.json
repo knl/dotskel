@@ -48,15 +48,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
-        "branch": "unbroken",
+        "branch": "master",
         "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
         "homepage": "https://nix-community.github.io/home-manager/",
-        "owner": "knl",
+        "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "8dbc5048b38d7d72943edd88338ef08005597e1a",
-        "sha256": "1fg3iyggymd6p52a0wg482kx8nabird4qf96dwy8j27rsbbnrwad",
+        "rev": "c0deab0effd576e70343cb5df0c64428e0e0d010",
+        "sha256": "116sfxrabapw1hz6cvr8digr2lgx0h421yh2h11fxi601c5d6qf4",
         "type": "tarball",
-        "url": "https://github.com/knl/home-manager/archive/8dbc5048b38d7d72943edd88338ef08005597e1a.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/c0deab0effd576e70343cb5df0c64428e0e0d010.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "hs-grille": {

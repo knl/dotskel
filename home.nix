@@ -421,6 +421,8 @@ rec {
     initExtraFirst = ''
       DIRSTACKSIZE=10
 
+      setopt   emacs
+
       setopt   notify globdots correct cdablevars autolist
       setopt   correctall autocd recexact longlistjobs
       setopt   autoresume
