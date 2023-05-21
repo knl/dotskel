@@ -155,6 +155,7 @@ rec {
     netcat
     niv.niv
     nmap
+    openssh # needed because macOS version is limited wrt yubikey
     p7zip
     paperkey
     python3Custom
@@ -175,6 +176,7 @@ rec {
     xz
     yq-go
     yubico-piv-tool
+    yubikey-agent
     yubikey-manager
     yubikey-personalization
     watch
