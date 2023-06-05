@@ -16,6 +16,10 @@ on:
         description: Enable debugging output
         required: false
         default: false
+      whitelist:
+        description: Which packages to build
+        required: false
+        default: ''
   schedule:
     # * is a special character in YAML so you have to quote this string
     # Run every Tuesday at 06:30, but we use the dispatch to trigger when urgent
