@@ -5,10 +5,10 @@
         "homepage": "https://devenv.sh",
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "873e7901efcefe8f0000975adc8b3b9b58c41fc4",
-        "sha256": "06rzsdi464kk3zmwwjry2h160lwk2hs32s0s2wnxv050ablrlci1",
+        "rev": "92ae3568a0f463e6c7334e54a21a3b7e4ffb014e",
+        "sha256": "0iansfr6hvkl5anllv2wi2bkr6ss1p669paly1n9db7n6ig3kp9h",
         "type": "tarball",
-        "url": "https://github.com/cachix/devenv/archive/873e7901efcefe8f0000975adc8b3b9b58c41fc4.tar.gz",
+        "url": "https://github.com/cachix/devenv/archive/92ae3568a0f463e6c7334e54a21a3b7e4ffb014e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "doomemacs": {
