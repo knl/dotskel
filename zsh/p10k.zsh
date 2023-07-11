@@ -90,7 +90,7 @@
     # nnn                   # nnn shell (https://github.com/jarun/nnn)
     # vim_shell             # vim shell indicator (:sh)
     # midnight_commander    # midnight commander shell (https://midnight-commander.org/)
-    # nix_shell             # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
+    nix_shell             # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
     # vi_mode               # vi mode (you don't need this if you've enabled prompt_char)
     # vpn_ip                # virtual private network indicator
     # load                  # CPU load
@@ -106,7 +106,7 @@
     direnv                  # direnv status (https://direnv.net/)
     time                    # current time
     # =========================[ Line #2 ]=========================
-    # newline                 # \n
+    newline                 # \n
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
