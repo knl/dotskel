@@ -155,12 +155,12 @@
         "url": "https://github.com/knl/rh/archive/9dc9c35f04749e9564dbb8311526d7093f4070ee.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "unar": {
-        "sha256": "1af8p0i13655fylllyrk268a36z4szcaiv7lvbd6rs5kbkdf4gql",
+    "unarchiver": {
+        "sha256": "071bj6rzchnamdz62ihf9j0n2dkmz5p1xs6z9bwq4ifbrxgrgci1",
         "type": "file",
-        "url": "https://cdn.theunarchiver.com/downloads/unarMac.zip",
-        "url_template": "https://cdn.theunarchiver.com/downloads/unarMac.zip",
-        "version": "4.2.4"
+        "url": "https://dl.devmate.com/com.macpaw.site.theunarchiver/TheUnarchiver.dmg",
+        "url_template": "https://dl.devmate.com/com.macpaw.site.theunarchiver/TheUnarchiver.dmg",
+        "version": "4.3.5"
     },
     "zsh-async": {
         "branch": "master",
