@@ -34,63 +34,66 @@ let
   };
 
   wrapEmacsclient = { emacs }:
-	  pkgs.writeShellScriptBin "emacs.bash" (''
-	      ${emacs}/bin/emacsclient --no-wait --eval \
-		"(if (> (length (frame-list)) 0) 't)" 2> /dev/null | grep -q t
-	      if [[ "$?" -eq 1 ]]; then
-		      ${emacs}/bin/emacsclient \
-		        --quiet --create-frame --alternate-editor="" "$@"
-	      else
-		      ${emacs}/bin/emacsclient --quiet "$@"
-	      fi
-	    ''
-	    + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
-	    ;
+    pkgs.writeShellScriptBin "emacs.bash" (''
+      	      ${emacs}/bin/emacsclient --no-wait --eval \
+      		"(if (> (length (frame-list)) 0) 't)" 2> /dev/null | grep -q t
+      	      if [[ "$?" -eq 1 ]]; then
+      		      ${emacs}/bin/emacsclient \
+      		        --quiet --create-frame --alternate-editor="" "$@"
+      	      else
+      		      ${emacs}/bin/emacsclient --quiet "$@"
+      	      fi
+      	    ''
+    + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
+  ;
 
   # theEmacs = with pkgs; ((emacsPackagesFor emacsGit).emacsWithPackages (epkgs: [ epkgs.vterm ]));
   # doom likes 28 + nativeComp
-  theEmacs = let
-    emacsPkg = (pkgs.emacsPackagesFor pkgs.emacsMacport).emacsWithPackages (epkgs: with epkgs; [
-        vterm all-the-icons
-    ]);
-    deps = [
+  theEmacs =
+    let
+      emacsPkg = (pkgs.emacsPackagesFor pkgs.emacsMacport).emacsWithPackages (epkgs: with epkgs; [
+        vterm
+        all-the-icons
+      ]);
+      deps = [
         (pkgs.aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
         (pkgs.hunspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large ]))
         (pkgs.nuspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large ]))
         pkgs.graphviz-nox
-        pkgs.imagemagick         # for image-dired
+        pkgs.imagemagick # for image-dired
         pkgs.fd
-        pkgs.gnutls              # for TLS connectivity
-        pkgs.coreutils      # needed for gls for dired
-        pkgs.binutils       # native-comp needs 'as', provided by this
-        (pkgs.ripgrep.override {withPCRE2 = true;})
+        pkgs.gnutls # for TLS connectivity
+        pkgs.coreutils # needed for gls for dired
+        pkgs.binutils # native-comp needs 'as', provided by this
+        (pkgs.ripgrep.override { withPCRE2 = true; })
         pkgs.zstd
         pkgs.git
         # :tools editorconfig
         pkgs.editorconfig-core-c
         # :tools lookup & :lang org +roam
         pkgs.sqlite
-	# other goodies
+        # other goodies
         pkgs.nixfmt
         pkgs.shfmt
         pkgs.jq
-    ];
-  in emacsPkg // (pkgs.symlinkJoin {
-    name = "my-doom-emacs";
-    paths = [ emacsPkg ];
-    nativeBuildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      wrapProgram $out/Applications/Emacs.app/Contents/MacOS/Emacs \
-        --prefix PATH : ${pkgs.lib.makeBinPath deps} \
-        --set LSP_USE_PLISTS true
-      wrapProgram $out/bin/emacs \
-        --prefix PATH : ${pkgs.lib.makeBinPath deps} \
-        --set LSP_USE_PLISTS true
-      wrapProgram $out/bin/emacsclient \
-        --prefix PATH : ${pkgs.lib.makeBinPath deps} \
-        --set LSP_USE_PLISTS true
-    '';
-  });
+      ];
+    in
+    emacsPkg // (pkgs.symlinkJoin {
+      name = "my-doom-emacs";
+      paths = [ emacsPkg ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/Applications/Emacs.app/Contents/MacOS/Emacs \
+          --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+          --set LSP_USE_PLISTS true
+        wrapProgram $out/bin/emacs \
+          --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+          --set LSP_USE_PLISTS true
+        wrapProgram $out/bin/emacsclient \
+          --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+          --set LSP_USE_PLISTS true
+      '';
+    });
 
   myFonts = with pkgs; [
     emacs-all-the-icons-fonts
@@ -166,7 +169,6 @@ rec {
     shellcheck
     shfmt
     tree
-    # tvnamer
     unar
     unarchiver
     # problems with fastparquet, hence the override
@@ -318,9 +320,11 @@ rec {
       # Put the ZSH history into the same directory as the configuration.
       # Also, the path must be absolute, relative paths just make new directories
       # wherever you're working from.
-      path = let
-        inherit (config.home) homeDirectory;
-        in "${homeDirectory}/${dotDir}/history";
+      path =
+        let
+          inherit (config.home) homeDirectory;
+        in
+        "${homeDirectory}/${dotDir}/history";
       extended = true;
       ignoreDups = true;
       share = true;
@@ -600,21 +604,21 @@ rec {
   xdg.configFile."zsh/functions".source = ./zsh/functions;
   xdg.configFile."zsh/completion.zsh".source = ./zsh/completion.zsh;
   xdg.configFile."zsh/vendor-completions".source = with pkgs;
-     runCommand "vendored-zsh-completions" {} ''
+    runCommand "vendored-zsh-completions" { } ''
       set -euo pipefail
       mkdir -p $out
       ${fd}/bin/fd -t f '^_[^.]+$' \
         ${lib.escapeShellArgs home.packages} \
         | xargs -0 -I {} bash -c '${ripgrep}/bin/rg -0l "^#compdef" $@ || :' _ {} \
         | xargs -0 cp -t $out/
-     '';
+    '';
 
   # Setting up aspell
   home.file.".aspell.conf".text = ''
-     data-dir ${builtins.getEnv "HOME"}/.nix-profile/lib/aspell
-     master en_US
-     extra-dicts en-computers.rws
-     add-extra-dicts en_US-science.rws
+    data-dir ${builtins.getEnv "HOME"}/.nix-profile/lib/aspell
+    master en_US
+    extra-dicts en-computers.rws
+    add-extra-dicts en_US-science.rws
   '';
 
   # It's Hammerspoon time
