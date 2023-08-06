@@ -84,13 +84,13 @@ let
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/Applications/Emacs.app/Contents/MacOS/Emacs \
-          --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+          --prefix PATH : ${pkgs.lib.makeBinPath ([emacsPkg] ++ deps)} \
           --set LSP_USE_PLISTS true
         wrapProgram $out/bin/emacs \
-          --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+          --prefix PATH : ${pkgs.lib.makeBinPath ([emacsPkg] ++ deps)} \
           --set LSP_USE_PLISTS true
         wrapProgram $out/bin/emacsclient \
-          --prefix PATH : ${pkgs.lib.makeBinPath deps} \
+          --prefix PATH : ${pkgs.lib.makeBinPath ([emacsPkg] ++ deps)} \
           --set LSP_USE_PLISTS true
       '';
     });
