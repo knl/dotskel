@@ -73,7 +73,7 @@ let
         # :tools lookup & :lang org +roam
         pkgs.sqlite
         # other goodies
-        pkgs.nixfmt
+        pkgs.alejandra # to format nix code
         pkgs.shfmt
         pkgs.jq
       ];
@@ -129,6 +129,7 @@ rec {
 
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
+    alejandra
     cachix
     curl
     devenv.default
