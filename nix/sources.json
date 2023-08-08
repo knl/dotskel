@@ -113,10 +113,10 @@
         "homepage": null,
         "owner": "spwhitt",
         "repo": "nix-zsh-completions",
-        "rev": "6a1bfc024481bdba568f2ced65e02f3a359a7692",
-        "sha256": "0jc0gh6zmbldx6al0g9yg3hpwwf1fagmzbkw3jcgp73r967asxv9",
+        "rev": "247e8cc192be84f15d93e68c79b4277aba6361d4",
+        "sha256": "0gzl45x5a8jjwfj46r0d8wrjylaspd2ksylr1wq2a2hy62kc5aqc",
         "type": "tarball",
-        "url": "https://github.com/spwhitt/nix-zsh-completions/archive/6a1bfc024481bdba568f2ced65e02f3a359a7692.tar.gz",
+        "url": "https://github.com/spwhitt/nix-zsh-completions/archive/247e8cc192be84f15d93e68c79b4277aba6361d4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
