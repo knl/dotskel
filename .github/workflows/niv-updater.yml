@@ -22,9 +22,9 @@ on:
         default: ''
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # Run every Tuesday at 06:30, but we use the dispatch to trigger when urgent
+    # Run every Tuesday at 03:30, but we use the dispatch to trigger when urgent
     # This used to run every day, but that is way too many changes...
-    - cron:  '30 6 * * 2'
+    - cron:  '30 3 * * 2'
 jobs:
   niv-updater:
     name: 'Check for updates (weekly)'
