@@ -13,13 +13,13 @@ jobs:
   test-and-build:
     runs-on: macos-12
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: set_var
         run: |
           content=$(jq -r .nixpkgs.url <./nix/sources.json)
           echo "nivSourcesJson=$content" >> $GITHUB_ENV
       - name: "Install Nix"
-        uses: cachix/install-nix-action@v22
+        uses: cachix/install-nix-action@v23
         with:
           nix_path: ${{ format('nixpkgs={0}', env.nivSourcesJson) }}
       - name: "Install Cachix"
