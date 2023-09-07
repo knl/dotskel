@@ -137,7 +137,7 @@ rec {
     duf
     entr
     # espanso # FIXME: make it compilable on macos
-    exa
+    eza
     fd
     fortune
     gitAndTools.delta
@@ -368,9 +368,9 @@ rec {
     };
 
     shellAliases = {
-      l = "exa --color auto";
-      ls = "exa -G --color auto -a -s type";
-      ll = "exa -l --color always -a -s type";
+      l = "eza --color auto";
+      ls = "eza -G --color auto -a -s type";
+      ll = "eza -l --color always -a -s type";
       "]" = "open";
       dl = "\curl -O -L";
       up = "\cd ..";
