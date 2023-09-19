@@ -199,6 +199,7 @@ rec {
     mtr
     netcat
     niv.niv
+    nixpkgs-fmt
     nmap
     openssh # needed because macOS version is limited wrt yubikey
     p7zip
