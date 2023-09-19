@@ -284,16 +284,6 @@
                         },
                         {
                             "from": {
-                                "key_code": "n"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "k"
-                                }
-                            ]
-                        },
-                        {
-                            "from": {
                                 "key_code": "j"
                             },
                             "to": [
@@ -309,6 +299,36 @@
                             "to": [
                                 {
                                     "key_code": "e"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "n"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "k"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "m"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "h"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "h"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "m"
                                 }
                             ]
                         }
