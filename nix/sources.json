@@ -156,11 +156,11 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "unarchiver": {
-        "sha256": "071bj6rzchnamdz62ihf9j0n2dkmz5p1xs6z9bwq4ifbrxgrgci1",
+        "sha256": "049bzagrz07rs7c6x39awnrnq028vp334fxmdsigp9sc7l75a3b9",
         "type": "file",
         "url": "https://dl.devmate.com/com.macpaw.site.theunarchiver/TheUnarchiver.dmg",
         "url_template": "https://dl.devmate.com/com.macpaw.site.theunarchiver/TheUnarchiver.dmg",
-        "version": "4.3.5"
+        "version": "4.3.6"
     },
     "zsh-async": {
         "branch": "master",
