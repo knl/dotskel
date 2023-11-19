@@ -205,7 +205,7 @@ rec {
     dua
     duf
     entr
-    # espanso # FIXME: make it compilable on macos
+    espanso # FIXME: make it compilable on macos
     eza
     fd
     fortune
