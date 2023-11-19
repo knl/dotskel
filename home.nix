@@ -33,7 +33,7 @@ let
     extraLibs = with pkgs.python3Packages; [ ipython pip virtualenv ];
   };
 
-  wezterm = let
+  wezterm_app = let
     app = "WezTerm.app";
     version = "20230712-072601-f4abf8fd";
   in
@@ -277,8 +277,10 @@ rec {
   # };
   programs.wezterm = {
     enable = true;
-    package = wezterm;
-    enableZshIntegration = true;
+    package = wezterm_app;
+    # this doesn't work, as my wezterm comes from the official distribution
+    enableZshIntegration = false;
+    enableBashIntegration = false;
   };
   xdg.configFile."wezterm".source = link ./configs/wezterm;
 
@@ -429,7 +431,7 @@ rec {
       XDG_DATA_HOME = xdg.dataHome;
 
       GOPATH = "$HOME/go";
-      PATH = "$HOME/bin:$GOPATH/bin:$HOME/.emacs.d/bin:$PATH";
+      PATH = "$HOME/bin:$GOPATH/bin:$HOME/.emacs.d/bin:${wezterm_app}/Applications/WezTerm.app/Contents/MacOS/:$PATH";
       TERM = "xterm-256color";
 
       LESS = "-F -g -i -M -R -S -w -X -z-4";
@@ -618,6 +620,9 @@ rec {
       # need to rebind the key again, since plugins are sourced before sourcing fzf
       bindkey '^R' histdb-fzf-widget
       # zsh-histdb end
+
+      # wezterm integration
+      source "${wezterm_app}/Applications/WezTerm.app/Contents/Resources/wezterm.sh"
     '';
 
     loginExtra = ''
