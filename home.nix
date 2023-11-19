@@ -36,6 +36,10 @@ let
   wezterm_app = let
     app = "WezTerm.app";
     version = "20230712-072601-f4abf8fd";
+    altIcon = pkgs.fetchurl {
+      url = "https://github.com/mikker/wezterm-icon/raw/main/wezterm.icns";
+      hash = "sha256-svfuxXlRmFW+9n40LBm3JygzLbp90C4LAnCQAr4XFDw=";
+    };
   in
   pkgs.stdenv.mkDerivation rec {
     pname = "wezterm";
@@ -50,6 +54,7 @@ let
     installPhase = ''
       mkdir -p "$out/Applications/"
       cp -R . "$out/Applications/"
+      cp ${altIcon} $out/Applications/WezTerm.app/Contents/Resources/terminal.icns
     '';
 
     meta = {
