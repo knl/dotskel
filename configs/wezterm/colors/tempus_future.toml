@@ -1,0 +1,64 @@
+# vi:ft=toml
+# name: Tempus Future
+# author: Protesilaos Stavrou (https://protesilaos.com)
+# blurb: Dark theme with colours inspired by concept art of outer space (WCAG AAA compliant)
+# license: GPLv3
+# upstream: https://gitlab.com/protesilaos/tempus-themes
+
+[colors]
+# The default text color
+foreground = "#b4abac"
+# The default background color
+background = "#090a18"
+
+# Overrides the cell background color when the current cell is occupied by the
+# cursor and the cursor style is set to Block
+cursor_bg = "#b4abac"
+# Overrides the text color when the current cell is occupied by the cursor
+cursor_fg = "#090a18"
+# Specifies the border color of the cursor when the cursor style is set to Block,
+# or the color of the vertical or horizontal bar when the cursor style is set to
+# Bar or Underline.
+cursor_border = "#b4abac"
+
+# the foreground color of selected text
+selection_fg = "#090a18"
+# the background color of selected text
+selection_bg = "#b4abac"
+
+# The color of the scrollbar "thumb"; the portion that represents the current viewport
+# scrollbar_thumb = '#222222',
+
+# The color of the split lines between panes
+# split = '#444444',
+
+# visual_bell = '#ccd0da'
+
+ansi = [
+  '#090a18',
+  '#ff7e8f',
+  '#6aba39',
+  '#bfa51a',
+  '#4ab2d7',
+  '#e58f84',
+  '#2ab7bb',
+  '#a7a2c4',
+] 
+
+brights = [
+  '#2b1329',
+  '#f78e2f',
+  '#60ba80',
+  '#de9b1d',
+  '#8ba7ea',
+  '#e08bd6',
+  '#2cbab6',
+  '#b4abac',
+]
+
+[metadata]
+aliases = []
+name = "Tempus Future"
+author = "Protesilaos Stavrou (https://protesilaos.com)"
+origin_url = "https://gitlab.com/protesilaos/tempus-themes"
+wezterm_version = "Always"

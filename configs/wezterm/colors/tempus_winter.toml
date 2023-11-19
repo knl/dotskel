@@ -1,0 +1,64 @@
+# vi:ft=toml
+# name: Tempus Winter
+# author: Protesilaos Stavrou (https://protesilaos.com)
+# blurb: Dark theme with a palette inspired by winter nights at the city (WCAG AA compliant)
+# license: GPLv3
+# upstream: https://gitlab.com/protesilaos/tempus-themes
+
+[colors]
+# The default text color
+foreground = "#8da3b8"
+# The default background color
+background = "#202427"
+
+# Overrides the cell background color when the current cell is occupied by the
+# cursor and the cursor style is set to Block
+cursor_bg = "#8da3b8"
+# Overrides the text color when the current cell is occupied by the cursor
+cursor_fg = "#202427"
+# Specifies the border color of the cursor when the cursor style is set to Block,
+# or the color of the vertical or horizontal bar when the cursor style is set to
+# Bar or Underline.
+cursor_border = "#8da3b8"
+
+# the foreground color of selected text
+selection_fg = "#202427"
+# the background color of selected text
+selection_bg = "#8da3b8"
+
+# The color of the scrollbar "thumb"; the portion that represents the current viewport
+# scrollbar_thumb = '#222222',
+
+# The color of the split lines between panes
+# split = '#444444',
+
+# visual_bell = '#ccd0da'
+
+ansi = [
+  '#202427',
+  '#ed6e5a',
+  '#4aa920',
+  '#9a9921',
+  '#7b91df',
+  '#d17e80',
+  '#4fa394',
+  '#91959b',
+] 
+
+brights = [
+  '#2a2e38',
+  '#de7b28',
+  '#00ab5f',
+  '#af9155',
+  '#329fcb',
+  '#ca77c5',
+  '#1ba6a4',
+  '#8da3b8',
+]
+
+[metadata]
+aliases = []
+name = "Tempus Winter"
+author = "Protesilaos Stavrou (https://protesilaos.com)"
+origin_url = "https://gitlab.com/protesilaos/tempus-themes"
+wezterm_version = "Always"

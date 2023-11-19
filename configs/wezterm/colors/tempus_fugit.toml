@@ -1,0 +1,64 @@
+# vi:ft=toml
+# name: Tempus Fugit
+# author: Protesilaos Stavrou (https://protesilaos.com)
+# blurb: Light, pleasant theme optimised for long writing/coding sessions (WCAG AA compliant)
+# license: GPLv3
+# upstream: https://gitlab.com/protesilaos/tempus-themes
+
+[colors]
+# The default text color
+foreground = "#4d595f"
+# The default background color
+background = "#fff5f3"
+
+# Overrides the cell background color when the current cell is occupied by the
+# cursor and the cursor style is set to Block
+cursor_bg = "#4d595f"
+# Overrides the text color when the current cell is occupied by the cursor
+cursor_fg = "#fff5f3"
+# Specifies the border color of the cursor when the cursor style is set to Block,
+# or the color of the vertical or horizontal bar when the cursor style is set to
+# Bar or Underline.
+cursor_border = "#4d595f"
+
+# the foreground color of selected text
+selection_fg = "#fff5f3"
+# the background color of selected text
+selection_bg = "#4d595f"
+
+# The color of the scrollbar "thumb"; the portion that represents the current viewport
+# scrollbar_thumb = '#222222',
+
+# The color of the split lines between panes
+# split = '#444444',
+
+# visual_bell = '#ccd0da'
+
+ansi = [
+  '#4d595f',
+  '#c61a14',
+  '#357200',
+  '#825e00',
+  '#1666b0',
+  '#a83884',
+  '#007072',
+  '#efe6e4',
+] 
+
+brights = [
+  '#796271',
+  '#b93f1a',
+  '#437520',
+  '#985900',
+  '#485adf',
+  '#a234c0',
+  '#00756a',
+  '#fff5f3',
+]
+
+[metadata]
+aliases = []
+name = "Tempus Fugit"
+author = "Protesilaos Stavrou (https://protesilaos.com)"
+origin_url = "https://gitlab.com/protesilaos/tempus-themes"
+wezterm_version = "Always"

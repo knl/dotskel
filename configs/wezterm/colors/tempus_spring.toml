@@ -1,0 +1,64 @@
+# vi:ft=toml
+# name: Tempus Spring
+# author: Protesilaos Stavrou (https://protesilaos.com)
+# blurb: Dark theme with a palette inspired by early spring colours (WCAG AA compliant)
+# license: GPLv3
+# upstream: https://gitlab.com/protesilaos/tempus-themes
+
+[colors]
+# The default text color
+foreground = "#b5b8b7"
+# The default background color
+background = "#283a37"
+
+# Overrides the cell background color when the current cell is occupied by the
+# cursor and the cursor style is set to Block
+cursor_bg = "#b5b8b7"
+# Overrides the text color when the current cell is occupied by the cursor
+cursor_fg = "#283a37"
+# Specifies the border color of the cursor when the cursor style is set to Block,
+# or the color of the vertical or horizontal bar when the cursor style is set to
+# Bar or Underline.
+cursor_border = "#b5b8b7"
+
+# the foreground color of selected text
+selection_fg = "#283a37"
+# the background color of selected text
+selection_bg = "#b5b8b7"
+
+# The color of the scrollbar "thumb"; the portion that represents the current viewport
+# scrollbar_thumb = '#222222',
+
+# The color of the split lines between panes
+# split = '#444444',
+
+# visual_bell = '#ccd0da'
+
+ansi = [
+  '#283a37',
+  '#ff8b5f',
+  '#5ec04d',
+  '#b0b01a',
+  '#39bace',
+  '#e99399',
+  '#36c08e',
+  '#99afae',
+] 
+
+brights = [
+  '#2a453d',
+  '#e19e00',
+  '#73be0d',
+  '#c6a843',
+  '#70afef',
+  '#d095e2',
+  '#3cbfaf',
+  '#b5b8b7',
+]
+
+[metadata]
+aliases = []
+name = "Tempus Spring"
+author = "Protesilaos Stavrou (https://protesilaos.com)"
+origin_url = "https://gitlab.com/protesilaos/tempus-themes"
+wezterm_version = "Always"

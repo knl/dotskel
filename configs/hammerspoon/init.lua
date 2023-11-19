@@ -100,7 +100,7 @@ hotkey.bind(hyper, 'h', function() application.launchOrFocus("Dash") end)
 hotkey.bind(hyper, 'k', function() application.launchOrFocus("Cobook") end)
 hotkey.bind(hyper, 'm', function() application.launchOrFocus("Postbox") end)
 hotkey.bind(hyper, 'o', function() application.launchOrFocus("Trello") end)
-hotkey.bind(hyper, 't', function() application.launchOrFocus("iTerm") end)
+hotkey.bind(hyper, 't', function() application.launchOrFocus(os.getenv('HOME') .. '/Applications/Home Manager Apps/WezTerm.app') end)
 
 -- A little-known OS X builtin keybinding I rely on extensively is
 -- Control-F2. It focuses the menu bar, from which you can navigate by

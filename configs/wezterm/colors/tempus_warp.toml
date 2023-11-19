@@ -1,0 +1,64 @@
+# vi:ft=toml
+# name: Tempus Warp
+# author: Protesilaos Stavrou (https://protesilaos.com)
+# blurb: Dark theme with a vibrant palette (WCAG AA compliant)
+# license: GPLv3
+# upstream: https://gitlab.com/protesilaos/tempus-themes
+
+[colors]
+# The default text color
+foreground = "#a29fa0"
+# The default background color
+background = "#001514"
+
+# Overrides the cell background color when the current cell is occupied by the
+# cursor and the cursor style is set to Block
+cursor_bg = "#a29fa0"
+# Overrides the text color when the current cell is occupied by the cursor
+cursor_fg = "#001514"
+# Specifies the border color of the cursor when the cursor style is set to Block,
+# or the color of the vertical or horizontal bar when the cursor style is set to
+# Bar or Underline.
+cursor_border = "#a29fa0"
+
+# the foreground color of selected text
+selection_fg = "#001514"
+# the background color of selected text
+selection_bg = "#a29fa0"
+
+# The color of the scrollbar "thumb"; the portion that represents the current viewport
+# scrollbar_thumb = '#222222',
+
+# The color of the split lines between panes
+# split = '#444444',
+
+# visual_bell = '#ccd0da'
+
+ansi = [
+  '#001514',
+  '#ff3737',
+  '#169c16',
+  '#9f8500',
+  '#5781ef',
+  '#da4ebf',
+  '#009880',
+  '#968282',
+] 
+
+brights = [
+  '#261c2c',
+  '#F0681A',
+  '#3aa73a',
+  '#ba8a00',
+  '#8887f0',
+  '#d85cf2',
+  '#1da1af',
+  '#a29fa0',
+]
+
+[metadata]
+aliases = []
+name = "Tempus Warp"
+author = "Protesilaos Stavrou (https://protesilaos.com)"
+origin_url = "https://gitlab.com/protesilaos/tempus-themes"
+wezterm_version = "Always"

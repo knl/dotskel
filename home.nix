@@ -33,6 +33,34 @@ let
     extraLibs = with pkgs.python3Packages; [ ipython pip virtualenv ];
   };
 
+  wezterm = let
+    app = "WezTerm.app";
+    version = "20230712-072601-f4abf8fd";
+  in
+  pkgs.stdenv.mkDerivation rec {
+    pname = "wezterm";
+    inherit version;
+
+    src = pkgs.fetchzip {
+      url = "https://github.com/wez/wezterm/releases/download/${version}/WezTerm-macos-${version}.zip";
+      sha256 = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
+    };
+
+    buildInputs = [ pkgs.undmg ];
+    installPhase = ''
+      mkdir -p "$out/Applications/"
+      cp -R . "$out/Applications/"
+    '';
+
+    meta = {
+      description = "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust";
+      homepage = "https://wezfurlong.org/wezterm";
+      changelog = "https://wezfurlong.org/wezterm/changelog.html#${version}";
+      license = pkgs.lib.licenses.mit;
+      platforms = pkgs.lib.platforms.darwin;
+    };
+  };
+
   wrapEmacsclient = { emacs }:
     pkgs.writeShellScriptBin "emacs.bash" (''
       ${emacs}/bin/emacsclient --no-wait --eval \
@@ -249,6 +277,13 @@ rec {
   #   package = theEmacs;
   #   # extraPackages = (epkgs: [epkgs.pdf-tools] );
   # };
+  programs.wezterm = {
+    enable = true;
+    package = wezterm;
+    enableZshIntegration = true;
+  };
+  xdg.configFile."wezterm".source = link ./configs/wezterm;
+
   programs.fzf.enable = true;
   programs.direnv = {
     enable = true;
