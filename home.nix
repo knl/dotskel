@@ -266,8 +266,6 @@ rec {
   # Install the following apps (might need nix-darwin)
   # hammerspoon
   # karabiner
-  # f.lux
-  # textexpander
   # istatmenus
   # trello
   # busycall
