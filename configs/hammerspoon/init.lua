@@ -19,28 +19,28 @@ local ctalt    = {"alt", "ctrl"}
 local hyper    = {"cmd", "alt", "shift", "ctrl"}
 
 -- 2x2 grid
-hotkey.bind(cmdalt, 'k', grid22:focused():leftmost():topmost():widest():tall(1):act())
-hotkey.bind(cmdalt, 'j', grid22:focused():leftmost():bottommost():widest():tall(1):act())
-hotkey.bind(cmdalt, 'h', grid22:focused():leftmost():topmost():wide(1):tallest():act())
-hotkey.bind(cmdalt, 'l', grid22:focused():rightmost():topmost():wide(1):tallest():act())
+hotkey.bind(cmdalt, 'e', grid22:focused():leftmost():topmost():widest():tall(1):act())
+hotkey.bind(cmdalt, 'n', grid22:focused():leftmost():bottommost():widest():tall(1):act())
+hotkey.bind(cmdalt, 'm', grid22:focused():leftmost():topmost():wide(1):tallest():act())
+hotkey.bind(cmdalt, 'i', grid22:focused():rightmost():topmost():wide(1):tallest():act())
 
-hotkey.bind(cmdalt, 'b', grid22:focused():leftmost():bottommost():wide(1):tall(1):act())
-hotkey.bind(cmdalt, 'y', grid22:focused():leftmost():topmost():wide(1):tall(1):act())
-hotkey.bind(cmdalt, 'p', grid22:focused():rightmost():topmost():wide(1):tall(1):act())
+hotkey.bind(cmdalt, 'v', grid22:focused():leftmost():bottommost():wide(1):tall(1):act())
+hotkey.bind(cmdalt, 'l', grid22:focused():leftmost():topmost():wide(1):tall(1):act())
+hotkey.bind(cmdalt, ';', grid22:focused():rightmost():topmost():wide(1):tall(1):act())
 hotkey.bind(cmdalt, '.', grid22:focused():rightmost():bottommost():wide(1):tall(1):act())
 
 -- 3x3 grid, but only horizontal grids
 -- one thirds
-hotkey.bind(ctcmdalt, 'j', grid33:focused():leftmost():topmost():wide(1):tallest():act())
-hotkey.bind(ctcmdalt, 'k', grid33:focused():xpos(1):topmost():wide(1):tallest():act())
-hotkey.bind(ctcmdalt, 'l', grid33:focused():xpos(2):topmost():wide(1):tallest():act())
+hotkey.bind(ctcmdalt, 'n', grid33:focused():leftmost():topmost():wide(1):tallest():act())
+hotkey.bind(ctcmdalt, 'e', grid33:focused():xpos(1):topmost():wide(1):tallest():act())
+hotkey.bind(ctcmdalt, 'i', grid33:focused():xpos(2):topmost():wide(1):tallest():act())
 
 -- two thirds
-hotkey.bind(ctalt, 'j', grid33:focused():leftmost():topmost():wide(2):tallest():act())
-hotkey.bind(ctalt, 'l', grid33:focused():rightmost():topmost():wide(2):tallest():act())
+hotkey.bind(ctalt, 'n', grid33:focused():leftmost():topmost():wide(2):tallest():act())
+hotkey.bind(ctalt, 'i', grid33:focused():rightmost():topmost():wide(2):tallest():act())
 
 -- a bit of convolution, as grille doesn't support centering
-hotkey.bind(ctalt, 'k', function () fn1 = grid33:focused():leftmost():topmost():wide(2):tallest():act(); fn2 = win:focused():vcenter():move(); fn1(); fn2(); end)
+hotkey.bind(ctalt, 'e', function () fn1 = grid33:focused():leftmost():topmost():wide(2):tallest():act(); fn2 = win:focused():vcenter():move(); fn1(); fn2(); end)
 
 -- fullwidth, fullheight and the combination (|,_,+)
 hotkey.bind(scmdalt, '\\', win:focused():tallest():resize())
