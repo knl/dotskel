@@ -241,7 +241,6 @@ rec {
     shfmt
     tree
     unar
-    unarchiver
     # problems with fastparquet, hence the override
     # problems with building skia-pathops (dep of fonttools, dep of visidata), hence comment out
     # (visidata.overrideAttrs (old: rec {

@@ -155,13 +155,6 @@
         "url": "https://github.com/knl/rh/archive/9dc9c35f04749e9564dbb8311526d7093f4070ee.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "unarchiver": {
-        "sha256": "071bj6rzchnamdz62ihf9j0n2dkmz5p1xs6z9bwq4ifbrxgrgci1",
-        "type": "file",
-        "url": "https://dl.devmate.com/com.macpaw.site.theunarchiver/TheUnarchiver.dmg",
-        "url_template": "https://dl.devmate.com/com.macpaw.site.theunarchiver/TheUnarchiver.dmg",
-        "version": "4.3.6"
-    },
     "zsh-async": {
         "branch": "master",
         "description": "Because your terminal should be able to perform tasks asynchronously without external tools!",
