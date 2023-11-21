@@ -18,7 +18,7 @@ function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
     return 'Tempus Night'
   else
-    return 'Tempus Totus'
+    return 'Tempus Day'
   end
 end
 
@@ -26,26 +26,18 @@ end
 config.color_scheme = scheme_for_appearance(get_appearance())
 
 config.font = wezterm.font 'Iosevka Term SS08'
-config.font_size = 13.0
-
-local function tab_title(tab_info)
-  local title = tab_info.tab_title
-  local zoom = ''
-  if tab_info.active_pane.is_zoomed then zoom = ' (Z)' end
-
-  if title and #title > 0 then return title .. zoom end
-  return tab_info.active_pane.title .. zoom
-end
-
-wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
-  local title = tab_title(tab)
-
-  if tab.is_active then return {
-    { Background = { Color = 'Black' } },
-    { Text = ' ' .. title .. ' ' },
-  } end
-  return title
-end)
+config.font_size = 16.0
+config.freetype_load_target = 'Light'
+config.freetype_render_target = 'HorizontalLcd'
+-- config.line_height = 1.0
+-- config.cell_width = 0.9
+config.use_fancy_tab_bar = true
+config.force_reverse_video_cursor = true
+config.hide_tab_bar_if_only_one_tab = false
+config.adjust_window_size_when_changing_font_size = false
+config.max_fps = 120
+config.tab_max_width = 32
+config.window_decorations = "RESIZE"
 
 config.leader = { key = '/', mods = 'SUPER', timeout_milliseconds = 2000 }
 config.keys = {
@@ -73,6 +65,12 @@ config.keys = {
         if line then window:active_tab():set_title(line) end
       end),
     },
+  },
+  -- from iTerm, clear everything
+  {
+    key = "k",
+    mods = "CMD",
+    action = act.ClearScrollback 'ScrollbackAndViewport',
   },
 }
 

@@ -88,21 +88,34 @@ let
       url = "https://github.com/mikker/wezterm-icon/raw/main/wezterm.icns";
       hash = "sha256-svfuxXlRmFW+9n40LBm3JygzLbp90C4LAnCQAr4XFDw=";
     };
+    fileicon-src = builtins.readFile (pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/mklement0/fileicon/master/bin/fileicon";
+      hash = "sha256-7RRjBiktPfKvnD7OLouHe57nWbur+7/W36QBSGZgBks=";
+    });
+    fileicon = (pkgs.writeScriptBin "fileicon" fileicon-src).overrideAttrs (old: {
+      buildCommand = old.buildCommand + ''
+        patchShebangs $out
+        substituteInPlace $out/bin/fileicon \
+          --replace osascript /usr/bin/osascript
+        chmod a+x $out/bin/fileicon
+      '';
+  });
   in
-  pkgs.stdenv.mkDerivation rec {
+  pkgs.stdenvNoCC.mkDerivation rec {
     pname = "wezterm";
     inherit version;
 
     src = pkgs.fetchzip {
       url = "https://github.com/wez/wezterm/releases/download/${version}/WezTerm-macos-${version}.zip";
-      sha256 = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
+      hash = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
     };
 
     buildInputs = [ pkgs.undmg ];
     installPhase = ''
       mkdir -p "$out/Applications/"
       cp -R . "$out/Applications/"
-      cp ${altIcon} $out/Applications/WezTerm.app/Contents/Resources/terminal.icns
+      # cp ${altIcon} $out/Applications/WezTerm.app/Contents/Resources/terminal.icns
+      # ${pkgs.darwin.cctools}/bin/codesign_allocate -r -i -o $out/Applications/WezTerm.app
     '';
 
     meta = {
@@ -314,6 +327,7 @@ rec {
     yubikey-manager
     yubikey-personalization
     watch
+    wezterm
     zstd
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = theEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
@@ -335,15 +349,6 @@ rec {
   #   package = theEmacs;
   #   # extraPackages = (epkgs: [epkgs.pdf-tools] );
   # };
-  programs.wezterm = {
-    enable = true;
-    package = wezterm_app;
-    # this doesn't work, as my wezterm comes from the official distribution
-    enableZshIntegration = false;
-    enableBashIntegration = false;
-  };
-  xdg.configFile."wezterm".source = link ./configs/wezterm;
-
   programs.fzf.enable = true;
   programs.direnv = {
     enable = true;
@@ -730,6 +735,17 @@ rec {
   };
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
+
+  home.sessionVariables = rec {
+    NIX_SSL_CERT_FILE = "${imcCerts}/etc/ssl/certs/ca-bundle.crt";
+    SSL_CERT_FILE = NIX_SSL_CERT_FILE;
+    REQUESTS_CA_BUNDLE = NIX_SSL_CERT_FILE;
+    PIP_CERT = NIX_SSL_CERT_FILE;
+    GIT_SSL_CAINFO = NIX_SSL_CERT_FILE;
+    NODE_EXTRA_CA_CERTS = NIX_SSL_CERT_FILE;
+  };
+
+  xdg.configFile."wezterm".source = link ./configs/wezterm;
 
   # Setting up aspell
   home.file.".aspell.conf".text = ''
