@@ -83,7 +83,19 @@
         "url": "https://github.com/knl/hs.winter/archive/94505beb073d4ba0f003b1374dae48e0b6314baa.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "niv": {
+    "nerd-icons.el": {
+        "branch": "main",
+        "description": null,
+        "homepage": null,
+        "owner": "rainstormstudio",
+        "repo": "nerd-icons.el",
+        "rev": "0262a8c4fa41541438e489572bba8f0b4b689ae7",
+        "sha256": "1c7pf6fp99y3gsn8pb73h1gwlz3ag2i0h5i8pl7i0f09p3ra9jr3",
+        "type": "tarball",
+        "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/0262a8c4fa41541438e489572bba8f0b4b689ae7.tar.gz",
+         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+     },
+     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
         "homepage": "https://github.com/nmattia/niv",

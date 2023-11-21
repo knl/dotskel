@@ -167,9 +167,15 @@ let
       });
       emacsPkg = emacsSource.pkgs.emacsWithPackages (epkgs: with epkgs; [
         treesit-grammars.with-all-grammars
+        (nerd-icons.overrideAttrs(old: {
+          postInstall = old.postInstall + ''
+            install -Dm644 $src/fonts/*.ttf -t $out/share/fonts/truetype
+          '';
+        }))
       ] ++ (with epkgs.melpaPackages; [
         vterm
         all-the-icons
+        emojify
       ]));
       deps = [
         (pkgs.aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
@@ -219,6 +225,8 @@ let
 
   myFonts = with pkgs; [
     emacs-all-the-icons-fonts
+    emacsPackages.nerd-icons
+    nerdfonts
     fira-code
     font-awesome
     # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })

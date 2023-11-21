@@ -21,7 +21,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Iosevka Term SS08" :size 15))
+(setq doom-font (font-spec :family "Iosevka Term SS08" :size 16))
+;;      doom-unicode-font (font-spec :family "FiraCode Nerd Font Mono" :size 15))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -46,26 +47,26 @@
                        (evil-previous-visual-line)))
        :n "gj" (cmd! (if (org-on-heading-p)
                          (org-forward-element)
-                       (evil-next-visual-line)))))
+                       (evil-next-visual-line))))
 
-(map!
       :o "o" #'evil-inner-symbol
+
       :leader
       "0" #'+treemacs/toggle
       "h L" #'global-keycast-mode
       (:prefix "f"
-       "t" #'find-in-dotfiles
-       "T" #'browse-dotfiles)
+               "t" #'find-in-dotfiles
+               "T" #'browse-dotfiles)
       (:prefix "w"
-       "-" #'+evil/window-split-and-follow
-       "/" #'+evil/window-vsplit-and-follow)
+               "-" #'+evil/window-split-and-follow
+               "/" #'+evil/window-vsplit-and-follow)
       (:prefix "n"
-       "b" #'org-roam-buffer-toggle
-       "d" #'org-roam-dailies-goto-today
-       "D" #'org-roam-dailies-goto-date
-       "i" #'org-roam-node-insert
-       "r" #'org-roam-node-find
-       "R" #'org-roam-capture))
+               "b" #'org-roam-buffer-toggle
+               "d" #'org-roam-dailies-goto-today
+               "D" #'org-roam-dailies-goto-date
+               "i" #'org-roam-node-insert
+               "r" #'org-roam-node-find
+               "R" #'org-roam-capture))
 
 ;; (map! :mnv  "n"  #'evil-next-line
 ;;       :nv   "N"  #'evil-join
@@ -165,18 +166,10 @@
            "** %?"
            :target (file+head+olp "%<%Y-%m-W%W>.org" "#+title: Week %<%W, %B %Y>\n\n\n" ("%<%F>"))
            :unnarrowed t
-           :jump-to-captured t))
-        ))
-        ;; '(("d" "default" entry "* %?"
-        ;;    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%B %d, %Y>\n\n")))))
+           :jump-to-captured t)))
+  ;; '(("d" "default" entry "* %?"
+  ;;    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%B %d, %Y>\n\n")))))
 
-(after! org-tree-slide
-  ;; I use g{h,j,k} to traverse headings and TAB to toggle their visibility, and
-  ;; leave C-left/C-right to .  I'll do a lot of movement because my
-  ;; presentations tend not to be very linear.
-  (setq org-tree-slide-skip-outline-level 2))
-
-(after! org-roam
   ;; Offer completion for #tags and @areas separately from notes.
   (add-to-list 'org-roam-completion-functions #'org-roam-complete-tag-at-point)
 
@@ -200,10 +193,16 @@
   ;; (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a)
   )
 
-(setq doom-themes-treemacs-enable-variable-pitch nil)
+(after! org-tree-slide
+  ;; I use g{h,j,k} to traverse headings and TAB to toggle their visibility, and
+  ;; leave C-left/C-right to .  I'll do a lot of movement because my
+  ;; presentations tend not to be very linear.
+  (setq org-tree-slide-skip-outline-level 2))
 
-(require 'treemacs-all-the-icons)
-(treemacs-load-theme "all-the-icons")
+                                        ;(require 'treemacs-all-the-icons)
+(setq doom-themes-treemacs-enable-variable-pitch nil)
+(setq doom-themes-treemacs-theme "doom-colors")
+                                        ;(treemacs-load-theme "all-the-icons")
 
 ;; (use-package! evil-colemak-basics
 ;;   :after evil
@@ -232,6 +231,10 @@
   (add-hook 'atomic-chrome-edit-mode-hook #'+my/atomic-chrome-mode-setup)
 
   (atomic-chrome-start-server))
+
+(advice-add '+emacs-lisp-truncate-pin :override (lambda () ()) )
+
+(setq emojify-display-style 'unicode)
 
 ;; (setq explicit-shell-file-name "/bin/zsh")
 ;; (setq shell-file-name "zsh")
