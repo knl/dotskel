@@ -17,15 +17,9 @@ but I can live with it.
 
 ** =nix=
 
-   Because I neither have macOS 10.15+ nor T2 machine, I just use:
+   The new installer from Determinate Systems is really good, and the option to use single user mode disappeared from all installers, so:
    #+begin_src bash
-     sh <(curl -L https://nixos.org/nix/install)
-     source "$HOME/.nix-profile/etc/profile.d/nix.sh"
-   #+end_src
-
-   Otherwise, I would've used:
-   #+begin_src bash
-     sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
      source "$HOME/.nix-profile/etc/profile.d/nix.sh"
    #+end_src
 
@@ -34,15 +28,13 @@ but I can live with it.
    These tools can't be installed by home-manager, because they are macOS
    applications. So, install them manually.
 
-   - [[https://iterm2.com/downloads.html][iTerm2]]
    - [[https://github.com/Hammerspoon/hammerspoon/releases/latest][Hammerspoon]]
-   - [[https://qsapp.com/download.php][Quicksilver]]
+   - [[https://d3jdrrl94b667u.cloudfront.net/Raycast_v1.62.1_fa62964c11720495b5c98ad1b30f32ebe5913c65_universal.dmg?response-content-disposition=attachment%3B%20filename%3DRaycast.dmg&Expires=1700563439&Signature=c87Tv1XxzDGRgIRt8zgrm0eiFO9QWxQrcYJV4qy7lyhiTtTG8J2JhTfUOsaRmJBtcE2KhtIFPnH0gG8twx2cqB2LGX5T535-UOeAVwLE7wiP-Ef9OrepvSgkZt5I6kQjWpO7tEcZXQ4j-BKJ4iV2Zph1rumTQIewTvh9ZwlgopJr6D~wK93j48dYEy5WfvKmRJbv1Jvas8Ia2shfg8NOTJhBul6huZfvY5CPJ7d7TfcXg~P8kSAyuP7jidePgcJ5VuajblyOObjkP6teR7hMSk~SNwCqxZC8rjntUd0eROM0sKs2rKiVdvh4CH8zFF3ZMq7kHOaAxfqMP7an-Vj7Xw__&Key-Pair-Id=K69CUC23G592W][Raycast]]
    - [[https://karabiner-elements.pqrs.org/][Karabiner-Elements]]
    - [[https://app-updates.agilebits.com/download/OPM7][1Password 7]]
    - [[https://www.mozilla.org/en-US/firefox/new/][Firefox]]
    - [[https://download.bjango.com/istatmenus/][iStat Menus]]
    - [[https://frankfurt.kapeli.com/downloads/v6/Dash.zip][Dash]]
-   - [[https://espanso.org/install/][espanso]]
 
 ** Misc
 
