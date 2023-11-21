@@ -348,6 +348,10 @@ rec {
       theme = "Monokai Extended";
     };
   };
+  programs.carapace = {
+    enable = true;
+    enableZshIntegration = true;
+  };
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -580,14 +584,6 @@ rec {
       unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
       unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
 
-      # Completion settings
-      source ${config.xdg.configHome}/zsh/completion.zsh
-
-      fpath=(${config.xdg.configHome}/zsh/plugins/zsh-completions/src \
-             ${config.xdg.configHome}/zsh/vendor-completions \
-             ${config.xdg.configHome}/zsh/plugins/mac-zsh-completions/completions \
-             $fpath)
-
       # compinit will be called after this block
     '';
 
@@ -702,18 +698,6 @@ rec {
         src = sources.zsh-history-substring-search;
       }
       {
-        name = "zsh-completions";
-        src = sources.zsh-completions;
-      }
-      {
-        name = "nix-zsh-completions";
-        src = sources.nix-zsh-completions;
-      }
-      {
-        name = "mac-zsh-completions";
-        src = sources.mac-zsh-completions;
-      }
-      {
         name = "async";
         src = sources.zsh-async;
       }
@@ -738,16 +722,6 @@ rec {
   };
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
-  xdg.configFile."zsh/completion.zsh".source = ./zsh/completion.zsh;
-  xdg.configFile."zsh/vendor-completions".source = with pkgs;
-    runCommand "vendored-zsh-completions" { } ''
-      set -euo pipefail
-      mkdir -p $out
-      ${fd}/bin/fd -t f '^_[^.]+$' \
-        ${lib.escapeShellArgs home.packages} \
-        | xargs -0 -I {} bash -c '${ripgrep}/bin/rg -0l "^#compdef" $@ || :' _ {} \
-        | xargs -0 cp -t $out/
-    '';
 
   # Setting up aspell
   home.file.".aspell.conf".text = ''

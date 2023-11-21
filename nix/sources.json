@@ -83,18 +83,6 @@
         "url": "https://github.com/knl/hs.winter/archive/94505beb073d4ba0f003b1374dae48e0b6314baa.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "mac-zsh-completions": {
-        "branch": "master",
-        "description": "macOS specific additional completion definitions for Zsh.",
-        "homepage": null,
-        "owner": "scriptingosx",
-        "repo": "mac-zsh-completions",
-        "rev": "303f25c8b30f3c7351a7bcaaf4b6f01818c3f1ad",
-        "sha256": "0j9npy2xivgr9blcnnig8dzikac9y5j1qsl75b6k4zbcwrd89afk",
-        "type": "tarball",
-        "url": "https://github.com/scriptingosx/mac-zsh-completions/archive/303f25c8b30f3c7351a7bcaaf4b6f01818c3f1ad.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
@@ -105,18 +93,6 @@
         "sha256": "0016l7230gd2kdh0g2w573r9a2krqb7x4ifcjhhsn4h1bwap7qr0",
         "type": "tarball",
         "url": "https://github.com/nmattia/niv/archive/723f0eeb969a730db3c30f977c2b66b9dce9fe4a.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "nix-zsh-completions": {
-        "branch": "master",
-        "description": "ZSH Completions for Nix",
-        "homepage": null,
-        "owner": "spwhitt",
-        "repo": "nix-zsh-completions",
-        "rev": "a7c8781b5a18026fbc3edb36397931526f243590",
-        "sha256": "0r99m8c2b4hrnnz306qjl26lnj3lbzilrs3lj69lx39yllh6jar5",
-        "type": "tarball",
-        "url": "https://github.com/spwhitt/nix-zsh-completions/archive/a7c8781b5a18026fbc3edb36397931526f243590.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -177,18 +153,6 @@
         "sha256": "1m8yawj7skbjw0c5ym59r1y88klhjl6abvbwzy6b1xyx3vfb7qh7",
         "type": "tarball",
         "url": "https://github.com/zsh-users/zsh-autosuggestions/archive/c3d4e576c9c86eac62884bd47c01f6faed043fc5.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "zsh-completions": {
-        "branch": "master",
-        "description": "Additional completion definitions for Zsh.",
-        "homepage": "",
-        "owner": "zsh-users",
-        "repo": "zsh-completions",
-        "rev": "9da7488c1152d786d237b45cbe5546eb90fc5f85",
-        "sha256": "1x0z9bmwg0blgjz9cfdvm45agphq5kklfk9vz2p5qcyfbx6db3cj",
-        "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-completions/archive/9da7488c1152d786d237b45cbe5546eb90fc5f85.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
