@@ -744,15 +744,6 @@ rec {
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
 
-  home.sessionVariables = rec {
-    NIX_SSL_CERT_FILE = "${imcCerts}/etc/ssl/certs/ca-bundle.crt";
-    SSL_CERT_FILE = NIX_SSL_CERT_FILE;
-    REQUESTS_CA_BUNDLE = NIX_SSL_CERT_FILE;
-    PIP_CERT = NIX_SSL_CERT_FILE;
-    GIT_SSL_CAINFO = NIX_SSL_CERT_FILE;
-    NODE_EXTRA_CA_CERTS = NIX_SSL_CERT_FILE;
-  };
-
   xdg.configFile."wezterm".source = link ./configs/wezterm;
 
   # Setting up aspell
