@@ -81,62 +81,44 @@ let
     };
   };
 
-  wezterm_app_ = let
-    app = "WezTerm.app";
-    version = "20230712-072601-f4abf8fd";
-    altIcon = pkgs.fetchurl {
-      url = "https://github.com/mikker/wezterm-icon/raw/main/wezterm.icns";
-      hash = "sha256-svfuxXlRmFW+9n40LBm3JygzLbp90C4LAnCQAr4XFDw=";
-    };
-    fileicon-src = builtins.readFile (pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/mklement0/fileicon/master/bin/fileicon";
-      hash = "sha256-7RRjBiktPfKvnD7OLouHe57nWbur+7/W36QBSGZgBks=";
-    });
-    fileicon = (pkgs.writeScriptBin "fileicon" fileicon-src).overrideAttrs (old: {
-      buildCommand = old.buildCommand + ''
-        patchShebangs $out
-        substituteInPlace $out/bin/fileicon \
-          --replace osascript /usr/bin/osascript
-        chmod a+x $out/bin/fileicon
-      '';
-  });
-  in
-  pkgs.stdenvNoCC.mkDerivation rec {
-    pname = "wezterm";
-    inherit version;
-
-    src = pkgs.fetchzip {
-      url = "https://github.com/wez/wezterm/releases/download/${version}/WezTerm-macos-${version}.zip";
-      hash = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
-    };
-
-    buildInputs = [ pkgs.undmg ];
-    installPhase = ''
-      mkdir -p "$out/Applications/"
-      cp -R . "$out/Applications/"
-      # cp ${altIcon} $out/Applications/WezTerm.app/Contents/Resources/terminal.icns
-      # ${pkgs.darwin.cctools}/bin/codesign_allocate -r -i -o $out/Applications/WezTerm.app
-    '';
-
-    meta = {
-      description = "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust";
-      homepage = "https://wezfurlong.org/wezterm";
-      changelog = "https://wezfurlong.org/wezterm/changelog.html#${version}";
-      license = pkgs.lib.licenses.mit;
-      platforms = pkgs.lib.platforms.darwin;
-    };
-  };
-
   wezterm_app = let
     altIcon = pkgs.fetchurl {
       url = "https://github.com/mikker/wezterm-icon/raw/main/wezterm.icns";
       hash = "sha256-svfuxXlRmFW+9n40LBm3JygzLbp90C4LAnCQAr4XFDw=";
     };
-  in pkgs.wezterm.overrideAttrs (old: {
-    postPatch = old.postPatch + ''
-      cp ${altIcon} assets/macos/WezTerm.app/Contents/Resources/terminal.icns
-    '';
-  });
+    # this works on my old intels and github
+    wezterm_app_intel = pkgs.stdenvNoCC.mkDerivation rec {
+      pname = "wezterm";
+      version = "20230712-072601-f4abf8fd";
+
+      src = pkgs.fetchzip {
+        url = "https://github.com/wez/wezterm/releases/download/${version}/WezTerm-macos-${version}.zip";
+        hash = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
+      };
+
+      buildInputs = [ pkgs.undmg ];
+      installPhase = ''
+        mkdir -p "$out/Applications/"
+        cp -R . "$out/Applications/"
+        cp ${altIcon} $out/Applications/WezTerm.app/Contents/Resources/terminal.icns
+      '';
+
+      meta = {
+        description = "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust";
+        homepage = "https://wezfurlong.org/wezterm";
+        changelog = "https://wezfurlong.org/wezterm/changelog.html#${version}";
+        license = pkgs.lib.licenses.mit;
+        platforms = pkgs.lib.platforms.darwin;
+      };
+    };
+    # this works on my m1
+    wezterm_app_m1 = pkgs.wezterm.overrideAttrs (old: {
+      postPatch = old.postPatch + ''
+        cp ${altIcon} assets/macos/WezTerm.app/Contents/Resources/terminal.icns
+      '';
+    });
+    in
+      (if (pkgs.stdenv.isDarwin && pkgs.stdenv.isAarch64) then wezterm_app_m1 else wezterm_app_intel);
 
   wrapEmacsclient = { emacs }:
     pkgs.writeShellScriptBin "emacs.bash" (''
