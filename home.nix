@@ -81,7 +81,7 @@ let
     };
   };
 
-  wezterm_app = let
+  wezterm_app_ = let
     app = "WezTerm.app";
     version = "20230712-072601-f4abf8fd";
     altIcon = pkgs.fetchurl {
@@ -126,6 +126,17 @@ let
       platforms = pkgs.lib.platforms.darwin;
     };
   };
+
+  wezterm_app = let
+    altIcon = pkgs.fetchurl {
+      url = "https://github.com/mikker/wezterm-icon/raw/main/wezterm.icns";
+      hash = "sha256-svfuxXlRmFW+9n40LBm3JygzLbp90C4LAnCQAr4XFDw=";
+    };
+  in pkgs.wezterm.overrideAttrs (old: {
+    postPatch = old.postPatch + ''
+      cp ${altIcon} assets/macos/WezTerm.app/Contents/Resources/terminal.icns
+    '';
+  });
 
   wrapEmacsclient = { emacs }:
     pkgs.writeShellScriptBin "emacs.bash" (''
@@ -327,7 +338,7 @@ rec {
     yubikey-manager
     yubikey-personalization
     watch
-    wezterm
+    wezterm_app
     zstd
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = theEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
@@ -500,7 +511,7 @@ rec {
       XDG_DATA_HOME = xdg.dataHome;
 
       GOPATH = "$HOME/go";
-      PATH = "$HOME/bin:$GOPATH/bin:$HOME/.emacs.d/bin:${wezterm_app}/Applications/WezTerm.app/Contents/MacOS/:$PATH";
+      PATH = "$HOME/bin:$GOPATH/bin:$HOME/.emacs.d/bin:$PATH";
       TERM = "xterm-256color";
 
       LESS = "-F -g -i -M -R -S -w -X -z-4";
@@ -681,9 +692,6 @@ rec {
       # need to rebind the key again, since plugins are sourced before sourcing fzf
       bindkey '^R' histdb-fzf-widget
       # zsh-histdb end
-
-      # wezterm integration
-      source "${wezterm_app}/Applications/WezTerm.app/Contents/Resources/wezterm.sh"
     '';
 
     loginExtra = ''
