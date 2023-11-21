@@ -739,10 +739,6 @@ rec {
   # Karabiner's config file
   xdg.configFile."karabiner/karabiner.json".source = link ./configs/karabiner/karabiner.json;
 
-  # iTerm2 settings
-  # Use link here, so when something changes, it gets propagated back
-  xdg.configFile."iterm2/com.googlecode.iterm2.plist".source = link ./preferences/com.googlecode.iterm2.plist;
-
   # Use cachix to speed up some fetches (niv, specifically)
   xdg.configFile."nix/nix.conf".text = ''
     experimental-features = nix-command flakes
