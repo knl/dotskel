@@ -31,6 +31,8 @@ let
 
   python3Custom = pkgs.python3.buildEnv.override {
     extraLibs = with pkgs.python3Packages; [ ipython pip virtualenv ];
+  };
+
   espanso_app = let
     app = "espanso.app";
     version = "2.1.8";
@@ -44,7 +46,6 @@ let
         hash = "sha256-WmJ84W/Y3XPm0pAgb80LIT1Y15fu/SxYRBhNkLLc5IQ=";
       };
     };
-
   in
   pkgs.stdenvNoCC.mkDerivation rec {
     pname = "espanso";
