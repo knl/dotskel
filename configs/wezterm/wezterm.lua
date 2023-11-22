@@ -23,6 +23,9 @@ function scheme_for_appearance(appearance)
 end
 
 
+-- no point, comes from nixpkgs
+config.check_for_updates = false
+
 config.color_scheme = scheme_for_appearance(get_appearance())
 
 config.font = wezterm.font 'Iosevka Term SS08'
@@ -31,13 +34,23 @@ config.freetype_load_target = 'Light'
 config.freetype_render_target = 'HorizontalLcd'
 -- config.line_height = 1.0
 -- config.cell_width = 0.9
+
+-- Tab Bar Options
+config.enable_tab_bar = true
 config.use_fancy_tab_bar = true
-config.force_reverse_video_cursor = true
 config.hide_tab_bar_if_only_one_tab = false
+config.show_tab_index_in_tab_bar = false
+
 config.adjust_window_size_when_changing_font_size = false
 config.max_fps = 120
-config.tab_max_width = 32
+
+config.term = "wezterm"
 config.window_decorations = "RESIZE"
+config.scrollback_lines = 10000
+config.enable_scroll_bar = true
+
+config.quick_select_alphabet = "colemak"
+config.selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%"
 
 config.leader = { key = '/', mods = 'SUPER', timeout_milliseconds = 2000 }
 config.keys = {
@@ -72,10 +85,89 @@ config.keys = {
     mods = "CMD",
     action = act.ClearScrollback 'ScrollbackAndViewport',
   },
+  { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
+  { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
 }
 
--- Suggested Alphabet for Colemak
-config.quick_select_alphabet = "arstqwfpzxcvneioluymdhgjbk"
+config.mouse_bindings = {
+  -- Change the default click behavior so that it only selects
+  -- text and doesn't open hyperlinks
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'NONE',
+    action = act.CompleteSelection 'ClipboardAndPrimarySelection',
+  },
+
+  -- and make CMD-Click open hyperlinks
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = act.OpenLinkAtMouseCursor,
+  },
+  {
+    event = { Down = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = act.Nop,
+  },
+}
+
+-- Equivalent to POSIX basename(3)
+-- Given "/foo/bar" returns "bar"
+-- Given "c:\\foo\\bar" returns "bar"
+function basename(s)
+  return string.gsub(s, '(.*[/\\])(.*)', '%2')
+end
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+  local GLYPH_CIRCLE = ""
+  -- local GLYPH_CIRCLE = utf8.char(0xf111)
+  local pane = tab.active_pane
+  local home_dir = wezterm.home_dir
+
+  local cwd = pane.current_working_dir or '<->'
+  cwd = string.gsub(cwd, home_dir, "~")
+  cwd = string.gsub(cwd, "~/work", "~w")
+  cwd = string.gsub(cwd, "~/dotfiles/dotskel", "~skel")
+  cwd = string.gsub(cwd, "file://", "")
+  cwd = string.gsub(cwd, "/$", "")
+  if string.len(cwd) > 20 then
+    cwd = ".../" .. basename(cwd)
+  end
+
+  local proc = basename(pane.foreground_process_name)
+  proc = string.gsub(proc, "zsh", "")
+  if proc ~= "" then
+    proc = proc .. " "
+  end
+
+  local title = proc .. cwd
+
+  local std_tbl = {
+    -- {Background={Color="blue"}},
+    {Text=tab.tab_index + 1 .. ": "},
+    {Text=title .. " "},
+  }
+  if tab.is_active then
+    return std_tbl
+  end
+  local has_unseen_output = false
+  for _, pane in ipairs(tab.panes) do
+    if pane.has_unseen_output then
+      has_unseen_output = true
+      break;
+    end
+  end
+  if has_unseen_output then
+    return {
+      {Text=tab.tab_index + 1 .. ": "},
+      {Foreground={AnsiColor="Navy"}},
+      -- {Intensity="Bold"},
+      {Text=title .. " "},
+      -- {Text=" *"},
+    }
+  end
+  return std_tbl
+end)
 
 -- and finally, return the configuration to wezterm
 return config
