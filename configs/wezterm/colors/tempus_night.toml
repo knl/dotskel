@@ -13,13 +13,13 @@ background = "#1a1a1a"
 
 # Overrides the cell background color when the current cell is occupied by the
 # cursor and the cursor style is set to Block
-cursor_bg = "#e0e0e0"
+cursor_bg = "#c4bdaf"
 # Overrides the text color when the current cell is occupied by the cursor
-cursor_fg = "#1a1a1a"
+cursor_fg = "#242536"
 # Specifies the border color of the cursor when the cursor style is set to Block,
 # or the color of the vertical or horizontal bar when the cursor style is set to
 # Bar or Underline.
-cursor_border = "#e0e0e0"
+cursor_border = "#c4bdaf"
 
 # the foreground color of selected text
 selection_fg = "#1a1a1a"
@@ -27,12 +27,12 @@ selection_fg = "#1a1a1a"
 selection_bg = "#e0e0e0"
 
 # The color of the scrollbar "thumb"; the portion that represents the current viewport
-# scrollbar_thumb = '#222222',
+scrollbar_thumb = '#c4bdaf',
 
 # The color of the split lines between panes
-# split = '#444444',
+split = '#242536',
 
-# visual_bell = '#ccd0da'
+visual_bell = '#d7ae00'
 
 ansi = [
   '#1a1a1a',
