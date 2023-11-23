@@ -27,10 +27,10 @@ selection_fg = "#282b2b"
 selection_bg = "#b6e0ca"
 
 # The color of the scrollbar "thumb"; the portion that represents the current viewport
-scrollbar_thumb = '#b0c8ca',
+scrollbar_thumb = '#b0c8ca'
 
 # The color of the split lines between panes
-split = '#323535',
+split = '#323535'
 
 visual_bell = '#bbde4f'
 
