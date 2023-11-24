@@ -32,21 +32,26 @@ config.font = wezterm.font 'Iosevka Term SS08'
 config.font_size = 16.0
 config.freetype_load_target = 'Light'
 config.freetype_render_target = 'HorizontalLcd'
--- config.line_height = 1.0
--- config.cell_width = 0.9
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 -- Tab Bar Options
 config.enable_tab_bar = true
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = false
-config.show_tab_index_in_tab_bar = false
+config.show_tab_index_in_tab_bar = true
 
 config.adjust_window_size_when_changing_font_size = false
 config.max_fps = 120
 
+config.set_environment_variables = {
+  TERMINFO_DIRS = '/home/user/.nix-profile/share/terminfo',
+  -- fix a bug with latest jq
+  JQ_COLORS = '1;30:0;39:0;39:0;39:0;32:1;39:1;39',
+}
 config.term = "wezterm"
+
 config.window_decorations = "RESIZE"
-config.scrollback_lines = 10000
+config.scrollback_lines = 65000
 config.enable_scroll_bar = true
 
 config.quick_select_alphabet = "colemak"
@@ -58,10 +63,7 @@ config.keys = {
   {
     key = 'LeftArrow',
     mods = 'OPT',
-    action = act.SendKey {
-      key = 'b',
-      mods = 'ALT',
-    },
+    action = act.SendKey { key = 'b', mods = 'ALT', },
   },
   {
     key = 'RightArrow',
@@ -91,11 +93,11 @@ config.keys = {
 
 config.mouse_bindings = {
   -- Change the default click behavior so that it only selects
-  -- text and doesn't open hyperlinks
+  -- text and doesn't open hyperlinks. It also populates the clipboard
   {
-    event = { Up = { streak = 1, button = 'Left' } },
-    mods = 'NONE',
-    action = act.CompleteSelection 'ClipboardAndPrimarySelection',
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = wezterm.action.CompleteSelection "Clipboard",
   },
 
   -- and make CMD-Click open hyperlinks
