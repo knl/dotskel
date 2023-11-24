@@ -59,17 +59,17 @@ config.selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%"
 
 config.leader = { key = '/', mods = 'SUPER', timeout_milliseconds = 2000 }
 config.keys = {
+  -- Open in current cwd
+  { key = "t", mods = "SHIFT|SUPER", action = act.SpawnTab("CurrentPaneDomain") },
+  -- Open in home by default
+  { key = "t", mods = "SUPER", action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, domain = "CurrentPaneDomain" }) },
+  -- sane splits
+  { key = "_", mods = "SHIFT|SUPER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+  { key = "|", mods = "SHIFT|SUPER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
   -- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match Terminal.app behavior
-  {
-    key = 'LeftArrow',
-    mods = 'OPT',
-    action = act.SendKey { key = 'b', mods = 'ALT', },
-  },
-  {
-    key = 'RightArrow',
-    mods = 'OPT',
-    action = act.SendKey { key = 'f', mods = 'ALT' },
-  },
+  { key = 'LeftArrow', mods = 'OPT', action = act.SendKey { key = 'b', mods = 'ALT', } },
+  { key = 'RightArrow', mods = 'OPT', action = act.SendKey { key = 'f', mods = 'ALT' } },
   {
     key = ',',
     mods = 'LEADER',
@@ -79,14 +79,10 @@ config.keys = {
         -- line is set only if enter is entered
         if line then window:active_tab():set_title(line) end
       end),
-    },
+    }
   },
   -- from iTerm, clear everything
-  {
-    key = "k",
-    mods = "CMD",
-    action = act.ClearScrollback 'ScrollbackAndViewport',
-  },
+  { key = "k", mods = "CMD", action = act.ClearScrollback 'ScrollbackAndViewport' },
   { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
   { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
 }
@@ -120,9 +116,71 @@ function basename(s)
   return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
 
+local function TableConcat(t1,t2)
+    for i=1,#t2 do
+        t1[#t1+1] = t2[i]
+    end
+    return t1
+end
+
+local function get_process_icon(process_name)
+	local process_icons = {
+		["nvim"] = {
+			-- { Foreground = { Color = palette.green } },
+			{ Text = wezterm.nerdfonts.custom_vim },
+		},
+		["vim"] = {
+			-- { Foreground = { Color = palette.green } },
+			{ Text = wezterm.nerdfonts.dev_vim },
+		},
+		["zsh"] = {
+			-- { Foreground = { Color = palette.peach } },
+			{ Text = wezterm.nerdfonts.dev_terminal },
+		},
+		["bash"] = {
+			-- { Foreground = { Color = palette.subtext0 } },
+			{ Text = wezterm.nerdfonts.cod_terminal_bash },
+		},
+		["htop"] = {
+			-- { Foreground = { Color = palette.yellow } },
+			{ Text = wezterm.nerdfonts.cod_pulse },
+		},
+		["cargo"] = {
+			-- { Foreground = { Color = palette.peach } },
+			{ Text = wezterm.nerdfonts.dev_rust },
+		},
+		["go"] = {
+			-- { Foreground = { Color = palette.sapphire } },
+			{ Text = wezterm.nerdfonts.mdi_language_go },
+		},
+		["git"] = {
+			-- { Foreground = { Color = palette.peach } },
+			{ Text = wezterm.nerdfonts.dev_git },
+		},
+		["tmux"] = {
+			-- { Foreground = { Color = palette.green } },
+			{ Text = wezterm.nerdfonts.cod_terminal_tmux },
+		},
+		["ssh"] = {
+			-- { Foreground = { Color = palette.sapphire } },
+			{ Text = wezterm.nerdfonts.cod_remote },
+		},
+	}
+
+	if process_name == "" then
+		process_name = "zsh"
+	end
+
+	return (
+		process_icons[process_name]
+			or {
+             -- { Foreground = { Color = palette.sky } },
+             { Text = process_name },
+            }
+	)
+end
+
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-  local GLYPH_CIRCLE = ""
-  -- local GLYPH_CIRCLE = utf8.char(0xf111)
   local pane = tab.active_pane
   local home_dir = wezterm.home_dir
 
@@ -132,23 +190,26 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   cwd = string.gsub(cwd, "~/dotfiles/dotskel", "~skel")
   cwd = string.gsub(cwd, "file://", "")
   cwd = string.gsub(cwd, "/$", "")
-  if string.len(cwd) > 20 then
+  if string.len(cwd) > max_width - 4 then
     cwd = ".../" .. basename(cwd)
   end
 
   local proc = basename(pane.foreground_process_name)
-  proc = string.gsub(proc, "zsh", "")
-  if proc ~= "" then
-    proc = proc .. " "
-  end
+  -- proc = string.gsub(proc, "zsh", "")
+  -- if proc ~= "" then
+  --  proc = proc .. " "
+  -- end
 
-  local title = proc .. cwd
-
-  local std_tbl = {
-    -- {Background={Color="blue"}},
-    {Text=tab.tab_index + 1 .. ": "},
-    {Text=title .. " "},
-  }
+  local std_tbl = TableConcat(
+    TableConcat({
+        {Text=tab.tab_index + 1 .. ": "},
+      },
+      get_process_icon(proc)
+    ),
+    {
+      {Text=" " .. cwd},
+    }
+  )
   if tab.is_active then
     return std_tbl
   end
@@ -160,16 +221,89 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     end
   end
   if has_unseen_output then
-    return {
-      {Text=tab.tab_index + 1 .. ": "},
-      {Foreground={AnsiColor="Navy"}},
-      -- {Intensity="Bold"},
-      {Text=title .. " "},
-      -- {Text=" *"},
-    }
+    return table.insert(std_tbl, 2,
+      {Foreground={AnsiColor="Navy"},}
+    )
   end
   return std_tbl
 end)
+
+local function get_tab_title(tab_info)
+    local title = tab_info.tab_title
+    if title and #title > 0 then
+        return title
+    end
+
+    local pane = tab_info.active_pane
+    if pane ~= nil then
+        local foreground_process = pane.foreground_process_name
+        if foreground_process == nil then
+            foreground_process = 'Unknown'
+        end
+        -- 'basename': https://wezfurlong.org/wezterm/config/lua/pane/get_foreground_process_name.html
+        local tab_title = string.gsub(foreground_process, '(.*[/\\])(.*)', '%2')
+        return tab_title
+    end
+
+    return 'Unknown'
+end
+
+local function trim_tab_title(config, index, tab_title)
+    local max_name_width = config.tab_max_width - 1 - string.len(tostring(index))
+    return string.sub(tab_title, 1, max_name_width)
+end
+
+-- wezterm.on(
+--     'format-tab-title',
+--     function(tab_info, _, _, config, _, _)
+--         local built_title = {}
+
+--         -- One index plus a separator. EG> '1:', '2:', '3:', etc.
+--         local one_indexed = tab_info.tab_index + 1
+--         table.insert(built_title, { Text = tostring(one_indexed) .. ':' })
+
+--         -- The custom tab title or the foreground process name.
+--         local tab_title = get_tab_title(tab_info)
+
+--         -- Trim the tab title to fit the tab width and accommodate the active
+--         -- and last tab indicators.
+--         local trimmed_name = trim_tab_title(config, one_indexed, tab_title)
+--         table.insert(built_title, { Text = trimmed_name })
+
+--         -- Add any indicators or a whitespace to stop shifting.
+--         if tab_info.is_active then
+--             table.insert(built_title, { Attribute = { Intensity = 'Bold' } })
+--             table.insert(built_title, { Text = '*' })
+--         elseif wezterm.GLOBAL.tab_state.last_tab_id == tab_info.tab_id then
+--             table.insert(built_title, { Text = '-' })
+--         else
+--             table.insert(built_title, { Text = ' ' })
+--         end
+
+--         -- Padding.
+--         table.insert(built_title, { Text = ' ' })
+
+--         return wezterm.format(built_title)
+--     end
+-- )
+
+-- wezterm.on(
+--   'format-tab-title',
+--   function(tab, tabs, panes, config, hover, max_width)
+--     local zoomed = ''
+--     if tab.active_pane.is_zoomed then
+--       zoomed = ' [Z]'
+--     end
+
+--     if tab.is_active then
+--       return {
+--         { Attribute = { Intensity = "Bold" } },
+--         { Text = ' ' .. tab.tab_index + 1 .. ' ' .. tab.active_pane.title .. zoomed .. ' ' },
+--       }
+--     end
+--     return ' ' .. tab.tab_index + 1 .. ' ' .. tab.active_pane.title .. zoomed .. ' '
+--   end
+-- )
 
 -- and finally, return the configuration to wezterm
 return config
