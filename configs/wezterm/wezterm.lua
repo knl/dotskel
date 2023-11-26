@@ -113,7 +113,10 @@ config.mouse_bindings = {
 -- Given "/foo/bar" returns "bar"
 -- Given "c:\\foo\\bar" returns "bar"
 function basename(s)
-  return string.gsub(s, '(.*[/\\])(.*)', '%2')
+  if s then
+    return string.gsub(s, '(.*[/\\])(.*)', '%2')
+  end
+  return nil
 end
 
 local function TableConcat(t1,t2)
