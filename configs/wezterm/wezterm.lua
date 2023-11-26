@@ -44,7 +44,7 @@ config.adjust_window_size_when_changing_font_size = false
 config.max_fps = 120
 
 config.set_environment_variables = {
-  TERMINFO_DIRS = '/home/user/.nix-profile/share/terminfo',
+  TERMINFO_DIRS = wezterm.home_dir .. '/.nix-profile/share/terminfo',
   -- fix a bug with latest jq
   JQ_COLORS = '1;30:0;39:0;39:0;39:0;32:1;39:1;39',
 }
