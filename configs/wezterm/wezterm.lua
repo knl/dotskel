@@ -197,22 +197,27 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     cwd = ".../" .. basename(cwd)
   end
 
-  local proc = basename(pane.foreground_process_name)
-  -- proc = string.gsub(proc, "zsh", "")
-  -- if proc ~= "" then
-  --  proc = proc .. " "
-  -- end
+  local proc, host, domain
 
-  local std_tbl = TableConcat(
-    TableConcat({
-        {Text=tab.tab_index + 1 .. ": "},
-      },
-      get_process_icon(proc)
-    ),
-    {
-      {Text=" " .. cwd},
-    }
-  )
+  if pane.domain_name:find("SSH:", 1, true) == 1 then
+    proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.user_vars.WEZTERM_SHELL) or pane.title
+    host = escape(pane.user_vars.WEZTERM_HOST) or ""
+    domain = pane.domain_name .. ": "
+  else
+    proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.foreground_process_name) or pane.title
+    host = ""
+    domain = ""
+  end
+
+  local std_tbl = get_process_icon(proc)
+  -- first row, actually
+  table.insert(std_tbl, 1, {Text=tab.tab_index + 1 .. ": "})
+  -- append
+  if domain ~= "" then
+    table.insert(std_tbl, {Text=" " .. domain})
+  end
+  table.insert(std_tbl, {Text=" " .. cwd})
+  
   if tab.is_active then
     return std_tbl
   end
