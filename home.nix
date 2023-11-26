@@ -692,6 +692,9 @@ rec {
       # need to rebind the key again, since plugins are sourced before sourcing fzf
       bindkey '^R' histdb-fzf-widget
       # zsh-histdb end
+
+      # wezterm shell integration
+      source "${config.home.profileDirectory}/etc/profile.d/wezterm.sh"
     '';
 
     loginExtra = ''
