@@ -96,13 +96,31 @@ let
         hash = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
       };
 
+      nativeBuildInputs = [
+        pkgs.installShellFiles
+        pkgs.ncurses # tic for terminfo
+      ];
       buildInputs = [ pkgs.undmg ];
       installPhase = ''
         mkdir -p "$out/Applications/"
         cp -R . "$out/Applications/"
         cp ${altIcon} $out/Applications/WezTerm.app/Contents/Resources/terminal.icns
-      '';
 
+        mkdir -p $out/nix-support
+        echo "${passthru.terminfo}" >> $out/nix-support/propagated-user-env-packages
+
+        install -Dm644 ./WezTerm.app/Contents/Resources/wezterm.sh -t $out/etc/profile.d
+    '';
+
+      passthru = {
+        terminfo = pkgs.runCommand "wezterm-terminfo"
+          {
+            nativeBuildInputs = [ pkgs.ncurses ];
+          } ''
+          mkdir -p $out/share/terminfo $out/nix-support
+          tic -x -o $out/share/terminfo ${pkgs.wezterm.src}/termwiz/data/wezterm.terminfo
+        '';
+      };
       meta = {
         description = "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust";
         homepage = "https://wezfurlong.org/wezterm";
