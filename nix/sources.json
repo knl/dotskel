@@ -93,9 +93,9 @@
         "sha256": "1c7pf6fp99y3gsn8pb73h1gwlz3ag2i0h5i8pl7i0f09p3ra9jr3",
         "type": "tarball",
         "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/0262a8c4fa41541438e489572bba8f0b4b689ae7.tar.gz",
-         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-     },
-     "niv": {
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
         "homepage": "https://github.com/nmattia/niv",
@@ -113,10 +113,10 @@
         "homepage": "",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3f21a22b5aafefa1845dec6f4a378a8f53d8681c",
-        "sha256": "15y8k3hazg91kscbmn7dy6m0q6zvmhlvvhg97gcl5kw87y0svzxk",
+        "rev": "d9de123937bc971bb232fc79d35a91f97beb2641",
+        "sha256": "03828lb6wz7v78q7r0k8fcrhw8x5yrll8s2kyg3myicljicnx3z0",
         "type": "tarball",
-        "url": "https://github.com/nixos/nixpkgs/archive/3f21a22b5aafefa1845dec6f4a378a8f53d8681c.tar.gz",
+        "url": "https://github.com/nixos/nixpkgs/archive/d9de123937bc971bb232fc79d35a91f97beb2641.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerlevel10k": {
