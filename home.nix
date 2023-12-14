@@ -369,7 +369,7 @@ rec {
     enable = true;
     config = {
       style = "header,changes";
-      theme = "Monokai Extended";
+      theme = "Monokai Extended Light";
     };
   };
   programs.carapace = {

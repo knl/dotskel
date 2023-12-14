@@ -1,0 +1,329 @@
+local wezterm = require 'wezterm'
+local act = wezterm.action
+
+-- In newer versions of wezterm, use the config_builder which will
+-- help provide clearer error messages
+local config = wezterm.config_builder and wezterm.config_builder() or {}
+
+-- wezterm.gui is not available to the mux server, so take care to
+-- do something reasonable when this config is evaluated by the mux
+function get_appearance()
+  if wezterm.gui then
+    return wezterm.gui.get_appearance()
+  end
+  return 'Light'
+end
+
+function scheme_for_appearance(appearance)
+  if appearance:find 'Dark' then
+    return 'Tempus Night'
+  else
+    return 'Tempus Day'
+  end
+end
+
+
+-- no point, comes from nixpkgs
+config.check_for_updates = false
+
+config.color_scheme = scheme_for_appearance(get_appearance())
+
+config.font = wezterm.font 'Iosevka Term SS08'
+config.font_size = 16.0
+config.freetype_load_target = 'Light'
+config.freetype_render_target = 'HorizontalLcd'
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+
+-- Tab Bar Options
+config.enable_tab_bar = true
+config.use_fancy_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = false
+config.show_tab_index_in_tab_bar = true
+
+config.adjust_window_size_when_changing_font_size = false
+config.max_fps = 120
+
+config.set_environment_variables = {
+  TERMINFO_DIRS = wezterm.home_dir .. '/.nix-profile/share/terminfo',
+  -- fix a bug with latest jq
+  JQ_COLORS = '1;30:0;39:0;39:0;39:0;32:1;39:1;39',
+}
+config.term = "wezterm"
+
+config.window_decorations = "RESIZE"
+config.scrollback_lines = 65000
+config.enable_scroll_bar = true
+
+config.quick_select_alphabet = "colemak"
+config.selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%"
+
+config.leader = { key = '/', mods = 'SUPER', timeout_milliseconds = 2000 }
+config.keys = {
+  -- Open in current cwd
+  { key = "t", mods = "SHIFT|SUPER", action = act.SpawnTab("CurrentPaneDomain") },
+  -- Open in home by default
+  { key = "t", mods = "SUPER", action = act.SpawnCommandInNewTab({ cwd = wezterm.home_dir, domain = "CurrentPaneDomain" }) },
+  -- sane splits
+  { key = "_", mods = "SHIFT|SUPER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+  { key = "|", mods = "SHIFT|SUPER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
+  -- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match Terminal.app behavior
+  { key = 'LeftArrow', mods = 'OPT', action = act.SendKey { key = 'b', mods = 'ALT', } },
+  { key = 'RightArrow', mods = 'OPT', action = act.SendKey { key = 'f', mods = 'ALT' } },
+  {
+    key = ',',
+    mods = 'LEADER',
+    action = act.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line is set only if enter is entered
+        if line then window:active_tab():set_title(line) end
+      end),
+    }
+  },
+  -- from iTerm, clear everything
+  { key = "k", mods = "CMD", action = act.ClearScrollback 'ScrollbackAndViewport' },
+  { key = 'UpArrow', mods = 'SHIFT', action = act.ScrollToPrompt(-1) },
+  { key = 'DownArrow', mods = 'SHIFT', action = act.ScrollToPrompt(1) },
+}
+
+config.mouse_bindings = {
+  -- Change the default click behavior so that it only selects
+  -- text and doesn't open hyperlinks. It also populates the clipboard
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = wezterm.action.CompleteSelection "Clipboard",
+  },
+
+  -- and make CMD-Click open hyperlinks
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = act.OpenLinkAtMouseCursor,
+  },
+  {
+    event = { Down = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = act.Nop,
+  },
+}
+
+-- Equivalent to POSIX basename(3)
+-- Given "/foo/bar" returns "bar"
+-- Given "c:\\foo\\bar" returns "bar"
+local function basename(s)
+  if s then
+    return string.gsub(s, '(.*[/\\])(.*)', '%2')
+  end
+  return nil
+end
+
+local function escape(pattern)
+  if pattern == nil or pattern == "" then
+    return nil
+  end
+  return pattern:gsub("%W", "%%%1")
+end
+
+local function get_process_icon(process_name)
+	local process_icons = {
+		["nvim"] = {
+			-- { Foreground = { Color = palette.green } },
+			{ Text = wezterm.nerdfonts.custom_vim },
+		},
+		["vim"] = {
+			-- { Foreground = { Color = palette.green } },
+			{ Text = wezterm.nerdfonts.dev_vim },
+		},
+		["zsh"] = {
+			-- { Foreground = { Color = palette.peach } },
+			{ Text = wezterm.nerdfonts.dev_terminal },
+		},
+		["bash"] = {
+			-- { Foreground = { Color = palette.subtext0 } },
+			{ Text = wezterm.nerdfonts.cod_terminal_bash },
+		},
+		["htop"] = {
+			-- { Foreground = { Color = palette.yellow } },
+			{ Text = wezterm.nerdfonts.cod_pulse },
+		},
+		["cargo"] = {
+			-- { Foreground = { Color = palette.peach } },
+			{ Text = wezterm.nerdfonts.dev_rust },
+		},
+		["go"] = {
+			-- { Foreground = { Color = palette.sapphire } },
+			{ Text = wezterm.nerdfonts.mdi_language_go },
+		},
+		["git"] = {
+			-- { Foreground = { Color = palette.peach } },
+			{ Text = wezterm.nerdfonts.dev_git },
+		},
+		["tmux"] = {
+			-- { Foreground = { Color = palette.green } },
+			{ Text = wezterm.nerdfonts.cod_terminal_tmux },
+		},
+		["ssh"] = {
+			-- { Foreground = { Color = palette.sapphire } },
+			{ Text = wezterm.nerdfonts.cod_remote },
+		},
+	}
+
+	if process_name == "" then
+		process_name = "zsh"
+	end
+
+	return (
+		process_icons[process_name]
+			or {
+             -- { Foreground = { Color = palette.sky } },
+             { Text = process_name },
+            }
+	)
+end
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+  local pane = tab.active_pane
+  local home_dir = wezterm.home_dir
+
+  local proc, host, host_r, domain
+
+  if pane.domain_name:find("SSH:", 1, true) == 1 then
+    proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.user_vars.WEZTERM_SHELL) or pane.title
+    host = ""
+    host_r = escape(pane.user_vars.WEZTERM_HOST) or ""
+    domain = pane.domain_name .. ": "
+  else
+    proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.foreground_process_name) or pane.title
+    local despacer = string.gmatch(proc, "[^%s]+")
+    proc = despacer()
+    host_r = ""
+    if proc == 'ssh' then
+      host_r = despacer() or ""
+    end
+    host = escape(pane.user_vars.WEZTERM_HOST) or ""
+    domain = ""
+  end
+
+  local cwd = pane.current_working_dir or '<?>'
+  cwd = string.gsub(cwd, host, "")
+  cwd = string.gsub(cwd, home_dir, "~")
+  cwd = string.gsub(cwd, "~/work", "~w")
+  cwd = string.gsub(cwd, "~/dotfiles/dotskel", "~skel")
+  cwd = string.gsub(cwd, "file://", "")
+  cwd = string.gsub(cwd, "/$", "")
+  if string.len(cwd) > max_width - 4 then
+    cwd = ".../" .. basename(cwd)
+  end
+
+  local std_tbl = get_process_icon(proc)
+  -- first row, actually
+  table.insert(std_tbl, 1, {Text=tab.tab_index + 1 .. ": "})
+  -- append
+  if host_r ~= "" then
+    table.insert(std_tbl, {Text=" " .. host_r})
+  end
+  if domain ~= "" then
+    table.insert(std_tbl, {Text=" " .. domain})
+  end
+  table.insert(std_tbl, {Text=" " .. cwd})
+  
+  if tab.is_active then
+    return std_tbl
+  end
+  local has_unseen_output = false
+  for _, pane in ipairs(tab.panes) do
+    if pane.has_unseen_output then
+      has_unseen_output = true
+      break;
+    end
+  end
+  if has_unseen_output then
+    return table.insert(std_tbl, 2,
+      {Foreground={AnsiColor="Navy"},}
+    )
+  end
+  return std_tbl
+end)
+
+local function get_tab_title(tab_info)
+    local title = tab_info.tab_title
+    if title and #title > 0 then
+        return title
+    end
+
+    local pane = tab_info.active_pane
+    if pane ~= nil then
+        local foreground_process = pane.foreground_process_name
+        if foreground_process == nil then
+            foreground_process = 'Unknown'
+        end
+        -- 'basename': https://wezfurlong.org/wezterm/config/lua/pane/get_foreground_process_name.html
+        local tab_title = basename(foreground_process)
+        return tab_title
+    end
+
+    return 'Unknown'
+end
+
+local function trim_tab_title(config, index, tab_title)
+    local max_name_width = config.tab_max_width - 1 - string.len(tostring(index))
+    return string.sub(tab_title, 1, max_name_width)
+end
+
+-- wezterm.on(
+--     'format-tab-title',
+--     function(tab_info, _, _, config, _, _)
+--         local built_title = {}
+
+--         -- One index plus a separator. EG> '1:', '2:', '3:', etc.
+--         local one_indexed = tab_info.tab_index + 1
+--         table.insert(built_title, { Text = tostring(one_indexed) .. ':' })
+
+--         -- The custom tab title or the foreground process name.
+--         local tab_title = get_tab_title(tab_info)
+
+--         -- Trim the tab title to fit the tab width and accommodate the active
+--         -- and last tab indicators.
+--         local trimmed_name = trim_tab_title(config, one_indexed, tab_title)
+--         table.insert(built_title, { Text = trimmed_name })
+
+--         -- Add any indicators or a whitespace to stop shifting.
+--         if tab_info.is_active then
+--             table.insert(built_title, { Attribute = { Intensity = 'Bold' } })
+--             table.insert(built_title, { Text = '*' })
+--         elseif wezterm.GLOBAL.tab_state.last_tab_id == tab_info.tab_id then
+--             table.insert(built_title, { Text = '-' })
+--         else
+--             table.insert(built_title, { Text = ' ' })
+--         end
+
+--         -- Padding.
+--         table.insert(built_title, { Text = ' ' })
+
+--         return wezterm.format(built_title)
+--     end
+-- )
+
+-- wezterm.on(
+--   'format-tab-title',
+--   function(tab, tabs, panes, config, hover, max_width)
+--     local zoomed = ''
+--     if tab.active_pane.is_zoomed then
+--       zoomed = ' [Z]'
+--     end
+
+--     if tab.is_active then
+--       return {
+--         { Attribute = { Intensity = "Bold" } },
+--         { Text = ' ' .. tab.tab_index + 1 .. ' ' .. tab.active_pane.title .. zoomed .. ' ' },
+--       }
+--     end
+--     return ' ' .. tab.tab_index + 1 .. ' ' .. tab.active_pane.title .. zoomed .. ' '
+--   end
+-- )
+
+-- and finally, return the configuration to wezterm
+return config
+
