@@ -188,6 +188,9 @@
 
 (setq emojify-display-style 'unicode)
 
+;; Weeks should start on Monday
+(setq calendar-week-start-day 1)
+
 ;; (setq explicit-shell-file-name "/bin/zsh")
 ;; (setq shell-file-name "zsh")
 
