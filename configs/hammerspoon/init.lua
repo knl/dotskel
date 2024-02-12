@@ -2,6 +2,8 @@ local application = require "hs.application"
 local hotkey = require "hs.hotkey"
 local window = require "hs.window"
 
+require "colemak"
+
 local winter = require "winter"
 local win = winter.new()
 

@@ -759,6 +759,7 @@ rec {
 
   # It's Hammerspoon time
   home.file.".hammerspoon/init.lua".source = ./configs/hammerspoon/init.lua;
+  home.file.".hammerspoon/colemak.lua".source = ./configs/hammerspoon/colemak.lua;
   home.file.".hammerspoon/grille.lua".source = "${sources.hs-grille}/grille.lua";
   home.file.".hammerspoon/winter.lua".source = "${sources.hs-winter}/winter.lua";
 
