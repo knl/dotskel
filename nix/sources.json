@@ -125,10 +125,10 @@
         "homepage": "",
         "owner": "romkatv",
         "repo": "powerlevel10k",
-        "rev": "8e2a22d80ba9f5fd6c784f66dc52c21385eb2642",
-        "sha256": "18qvp4y7d8vmz3aqh6a48534v80pd0fvkd48ghz7xa7zc5q2pvrp",
+        "rev": "b973805f019cb9a4ecb1ccdf8879d89eb2b1b111",
+        "sha256": "1jbc7dfaykixy91xcyxczhslbwgpb6ijby3xwg13ch4zjpmagci2",
         "type": "tarball",
-        "url": "https://github.com/romkatv/powerlevel10k/archive/8e2a22d80ba9f5fd6c784f66dc52c21385eb2642.tar.gz",
+        "url": "https://github.com/romkatv/powerlevel10k/archive/b973805f019cb9a4ecb1ccdf8879d89eb2b1b111.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "rh": {
