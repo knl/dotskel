@@ -254,8 +254,8 @@ let
     fira-code
     font-awesome
     # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
-    (iosevka-bin.override { variant = "sgr-iosevka-term-ss08"; })
-    (iosevka-bin.override { variant = "etoile"; })
+    (iosevka-bin.override { variant = "SGr-IosevkaTermSS08"; })
+    (iosevka-bin.override { variant = "Etoile"; })
     powerline-fonts
     powerline-symbols
     source-code-pro
