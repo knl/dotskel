@@ -35,15 +35,15 @@ let
 
   espanso_app = let
     app = "espanso.app";
-    version = "2.1.8";
+    version = "2.2.1";
     sources = {
       darwin-x86_64 = pkgs.fetchzip {
         url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-Intel.zip";
-        hash = "sha256-tpdXT9wXS+fb0Ck63/lP/AkHImvQhiBefKfIC7bj9C0=";
+        hash = "sha256-tpdXT9wXS+fb0Ck63/lP/AkHImvQhiBefKfIC7bj3C0=";
       };
       darwin-aarch64 = pkgs.fetchzip {
         url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-M1.zip";
-        hash = "sha256-WmJ84W/Y3XPm0pAgb80LIT1Y15fu/SxYRBhNkLLc5IQ=";
+        hash = "sha256-L4jEGJw1CIH7sXIh79oovlQnDG+RHEKjglmeGQUx398=";
       };
     };
   in
