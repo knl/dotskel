@@ -176,7 +176,6 @@
   :config
   (setq atomic-chrome-url-major-mode-alist
         '(("github\\.com"        . gfm-mode)
-          ("emacs-china\\.org"   . gfm-mode)
           ("stackexchange\\.com" . gfm-mode)
           ("stackoverflow\\.com" . gfm-mode)))
 
