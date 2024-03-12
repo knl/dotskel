@@ -82,7 +82,10 @@
 (after! lsp-ui
   (setq lsp-ui-sideline-enable nil  ; no more useful than flycheck
         lsp-ui-doc-enable nil))     ; redundant with K
-                                    ;
+                                        ;
+
+;;; envrc
+(setq envrc-direnv-executable "~/.nix-profile/bin/direnv")
 
 ;;; :lang org
 (setq +org-roam-auto-backlinks-buffer nil
