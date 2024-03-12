@@ -39,6 +39,9 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type "relative")
 
+;; workaround for large title bar on macOS Sonoma
+;; see https://github.com/doomemacs/doomemacs/issues/7532
+(add-hook 'doom-after-init-hook (lambda () (tool-bar-mode 1) (tool-bar-mode 0)))
 
 (map! (:after evil-org
        :map evil-org-mode-map
