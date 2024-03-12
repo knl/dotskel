@@ -63,4 +63,6 @@ config.default_cwd = wez.home_dir
 --   { label = "Git Bash", args = { "C:/Program Files/Git/bin/bash.exe" }, cwd = "~" },
 -- }
 
+config.check_for_updates = false
+
 return config
