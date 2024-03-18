@@ -39,7 +39,7 @@ let
     sources = {
       darwin-x86_64 = pkgs.fetchzip {
         url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-Intel.zip";
-        hash = "sha256-tpdXT9wXS+fb0Ck63/lP/AkHImvQhiBefKfIC7bj3C0=";
+        hash = "sha256-lVO8Vwn7WIMIuLP1bKdG9fmsp6ll9JwzfiSGXMI9MR0=";
       };
       darwin-aarch64 = pkgs.fetchzip {
         url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-M1.zip";
