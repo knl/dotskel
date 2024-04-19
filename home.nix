@@ -16,7 +16,6 @@ let
       # (import sources.emacs-overlay)
     ] ++ overlays;
   };
-  devenv = import sources.devenv;
   niv = import sources.niv { };
   link = config.lib.file.mkOutOfStoreSymlink;
   # Darwin specific run-or-raise style script for emacs.
@@ -286,7 +285,7 @@ rec {
     alejandra
     cachix
     curl
-    devenv.default
+    devenv
     dua
     duf
     entr
