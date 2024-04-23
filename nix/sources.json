@@ -161,10 +161,10 @@
         "homepage": "",
         "owner": "larkery",
         "repo": "zsh-histdb",
-        "rev": "f73d9c843b512fe08ececea3edf512eb60ac84d1",
-        "sha256": "092fb15a6bp6dngx22s4jl8pns3xnirml5b3dc9wf7rcbka6rwa7",
+        "rev": "90a6c104d0fcc0410d665e148fa7da28c49684eb",
+        "sha256": "0n71m6k2w7zn5pmd5fdvmw7f14ss6lchm3q2zzdvfmcihskbbldy",
         "type": "tarball",
-        "url": "https://github.com/larkery/zsh-histdb/archive/f73d9c843b512fe08ececea3edf512eb60ac84d1.tar.gz",
+        "url": "https://github.com/larkery/zsh-histdb/archive/90a6c104d0fcc0410d665e148fa7da28c49684eb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb-fzf": {
