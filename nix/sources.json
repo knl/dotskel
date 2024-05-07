@@ -132,15 +132,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-async": {
-        "branch": "master",
+        "branch": "main",
         "description": "Because your terminal should be able to perform tasks asynchronously without external tools!",
         "homepage": null,
         "owner": "mafredri",
         "repo": "zsh-async",
-        "rev": "3ba6e2d1ea874bfb6badb8522ab86c1ae272923d",
-        "sha256": "1hbzaydsdvabwnyh7aj13qcd9mz4abx081s9jva5wcizpxf5j66y",
+        "rev": "ee1d11b68c38dec24c22b1c51a45e8a815a79756",
+        "sha256": "0wz6rna6bb28g0zkm8gykf8l2vf86i3c7qg3d19rk8fz560yci4s",
         "type": "tarball",
-        "url": "https://github.com/mafredri/zsh-async/archive/3ba6e2d1ea874bfb6badb8522ab86c1ae272923d.tar.gz",
+        "url": "https://github.com/mafredri/zsh-async/archive/ee1d11b68c38dec24c22b1c51a45e8a815a79756.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-autosuggestions": {
