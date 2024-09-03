@@ -209,10 +209,10 @@
         "homepage": "",
         "owner": "MichaelAquilina",
         "repo": "zsh-you-should-use",
-        "rev": "fc0be82b42b1cb205e67dbb4520cb77e248f710d",
-        "sha256": "10mb2saj024rxqyhflc6askfw0gi3sx90jsk1fwr4kr497qnijav",
+        "rev": "f13d39a1ae84219e4ee14e77d31bb774c91f2fe3",
+        "sha256": "1kb11rqhmsnv3939prb9f00c1giqy3200sjnhh7cxcfjcncq0y7v",
         "type": "tarball",
-        "url": "https://github.com/MichaelAquilina/zsh-you-should-use/archive/fc0be82b42b1cb205e67dbb4520cb77e248f710d.tar.gz",
+        "url": "https://github.com/MichaelAquilina/zsh-you-should-use/archive/f13d39a1ae84219e4ee14e77d31bb774c91f2fe3.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
