@@ -13,6 +13,24 @@ jobs:
   test-and-build:
     runs-on: macos-14
     steps:
+      - name: "Free up disk space"
+        run: |
+          sudo rm -rf \
+            "$AGENT_TOOLSDIRECTORY" \
+            /opt/google/chrome \
+            /opt/microsoft/msedge \
+            /opt/microsoft/powershell \
+            /opt/pipx \
+            /usr/lib/mono \
+            /usr/local/julia* \
+            /usr/local/lib/android \
+            /usr/local/lib/node_modules \
+            /usr/local/share/chromium \
+            /usr/local/share/powershell \
+            /usr/share/dotnet \
+            /usr/share/swift
+          find /Applications/ -name "Xcode*" | sort -r | tail --lines=+2 | xargs rm -rf
+          df -h /
       - uses: actions/checkout@v4
       - id: set_var
         run: |
