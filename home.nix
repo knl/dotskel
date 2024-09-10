@@ -294,7 +294,7 @@ rec {
     fd
     fortune
     gitAndTools.delta
-    gitAndTools.git-branchless
+    # gitAndTools.git-branchless
     gitAndTools.gitSVN
     gitAndTools.hub
     gnused
