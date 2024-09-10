@@ -88,11 +88,11 @@ let
     # this works on my old intels and github
     wezterm_app_intel = pkgs.stdenvNoCC.mkDerivation rec {
       pname = "wezterm";
-      version = "20230712-072601-f4abf8fd";
+      version = "20240203-110809-5046fc22";
 
       src = pkgs.fetchzip {
         url = "https://github.com/wez/wezterm/releases/download/${version}/WezTerm-macos-${version}.zip";
-        hash = "sha256-8PHHTVjcFDQ0Ic1UpUnMoYtSlxL1e/15zo5Jk9Sqb5E=";
+        hash = "sha256-Az+HlnK/lRJpUSGm5UKyma1l2PaBKNCGFiaYnLECMX8=";
       };
 
       nativeBuildInputs = [
