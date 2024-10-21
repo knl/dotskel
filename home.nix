@@ -473,7 +473,7 @@ rec {
     # .config/zsh/lib
     dotDir = ".config/zsh";
 
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     history = {
       size = 50000;
