@@ -30,7 +30,7 @@ local config = {}
 ---@see config.webgpu_preferred_adapter
 ---@see config.webgpu_power_preference
 ---@see config.webgpu_force_fallback_adapter
--- config.front_end = "WebGpu"
+config.front_end = "WebGpu"
 
 ---If set to `true`, forces the use of a fallback software (CPU based) rendering
 ---backend. The performance will not be as good as using a GPU.
