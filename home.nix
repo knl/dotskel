@@ -405,6 +405,10 @@ rec {
   # TODO: maybe patch https://github.com/berbiche/dotfiles/blob/b5cb06db7764a963ab10b943d9269a51b12991e0/profiles/dev/home-manager/emacs/default.nix#L42
   home.file.".doom.d".source = link ./configs/doom;
 
+  programs.jujutsu = {
+    enable = true;
+  };
+
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
