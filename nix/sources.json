@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "doomemacs",
         "repo": "doomemacs",
-        "rev": "c8a5e6ec1ca85a35f94d6c820c2fd8888373c2ae",
-        "sha256": "08cwhfwg4apm7rxfhkadlif79maklmx4k1il4rixwlc9gdy422lb",
+        "rev": "dea6552ef97d8d1b731bef17548d492e8b15566c",
+        "sha256": "1dll7ya5l62fdn6gixqacyrh244jqskj66g0byw2iij26r1zkm16",
         "type": "tarball",
-        "url": "https://github.com/doomemacs/doomemacs/archive/c8a5e6ec1ca85a35f94d6c820c2fd8888373c2ae.tar.gz",
+        "url": "https://github.com/doomemacs/doomemacs/archive/dea6552ef97d8d1b731bef17548d492e8b15566c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-overlay": {
