@@ -19,7 +19,11 @@ but I can live with it.
 
    The new installer from Determinate Systems is really good, and the option to use single user mode disappeared from all installers, so:
    #+begin_src bash
-     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
+       sh -s -- install \
+         --extra-conf "extra-substituters = https://knl.cachix.org https://nix-community.cachix.org https://niv.cachix.org https://cache.nixos.org" \
+         --extra-conf "extra-trusted-public-keys = knl.cachix.org-1:/iqUbqBexzvcDn5ee7Q3Kj1MBh6P9RTwEVh6hh9SDE0= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+ 
      source "$HOME/.nix-profile/etc/profile.d/nix.sh"
    #+end_src
 
