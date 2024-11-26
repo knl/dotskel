@@ -149,10 +149,10 @@
         "homepage": null,
         "owner": "zsh-users",
         "repo": "zsh-autosuggestions",
-        "rev": "e52ee8ca55bcc56a17c828767a3f98f22a68d4eb",
-        "sha256": "02p5wq93i12w41cw6b00hcgmkc8k80aqzcy51qfzi0armxig555y",
+        "rev": "0e810e5afa27acbd074398eefbe28d13005dbc15",
+        "sha256": "0y866dsm8l164afbyd9cafbl97yf9viqwms9bbn0799nwgsb15pk",
         "type": "tarball",
-        "url": "https://github.com/zsh-users/zsh-autosuggestions/archive/e52ee8ca55bcc56a17c828767a3f98f22a68d4eb.tar.gz",
+        "url": "https://github.com/zsh-users/zsh-autosuggestions/archive/0e810e5afa27acbd074398eefbe28d13005dbc15.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-histdb": {
