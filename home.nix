@@ -245,7 +245,6 @@ let
   myFonts = with pkgs; [
     emacs-all-the-icons-fonts
     emacsPackages.nerd-icons
-    nerdfonts
     fira-code
     font-awesome
     # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
@@ -254,7 +253,7 @@ let
     powerline-fonts
     powerline-symbols
     source-code-pro
-  ];
+  ] ++ pkgs.lib.attrValues (pkgs.lib.filterAttrs (_: v: pkgs.lib.isDerivation v) pkgs.nerd-fonts);
 
   patched-curl = pkgs.curl.overrideAttrs (oldAttrs: {
     patches = (oldAttrs.patches or []) ++ [
