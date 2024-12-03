@@ -207,7 +207,6 @@ let
         pkgs.binutils # native-comp needs 'as', provided by this
         (pkgs.ripgrep.override { withPCRE2 = true; })
         pkgs.zstd
-        pkgs.git
         (pkgs.git.override { openssh = pkgs.openssh_hpnWithKerberos; curl = patched-curl; })
         # :tools editorconfig
         pkgs.editorconfig-core-c
@@ -324,7 +323,6 @@ rec {
     niv.niv
     nixpkgs-fmt
     nmap
-    openssh # needed because macOS version is limited wrt yubikey
     openssh_hpnWithKerberos # needed because macOS version is limited wrt yubikey
     p7zip
     paperkey
