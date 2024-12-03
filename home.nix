@@ -28,10 +28,6 @@ let
         if result is not {} then perform action "AXRaise" of item 1 of result
     end tell' &> /dev/null || exit 0'';
 
-  python3Custom = pkgs.python3.buildEnv.override {
-    extraLibs = with pkgs.python3Packages; [ ipython pip virtualenv ];
-  };
-
   espanso_app = let
     app = "espanso.app";
     version = "2.2.1";
@@ -326,7 +322,7 @@ rec {
     openssh_hpnWithKerberos # needed because macOS version is limited wrt yubikey
     p7zip
     paperkey
-    python3Custom
+    python3
     readline
     ripgrep
     rsync
