@@ -331,11 +331,7 @@ rec {
     shfmt
     tree
     unar
-    # problems with fastparquet, hence the override
-    # problems with building skia-pathops (dep of fonttools, dep of visidata), hence comment out
-    # (visidata.overrideAttrs (old: rec {
-    #  propagatedBuildInputs = old.propagatedBuildInputs ++ [ python3Packages.pyarrow python3Packages.fastparquet ];
-    # }))
+    uv
     xz
     yq-go
     yubico-piv-tool
@@ -351,14 +347,6 @@ rec {
     # need to include the Emacs itself, as I'm avoiding programs.emacs because it makes doom unusable
     theEmacs
   ] ++ myFonts;
-
-  # TODO:
-  # Install the following apps (might need nix-darwin)
-  # hammerspoon
-  # karabiner
-  # istatmenus
-  # trello
-  # busycall
 
   # programs.emacs = {
   #   enable = true;
