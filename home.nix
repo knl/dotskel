@@ -38,7 +38,7 @@ let
     sources = {
       darwin-x86_64 = pkgs.fetchzip {
         url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-Intel.zip";
-        hash = "sha256-lVO8Vwn7WIMIuLP1bKdG9fmsp6ll9JwzfiSGXMI9MR0=";
+        hash = "sha256-lVO8Vwn7WIMIuLP1bKdG9fmsp6ll9JwzfiSGXMI9MR1=";
       };
       darwin-aarch64 = pkgs.fetchzip {
         url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-M1.zip";
@@ -52,7 +52,7 @@ let
 
     src = if pkgs.stdenv.isAarch64 then sources.darwin-aarch64 else sources.darwin-x86_64;
 
-    sourceRoot = "source";
+    # sourceRoot = "source";
 
     postPatch = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
     # substituteInPlace Espanso.app/Contents/Info.plist \
