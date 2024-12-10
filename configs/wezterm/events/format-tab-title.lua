@@ -52,16 +52,45 @@ function M.setup()
     if title == "zsh" or title == "bash" then
       ---full title truncation is not necessary since the dir name will be truncated
       is_truncation_needed = false
-      local cwd = fn.basename(pane.current_working_dir)
+      -- local cwd = fn.basename(pane:get_current_working_dir().file_path)
+      local cwd_uri = pane.current_working_dir
+      -- wez.log_info("cwd_uri = " .. cwd_uri)
+      if type(cwd_uri) == 'userdata' then
+        -- Running on a newer version of wezterm and we have
+        -- a URL object here, making this simple!
+
+        cwd = cwd_uri.file_path
+        hostname = cwd_uri.host or wezterm.hostname()
+      else
+        -- an older version of wezterm, 20230712-072601-f4abf8fd or earlier,
+        -- which doesn't have the Url object
+        cwd_uri = cwd_uri:sub(8)
+        local slash = cwd_uri:find '/'
+        if slash then
+          hostname = cwd_uri:sub(1, slash - 1)
+          -- and extract the cwd from the uri, decoding %-encoding
+          cwd = cwd_uri:sub(slash):gsub('%%(%x%x)', function(hex)
+            return string.char(tonumber(hex, 16))
+          end)
+        end
+      end
+
+      -- wez.log_info("cwd = '" .. cwd .. "' ~ = " .. wez.home_dir)
       -- if pane.current_working_dir == wez.home_dir then
-      if cwd == "nknezevi1" then
-        cwd = "~"
+      cwd = cwd:gsub(wez.home_dir .. '/', '~')
+      -- if cwd == wez.home_dir then
+      --   cwd = "~"
+      -- end
+      if cwd:sub(-1, -1) == "/" then
+        cwd=cwd:sub(1, -2)
       end
 
       ---instead of truncating the whole title, truncate to length the cwd to ensure
       ---that the right parenthesis always closes.
-      if max_width == config.tab_max_width then
-        cwd = wez.truncate_right(cwd, max_width - 14) .. "..."
+      -- wez.log_info("max_width = " .. max_width)
+      -- wez.log_info("config.tab_max_width = " .. config.tab_max_width)
+      if max_width >= config.tab_max_width then
+        cwd = ".../" .. wez.truncate_left(cwd, max_width-10) -- .. "..."
       end
       title = title .. " " .. cwd
     end
@@ -75,8 +104,8 @@ function M.setup()
 
     ---truncate the tab title when it overflows the maximum available space, then
     ---concatenate some dots to indicate the occurred truncation
-    if is_truncation_needed and max_width == config.tab_max_width then
-      title = wez.truncate_right(title, max_width - 8) .. "..."
+    if is_truncation_needed and max_width >= config.tab_max_width then
+      title = wez.truncate_left(title, max_width - 14) .. "..."
     end
 
     ---add the either the leftmost element or the normal left separator. This is done
