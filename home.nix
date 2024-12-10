@@ -203,7 +203,7 @@ let
         pkgs.binutils # native-comp needs 'as', provided by this
         (pkgs.ripgrep.override { withPCRE2 = true; })
         pkgs.zstd
-        (pkgs.git.override { openssh = pkgs.openssh_hpnWithKerberos; curl = patched-curl; })
+        (pkgs.git.override { openssh = pkgs.openssh_hpnWithKerberos; })
         # :tools editorconfig
         pkgs.editorconfig-core-c
         # :tools lookup & :lang org +roam
@@ -249,21 +249,6 @@ let
     powerline-symbols
     source-code-pro
   ] ++ pkgs.lib.attrValues (pkgs.lib.filterAttrs (_: v: pkgs.lib.isDerivation v) pkgs.nerd-fonts);
-
-  patched-curl = pkgs.curl.overrideAttrs (oldAttrs: {
-    patches = (oldAttrs.patches or []) ++ [
-      # https://github.com/curl/curl/issues/15496
-      (pkgs.fetchpatch {
-        url = "https://github.com/curl/curl/commit/f5c616930b5cf148b1b2632da4f5963ff48bdf88.patch";
-        hash = "sha256-FlsAlBxAzCmHBSP+opJVrZG8XxWJ+VP2ro4RAl3g0pQ=";
-      })
-      # https://github.com/curl/curl/issues/15513
-      (pkgs.fetchpatch {
-        url = "https://github.com/curl/curl/commit/0cdde0fdfbeb8c35420f6d03fa4b77ed73497694.patch";
-        hash = "sha256-WP0zahMQIx9PtLmIDyNSJICeIJvN60VzJGN2IhiEYv0=";
-      })
-    ];
-  });
 
 in
 rec {
