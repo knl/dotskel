@@ -425,7 +425,7 @@ rec {
   programs.git = {
     enable = true;
     userEmail = "nikola@knezevic.ch";
-    package = pkgs.gitAndTools.gitFull.override { openssh = pkgs.openssh_hpnWithKerberos; curl=patched-curl; };
+    package = pkgs.gitAndTools.gitFull.override { openssh = pkgs.openssh_hpnWithKerberos; };
     userName = "Nikola Knezevic";
     # aliases are defined in ~/.gitaliases
     extraConfig = {
