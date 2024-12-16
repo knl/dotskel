@@ -197,21 +197,13 @@ let
         (pkgs.nuspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large ]))
         pkgs.graphviz-nox
         pkgs.imagemagick # for image-dired
-        pkgs.fd
         pkgs.gnutls # for TLS connectivity
         pkgs.coreutils # needed for gls for dired
         pkgs.binutils # native-comp needs 'as', provided by this
-        (pkgs.ripgrep.override { withPCRE2 = true; })
-        pkgs.zstd
-        (pkgs.git.override { openssh = pkgs.openssh_hpnWithKerberos; })
         # :tools editorconfig
         pkgs.editorconfig-core-c
         # :tools lookup & :lang org +roam
         pkgs.sqlite
-        # other goodies
-        pkgs.alejandra # to format nix code
-        pkgs.shfmt
-        pkgs.jq
       ];
       env = ''
         (setq exec-path (append exec-path '( ${pkgs.lib.concatMapStringsSep " " (x: ''"${x}/bin"'') deps} )))
