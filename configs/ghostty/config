@@ -1,0 +1,16 @@
+# theme = tempus_night
+
+copy-on-select = true
+
+window-inherit-working-directory = false
+window-step-resize = true
+
+macos-option-as-alt = true
+
+font-family = "Iosevka Term SS08"
+# font-family = "IosevkaTerm Nerd Font"
+
+font-size = 18.0
+
+# clear screen on Cmd+K (from iTerm2)
+keybind = cmd+k=clear_screen

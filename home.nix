@@ -76,63 +76,6 @@ let
     };
   };
 
-  wezterm_app = let
-    altIcon = pkgs.fetchurl {
-      url = "https://github.com/mikker/wezterm-icon/raw/main/wezterm.icns";
-      hash = "sha256-svfuxXlRmFW+9n40LBm3JygzLbp90C4LAnCQAr4XFDw=";
-    };
-    # this works on my old intels and github
-    wezterm_app_intel = pkgs.stdenvNoCC.mkDerivation rec {
-      pname = "wezterm";
-      version = "20240203-110809-5046fc22";
-
-      src = pkgs.fetchzip {
-        url = "https://github.com/wez/wezterm/releases/download/${version}/WezTerm-macos-${version}.zip";
-        hash = "sha256-Az+HlnK/lRJpUSGm5UKyma1l2PaBKNCGFiaYnLECMX8=";
-      };
-
-      nativeBuildInputs = [
-        pkgs.installShellFiles
-        pkgs.ncurses # tic for terminfo
-      ];
-      buildInputs = [ pkgs.undmg ];
-      installPhase = ''
-        mkdir -p "$out/Applications/"
-        cp -R . "$out/Applications/"
-        cp ${altIcon} $out/Applications/WezTerm.app/Contents/Resources/terminal.icns
-
-        mkdir -p $out/nix-support
-        echo "${passthru.terminfo}" >> $out/nix-support/propagated-user-env-packages
-
-        install -Dm644 ./WezTerm.app/Contents/Resources/wezterm.sh -t $out/etc/profile.d
-    '';
-
-      passthru = {
-        terminfo = pkgs.runCommand "wezterm-terminfo"
-          {
-            nativeBuildInputs = [ pkgs.ncurses ];
-          } ''
-          mkdir -p $out/share/terminfo $out/nix-support
-          tic -x -o $out/share/terminfo ${pkgs.wezterm.src}/termwiz/data/wezterm.terminfo
-        '';
-      };
-      meta = {
-        description = "A GPU-accelerated cross-platform terminal emulator and multiplexer written by @wez and implemented in Rust";
-        homepage = "https://wezfurlong.org/wezterm";
-        changelog = "https://wezfurlong.org/wezterm/changelog.html#${version}";
-        license = pkgs.lib.licenses.mit;
-        platforms = pkgs.lib.platforms.darwin;
-      };
-    };
-    # this works on my m1
-    wezterm_app_m1 = pkgs.wezterm.overrideAttrs (old: {
-      postPatch = old.postPatch + ''
-        cp ${altIcon} assets/macos/WezTerm.app/Contents/Resources/terminal.icns
-      '';
-    });
-    in
-      (if (pkgs.stdenv.isDarwin && pkgs.stdenv.isAarch64) then wezterm_app_m1 else wezterm_app_intel);
-
   wrapEmacsclient = { emacs }:
     pkgs.writeShellScriptBin "emacs.bash" (''
       ${emacs}/bin/emacsclient --no-wait --eval \
@@ -316,7 +259,7 @@ rec {
     yubikey-manager
     yubikey-personalization
     watch
-    wezterm_app
+    (pkgs.callPackage ./nix/pkgs/ghostty.nix { })
     zstd
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = theEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
@@ -709,9 +652,6 @@ rec {
       # need to rebind the key again, since plugins are sourced before sourcing fzf
       bindkey '^R' histdb-fzf-widget
       # zsh-histdb end
-
-      # wezterm shell integration
-      source "${config.home.profileDirectory}/etc/profile.d/wezterm.sh"
     '';
 
     loginExtra = ''
@@ -764,7 +704,7 @@ rec {
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
   xdg.configFile."zsh/functions".source = ./zsh/functions;
 
-  xdg.configFile."wezterm".source = link ./configs/wezterm;
+  xdg.configFile."ghostty".source = link ./configs/ghostty;
 
   # Setting up aspell
   home.file.".aspell.conf".text = ''
