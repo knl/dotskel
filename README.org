@@ -21,10 +21,11 @@ but I can live with it.
    #+begin_src bash
      curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
        sh -s -- install \
-         --extra-conf "extra-substituters = https://knl.cachix.org https://nix-community.cachix.org https://niv.cachix.org https://cache.nixos.org https://devenv.cachix.org" \
-         --extra-conf "extra-trusted-public-keys = knl.cachix.org-1:/iqUbqBexzvcDn5ee7Q3Kj1MBh6P9RTwEVh6hh9SDE0= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw= nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU=" \
-	 --extra-conf "keep-outputs = true" \
-         --extra-conf "keep-derivations = true"
+         --extra-conf 'substituters = https://knl.cachix.org https://niv.cachix.org https://cache.nixos.org https://nix-community.cachix.org https://fzakaria.cachix.org https://devenv.cachix.org' \
+         --extra-conf 'trusted-public-keys = knl.cachix.org-1:/iqUbqBexzvcDn5ee7Q3Kj1MBh6P9RTwEVh6hh9SDE0= niv.cachix.org-1:X32PCg2e/zAm3/uD1ScqW2z/K0LtDyNV7RdaxIuLgQM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= fzakaria.cachix.org-1:SpQviPuoJ3GnCVG40vwTp/r9y1/cbwP808SbMJ/XlGo= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=' \
+         --extra-conf 'keep-outputs = true' \
+         --extra-conf 'keep-derivations = true' \
+         --extra-conf "trusted-users = $USER"
 
      source "$HOME/.nix-profile/etc/profile.d/nix.sh"
    #+end_src
@@ -41,6 +42,9 @@ but I can live with it.
    - [[https://www.mozilla.org/en-US/firefox/new/][Firefox]]
    - [[https://download.bjango.com/istatmenus/][iStat Menus]]
    - [[https://frankfurt.kapeli.com/downloads/v6/Dash.zip][Dash]]
+   - [[https://www.postbox-inc.com/download/success-mac][Postbox]]
+   - [[https://www.arqbackup.com/download/arqbackup/Arq7.pkg][Arq]]
+   - [[https://apps.apple.com/ca/app/tailscale/id1475387142?mt=12][Tailscale]]
 
 ** Misc
 
