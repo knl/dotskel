@@ -77,10 +77,10 @@
         "homepage": null,
         "owner": "rainstormstudio",
         "repo": "nerd-icons.el",
-        "rev": "4bd9795f1f3f47cb874e10ff5c3845e037f0b3e2",
-        "sha256": "1imklm81jsq2jdjprsjm8pdq701c4l0rgn7l0f3l3xs602kg49l1",
+        "rev": "546ee20caf825e65da4c5435d31f13d269ed2a81",
+        "sha256": "0vmzywzaizphj15rqvihw1znjp1i74w8fkhrg7kvic10iv0fpga8",
         "type": "tarball",
-        "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/4bd9795f1f3f47cb874e10ff5c3845e037f0b3e2.tar.gz",
+        "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/546ee20caf825e65da4c5435d31f13d269ed2a81.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
