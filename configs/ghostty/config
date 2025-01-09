@@ -1,4 +1,10 @@
-# theme = tempus_night
+# theme = light:"Tango Half Adapted",dark:tempus_night
+theme = light:"Tempus Day",dark:"Tempus Night"
+
+cursor-style = block
+cursor-style-blink = true
+cursor-invert-fg-bg = true
+shell-integration-features = no-cursor
 
 copy-on-select = true
 
