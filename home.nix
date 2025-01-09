@@ -578,6 +578,10 @@ rec {
         . ~/.nix-profile/etc/profile.d/nix.sh
       fi
 
+      if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+        source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+      fi
+
       # expands .... to ../..
       function expand-dot-to-parent-directory-path {
         if [[ $LBUFFER = *.. ]]; then
