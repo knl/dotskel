@@ -656,6 +656,24 @@ rec {
       # need to rebind the key again, since plugins are sourced before sourcing fzf
       bindkey '^R' histdb-fzf-widget
       # zsh-histdb end
+
+      # fzf goodies
+      _fzf_complete_git() {
+          _fzf_complete \
+              --preview='git show --color=always {1}' \
+              --preview-window=wrap,~6\
+              -- "$@" < <(
+                  if [[ "$*" == *"--"* ]]; then
+                      git ls-files
+                  else
+                      git log --oneline
+                  fi
+              )
+      }
+
+      _fzf_complete_git_post() {
+          cut -d ' ' -f1
+      }
     '';
 
     loginExtra = ''
