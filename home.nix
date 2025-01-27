@@ -231,7 +231,6 @@ rec {
     jc
     jless
     jq
-    loc
     lua
     moreutils
     mtr
@@ -249,6 +248,7 @@ rec {
     sd
     shellcheck
     shfmt
+    tokei
     tree
     unar
     uv
