@@ -7,6 +7,7 @@ pkgs.mkShell rec {
   name = "home-manager-shell";
   buildInputs = with pkgs; [
     niv
+    cachix
     (import sources.home-manager { inherit pkgs; }).home-manager
   ];
 
