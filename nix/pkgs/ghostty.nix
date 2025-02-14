@@ -6,12 +6,12 @@
 }:
 stdenv.mkDerivation rec {
   pname = "ghostty";
-  version = "1.1.0";
+  version = "1.1.2";
 
   src = fetchurl {
     name = "${pname}-${version}.dmg";
     url = "https://release.files.ghostty.org/${version}/Ghostty.dmg";
-    hash = "sha256-3KKyJOpkbhGKtq01aDGDealjI2BCL6fpz5DW6rn0A/0=";
+    hash = "sha256-1K0BOWg0ykR/pdCE6/b7XUSVcoD6ryLqRz6WBnUcSOE=";
   };
 
   nativeBuildInputs = [ _7zz ];
