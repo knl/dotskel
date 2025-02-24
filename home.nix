@@ -381,25 +381,49 @@ rec {
       credential.helper = "osxkeychain";
       core.whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
       repack.usedeltabaseoffset = "true";
-      diff = {
-        renames = "copies";
-        mnemonicprefix = "true";
-        algorithm = "histogram";
+      column.ui = "auto";
+      branch = {
+        sort = "auto";
+        autosetupmerge = "true";
       };
-      branch.autosetupmerge = "true";
-      push.default = "current";
-      merge.stat = "true";
-      pull.ff = "only";
+      # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
+      tag.sort = "version:refname";
+      init.defaultBranch = "main";
+      diff = {
+        algorithm = "histogram";
+        renames = "true";
+        mnemonicprefix = "true";
+	colorMoved = "plain";
+      };
+      push = {
+        default = "current";
+	autoSetupRemote = "true";
+	followTags = "true";
+      };
+      fetch = {
+        prune = "true";
+	pruneTags = "true";
+	all = "true";
+      };
+      help.autocorrect = "prompt";
+      commit.verbose = "true";
       rebase = {
-        autoSquash = true;
-        autoStash = true;
+        autoSquash = "true";
+	autoStash = "true";
+	updateRefs = "true";
+      };
+      merge = {
+        stat = "true";
+	conflictstyle = "zdiff3";
+      };
+      pull = {
+        ff = "only";
+	rebase = "true";
       };
       rerere = {
         autoupdate = true;
         enabled = true;
       };
-      # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
-      tag.sort = "version:refname";
     };
     # Replaces ~/.gitignore
     ignores = [
