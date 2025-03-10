@@ -96,27 +96,28 @@ let
         url = "https://github.com/nashamri/spacemacs-logo/raw/917f2f2694019d534098f5e2e365b5f6e5ddbd37/spacemacs.icns";
         sha256 = "sha256:0049lkmc8pmb9schjk5mqy372b3m7gg1xp649gibriabz9y8pnxk";
       };
-      emacsSource = pkgs.emacs29-macport.overrideAttrs (old: {
-        patches =
-          (old.patches or [])
-          ++ [
-            # Fix OS window role (needed for window managers like yabai)
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-              sha256 = "sha256-+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
-            })
-            # Enable rounded window with no decoration
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
-              sha256 = "sha256-uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
-            })
-            # Make Emacs aware of OS-level light/dark mode
-            # points to emacs-28, as 29 is just a symlink
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-              sha256 = "sha256-oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
-            })
-          ];
+      emacsSource = pkgs.emacs30;
+      emacsSource1 = pkgs.emacs30.overrideAttrs (old: {
+#        patches =
+#          (old.patches or [])
+#          ++ [
+#            # Fix OS window role (needed for window managers like yabai)
+#            (pkgs.fetchpatch {
+#              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
+#              sha256 = "sha256-+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
+#            })
+#            # Enable rounded window with no decoration
+#            (pkgs.fetchpatch {
+#              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
+#              sha256 = "sha256-uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
+#            })
+#            # Make Emacs aware of OS-level light/dark mode
+#            # points to emacs-28, as 29 is just a symlink
+#            (pkgs.fetchpatch {
+#              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
+#              sha256 = "sha256-oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
+#            })
+#          ];
         postPatch = old.postPatch + ''
           # copy the nice icon to it
           cp ${spacemacsIcon} mac/Emacs.app/Contents/Resources/Emacs.icns
@@ -169,7 +170,7 @@ let
           --prefix PATH : ${pkgs.lib.makeBinPath deps}:${config.home.homeDirectory}/.emacs.d/bin \
           --set LSP_USE_PLISTS true
       '');
-      inherit (pkgs.emacs29-macport) meta;
+      inherit (pkgs.emacs30) meta;
     });
 
   myFonts = with pkgs; [
@@ -192,6 +193,12 @@ rec {
     config = {
       allowUnfree = true;
       allowUnsupportedSystem = true;
+      permittedInsecurePackages = [
+          "my-doom-emacs"
+          "emacs-mac-macport-with-packages-29.1"
+          "emacs-mac-macport-29.1"
+          "emacs-29.4"
+      ];
     };
   };
 
