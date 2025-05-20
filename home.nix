@@ -125,11 +125,7 @@ let
       });
       emacsPkg = emacsSource.pkgs.emacsWithPackages (epkgs: with epkgs; [
         treesit-grammars.with-all-grammars
-        (nerd-icons.overrideAttrs(old: {
-          postInstall = old.postInstall + ''
-            install -Dm644 $src/fonts/*.ttf -t $out/share/fonts/truetype
-          '';
-        }))
+        nerd-icons
       ] ++ (with epkgs.melpaPackages; [
         vterm
         all-the-icons
