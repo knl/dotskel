@@ -248,6 +248,7 @@ rec {
     readline
     ripgrep
     rsync
+    scc
     sd
     shellcheck
     shfmt
