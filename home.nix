@@ -578,134 +578,137 @@ rec {
       staged = "git diff --no-ext-diff --cached";
     };
 
-    initExtraFirst = ''
-      DIRSTACKSIZE=10
+    initContent = let
+      initExtraFirst = pkgs.lib.mkBefore ''
+        DIRSTACKSIZE=10
 
-      setopt   emacs
+        setopt   emacs
 
-      setopt   notify globdots correct cdablevars autolist
-      setopt   correctall autocd recexact longlistjobs
-      setopt   autoresume
-      setopt   rcquotes mailwarning
-      unsetopt bgnice
-      setopt   autopushd pushdminus pushdsilent pushdtohome pushdignoredups
+        setopt   notify globdots correct cdablevars autolist
+        setopt   correctall autocd recexact longlistjobs
+        setopt   autoresume
+        setopt   rcquotes mailwarning
+        unsetopt bgnice
+        setopt   autopushd pushdminus pushdsilent pushdtohome pushdignoredups
 
-      setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
-      setopt ALWAYS_TO_END       # Move cursor to the end of a completed word.
-      setopt AUTO_MENU           # Show completion menu on a successive tab press.
-      setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
-      setopt EXTENDED_GLOB       # Needed for file modification glob modifiers with compinit
-      unsetopt AUTO_PARAM_SLASH    # If completed parameter is a directory, do not add a trailing slash.
-      unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
-      unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
+        setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
+        setopt ALWAYS_TO_END       # Move cursor to the end of a completed word.
+        setopt AUTO_MENU           # Show completion menu on a successive tab press.
+        setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
+        setopt EXTENDED_GLOB       # Needed for file modification glob modifiers with compinit
+        unsetopt AUTO_PARAM_SLASH    # If completed parameter is a directory, do not add a trailing slash.
+        unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
+        unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
 
-      # compinit will be called after this block
-    '';
+        # compinit will be called after this block
+      '';
 
-    # Called whenever zsh is initialized
-    initExtra = ''
-      # Nix setup (environment variables, etc.)
-      if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
-        . ~/.nix-profile/etc/profile.d/nix.sh
-      fi
-
-      if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
-        source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
-      fi
-
-      # expands .... to ../..
-      function expand-dot-to-parent-directory-path {
-        if [[ $LBUFFER = *.. ]]; then
-          LBUFFER+='/..'
-        else
-          LBUFFER+='.'
+      # Called whenever zsh is initialized
+      initExtra = ''
+        # Nix setup (environment variables, etc.)
+        if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+          . ~/.nix-profile/etc/profile.d/nix.sh
         fi
-      }
-      zle -N expand-dot-to-parent-directory-path
 
-      bindkey -M emacs '\e[1;5D' backward-word
-      bindkey -M emacs '\e[1;5C' forward-word
-      bindkey -M emacs '\e[3~' delete-char
-      bindkey -M emacs "^P" history-substring-search-up
-      bindkey -M emacs "^N" history-substring-search-down
-      # also bind to keys up and down
-      bindkey '^[[A' history-substring-search-up
-      bindkey '^[[B' history-substring-search-down
-      # expand .... to ../..
-      bindkey -M emacs "." expand-dot-to-parent-directory-path
-      # but not during incremental search
-      bindkey -M isearch . self-insert 2> /dev/null
+        if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+          source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+        fi
 
-      # more flexible push-line, C-q kills the line and restores after new line is executed
-      for key in "\C-Q" "\e"{q,Q}
-        bindkey -M emacs "$key" push-line-or-edit
-      # Expand history on space.
-      bindkey -M emacs ' ' magic-space
+        # expands .... to ../..
+        function expand-dot-to-parent-directory-path {
+          if [[ $LBUFFER = *.. ]]; then
+            LBUFFER+='/..'
+          else
+            LBUFFER+='.'
+          fi
+        }
+        zle -N expand-dot-to-parent-directory-path
 
-      fpath=(${config.xdg.configHome}/zsh/functions(-/FN) $fpath)
-      # functions must be autoloaded, do it in a function to isolate
-      function {
-        local pfunction_glob='^([_.]*|prompt_*_setup|README*|*~)(-.N:t)'
+        bindkey -M emacs '\e[1;5D' backward-word
+        bindkey -M emacs '\e[1;5C' forward-word
+        bindkey -M emacs '\e[3~' delete-char
+        bindkey -M emacs "^P" history-substring-search-up
+        bindkey -M emacs "^N" history-substring-search-down
+        # also bind to keys up and down
+        bindkey '^[[A' history-substring-search-up
+        bindkey '^[[B' history-substring-search-down
+        # expand .... to ../..
+        bindkey -M emacs "." expand-dot-to-parent-directory-path
+        # but not during incremental search
+        bindkey -M isearch . self-insert 2> /dev/null
 
-        local pfunction
-        # Extended globbing is needed for listing autoloadable function directories.
-        setopt LOCAL_OPTIONS EXTENDED_GLOB
+        # more flexible push-line, C-q kills the line and restores after new line is executed
+        for key in "\C-Q" "\e"{q,Q}
+          bindkey -M emacs "$key" push-line-or-edit
+        # Expand history on space.
+        bindkey -M emacs ' ' magic-space
 
-        for pfunction in ${config.xdg.configHome}/zsh/functions/$~pfunction_glob; do
-          autoload -Uz "$pfunction"
-        done
-      }
+        fpath=(${config.xdg.configHome}/zsh/functions(-/FN) $fpath)
+        # functions must be autoloaded, do it in a function to isolate
+        function {
+          local pfunction_glob='^([_.]*|prompt_*_setup|README*|*~)(-.N:t)'
 
-      eval "$(lua ${sources.rh}/rh.lua --init zsh ~/work)"
+          local pfunction
+          # Extended globbing is needed for listing autoloadable function directories.
+          setopt LOCAL_OPTIONS EXTENDED_GLOB
 
-      # Theme (custom built on powerlevel10k)
-      # First load all variables
-      source ${config.xdg.configHome}/zsh/p10k.zsh
-      # Then source the theme
-      source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
+          for pfunction in ${config.xdg.configHome}/zsh/functions/$~pfunction_glob; do
+            autoload -Uz "$pfunction"
+          done
+        }
 
-      # zsh-histdb start
-      HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
+        eval "$(lua ${sources.rh}/rh.lua --init zsh ~/work)"
 
-      source ''${ZDOTDIR}/plugins/zsh-histdb/sqlite-history.zsh
+        # Theme (custom built on powerlevel10k)
+        # First load all variables
+        source ${config.xdg.configHome}/zsh/p10k.zsh
+        # Then source the theme
+        source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
 
-      _zsh_autosuggest_strategy_histdb_top() {
-          local query="
-              select commands.argv from history
-              left join commands on history.command_id = commands.rowid
-              left join places on history.place_id = places.rowid
-              where commands.argv LIKE '$(sql_escape $1)%'
-              group by commands.argv, places.dir
-              order by places.dir != '$(sql_escape $PWD)', count(*) desc
-              limit 1
-          "
-          suggestion=$(_histdb_query "$query")
-      }
+        # zsh-histdb start
+        HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
 
-      ZSH_AUTOSUGGEST_STRATEGY=histdb_top
+        source ''${ZDOTDIR}/plugins/zsh-histdb/sqlite-history.zsh
 
-      # need to rebind the key again, since plugins are sourced before sourcing fzf
-      bindkey '^R' histdb-fzf-widget
-      # zsh-histdb end
+        _zsh_autosuggest_strategy_histdb_top() {
+            local query="
+                select commands.argv from history
+                left join commands on history.command_id = commands.rowid
+                left join places on history.place_id = places.rowid
+                where commands.argv LIKE '$(sql_escape $1)%'
+                group by commands.argv, places.dir
+                order by places.dir != '$(sql_escape $PWD)', count(*) desc
+                limit 1
+            "
+            suggestion=$(_histdb_query "$query")
+        }
 
-      # fzf goodies
-      _fzf_complete_git() {
-          _fzf_complete \
-              --preview='git show --color=always {1}' \
-              --preview-window=wrap,~6\
-              -- "$@" < <(
-                  if [[ "$*" == *"--"* ]]; then
-                      git ls-files
-                  else
-                      git log --oneline
-                  fi
-              )
-      }
+        ZSH_AUTOSUGGEST_STRATEGY=histdb_top
 
-      _fzf_complete_git_post() {
-          cut -d ' ' -f1
-      }
-    '';
+        # need to rebind the key again, since plugins are sourced before sourcing fzf
+        bindkey '^R' histdb-fzf-widget
+        # zsh-histdb end
+
+        # fzf goodies
+        _fzf_complete_git() {
+            _fzf_complete \
+                --preview='git show --color=always {1}' \
+                --preview-window=wrap,~6\
+                -- "$@" < <(
+                    if [[ "$*" == *"--"* ]]; then
+                        git ls-files
+                    else
+                        git log --oneline
+                    fi
+                )
+        }
+
+        _fzf_complete_git_post() {
+            cut -d ' ' -f1
+        }
+      '';
+    in
+      pkgs.lib.mkMerge [ initExtraFirst initExtra ];
 
     loginExtra = ''
       # Execute code only if STDERR is bound to a TTY.
