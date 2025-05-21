@@ -346,7 +346,7 @@ rec {
       repack.usedeltabaseoffset = "true";
       column.ui = "auto";
       branch = {
-        sort = "auto";
+        # sort = "auto";
         autosetupmerge = "true";
       };
       # Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
@@ -406,7 +406,7 @@ rec {
       { path = "~/.gitaliases"; }
     ];
   };
-  home.file.".gitaliases".source = ./configs/gitaliases;
+  home.file.".gitaliases".source = link ./configs/gitaliases;
 
   programs.z-lua = {
     enable = true;
