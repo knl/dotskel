@@ -325,49 +325,8 @@ rec {
 
   programs.jujutsu = {
     enable = true;
-    settings = {
-      user = {
-        name = "Nikola Knezevic";
-        email = "nikola@knezevic.ch";
-      };
-      revsets = {
-        short-prefixes = "interesting";
-      };
-      aliases = {
-        list = ["log" "--no-graph"];
-        archived = ["list" ''--template=change_id ++ "\n(jj archive) " ++ unarchived'' "--revisions"];
-        am = ["amend"];
-        bg = ["--ignore-working-copy" "--no-pager"];
-        bgc = ["bg" "--color=always"];
-        bookmarks = ["list" ''--template=bookmarks ++ "\n"''];
-        changes = ["list" ''--template=change_id.short() ++ "\n"''];
-        commits = ["list" ''--template=commit_id.short() ++ "\n"''];
-        delta = [''--config-toml=ui.pager=["delta", "--line-numbers", "--navigate", "--side-by-side"];'' "diff" "--git"];
-        hide = ["abandon"];
-        hideempty = ["hide" "empty() & local ~ root()"];
-        rebasestale = ["rebase" "--source=all:roots(localstale)" "--destination=og" "--skip-emptied"];
-        reword = ["describe"];
-        rollback = ["backout"];
-        unarchived = ["list" ''--template=change_id ++ "\n" ++ unarchived'' "--revisions"];
-        up = ["new"];
-        whatsout = ["diff" "--summary"];
-      };
-      template-aliases = {
-        "format_short_commit_id(id)" = "id.shortest(7)";
-        "format_short_signature(signature)" = ''label("email", signature.username())'';
-      };
-      "revset-aliases" = {
-        archived = ''description(glob:"(jj archive)*")'';
-        remote = "ancestors(remote_bookmarks(remote=origin))";
-        local = "all() ~ remote";
-        "chain(revisions)" = "ancestors(revisions) & local";
-        local_unarchived = "local ~ archived";
-        og = "trunk()";
-        interesting = "og | parents(local_unarchived) | local_unarchived";
-        localstale = "local_unarchived ~ descendants(og)";
-      };
-    };
   };
+  xdg.configFile."jj/config.toml".source = link ./configs/jj/config.toml;
 
   programs.git = {
     enable = true;

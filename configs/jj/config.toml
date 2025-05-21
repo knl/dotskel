@@ -1,0 +1,161 @@
+# https://github.com/martinvonz/jj/blob/main/docs/config.md
+[user]
+    name = 'Nikola Knezevic'
+    email = 'nikola.knezevic@imc.com'
+
+[revset-aliases]
+    archived = 'description(glob:"(jj archive)*")'
+    local = 'all() ~ ancestors(remote_bookmarks(remote=origin))'
+    'chain(revisions)' = 'ancestors(revisions) & local'
+    local_unarchived = 'local ~ archived'
+    og = 'trunk()'
+    interesting = 'og | parents(local_unarchived) | local_unarchived'
+    localstale = 'local_unarchived ~ descendants(og)'
+
+[template-aliases]
+    'commit_timestamp(commit)' = '''
+        if(commit.current_working_copy() || commit.hidden(),
+            commit.committer().timestamp().ago(),
+            commit.author().timestamp().ago()
+        )
+    '''
+    'format_short_change_id(id)' = 'id.shortest()'
+    'hyperlink(url, text)' = '''
+        raw_escape_sequence("\e]8;;" ++ url ++ "\e\\") ++
+        text ++
+        raw_escape_sequence("\e]8;;\e\\")
+    '''
+    'gerrit_change_id(change_id)' = '"Id0000000" ++ change_id.normal_hex()'
+    'format_short_change_id_with_gerrit_hyperlink(commit)' = '''
+        hyperlink(
+            "https://gerrit/q/" ++
+            coalesce(
+                commit.trailers().map(|trailer|
+                    if(trailer.key() == "Change-Id", trailer.value())
+                ).join(""),
+                gerrit_change_id(commit.change_id())
+            ),
+            format_short_change_id(commit.change_id())
+        )
+    '''
+    'format_short_change_id_with_hidden_and_divergent_info(commit)' = '''
+        if(commit.hidden(),
+            label("hidden",
+                format_short_change_id_with_gerrit_hyperlink(commit) ++
+                " hidden"
+            ),
+            label(if(commit.divergent(), "divergent"),
+                format_short_change_id_with_gerrit_hyperlink(commit) ++
+                if(commit.divergent(), "?")
+            )
+        )
+    '''
+    'format_short_commit_id(id)' = 'id.shortest(7)'
+    'format_short_signature(signature)' = '''
+        coalesce(signature.email().local(), email_placeholder)'''
+    'format_timestamp(timestamp)' = 'timestamp'
+    'oneline(commit)' = '''
+        separate(commit_summary_separator,
+            format_short_commit_id(commit.commit_id()),
+            separate(" ",
+                if(commit.conflict(), label("conflict", "(conflict)")),
+                if(commit.empty(), label("empty", "(empty)")),
+                if(commit.description(),
+                    commit.description().first_line(),
+                    label(if(commit.empty(), "empty"), description_placeholder)
+                )
+            ),
+            separate(" ",
+                if(commit.git_head(), label("git_head", "git_head()")),
+                commit.bookmarks(),
+                commit.tags(),
+                commit.working_copies()
+            ),
+            format_short_change_id_with_hidden_and_divergent_info(commit)
+        ) ++ "\n"
+    '''
+    'unarchived(description)' = """
+        description.remove_prefix("(jj archive) ").remove_suffix("\n")
+    """
+
+[aliases]
+    ab = ['absorb']
+    am = ['amend']
+    bg = [
+        '--config=ui.log-word-wrap=false',
+        '--ignore-working-copy',
+        '--no-pager']
+    bgc = ['bg', '--color=always']
+    list = ['log', '--no-graph']
+    reword = ['describe']
+    archive = [
+        'util', 'exec', '--', 'sh', '-c', '''
+            m=$(
+                jj bgc list \
+                    --template='"(jj archive) " ++ unarchived(description)' \
+                    --revisions="$*") \
+            && jj reword --message="$m" "$*"
+        ''', '']
+    bookmarks = ['list', '--template=bookmarks ++ "\n"']
+    changes = ['list', '--template=change_id.short() ++ "\n"']
+    commits = ['list', '--template=commit_id.short() ++ "\n"']
+    delta = [
+        '''--config=ui.pager=[
+            "delta", "--line-numbers", "--navigate", "--side-by-side"]''',
+        'diff', '--git']
+    hide = ['abandon']
+    hideempty = ['hide', 'empty() & local ~ root()']
+    push = [
+        'util', 'exec', '--', 'ash', '-r @- revision', '--remote', ''' \
+            jj bookmark move \
+                --from='heads(ancestors({{.r}}) & tracked_remote_bookmarks())' \
+                --to={{.r}} \
+            && jj git push --revisions={{.r}} \
+                {{if len .remote}}--remote={{.remote}}{{end}}
+        ''']
+    rebasestale = [
+        'rebase',
+        '--source=all:roots(localstale)', '--destination=og', '--skip-emptied']
+    revlog = ['evolog']
+    rollback = ['revert']
+    unarchive = [
+        'util', 'exec', '--', 'sh', '-c', '''
+            m=$(
+                jj bgc list \
+                    --template='unarchived(description)' --revisions="$*") \
+            && jj reword --message="$m" "$*"
+        ''', '']
+    up = ['new']
+    whatsout = ['diff', '--summary']
+
+[colors]
+    'description placeholder' = 'red'
+    'working_copy description placeholder' = 'default'
+    working_copy.underline = true
+
+[core]
+    fsmonitor = 'watchman'
+    watchman.register-snapshot-trigger = true
+
+[git]
+    auto-local-bookmark = true
+    push = 'fork'
+    push-bookmark-prefix = 'knl/jj_'
+
+[merge-tools.difft]
+    diff-args = ['--color=always', '$left', '$right']
+
+[merge-tools.pycharm]
+    merge-args = ['merge', '$left', '$right', '$base', '$output']
+
+[ui]
+    diff-editor = ':builtin'
+    diff-instructions = false
+    log-word-wrap = true
+    merge-editor = 'vscode'
+
+[revsets]
+    short-prefixes = 'interesting'
+
+[templates]
+    commit_trailers = '"Change-Id: " ++ gerrit_change_id(change_id)'
