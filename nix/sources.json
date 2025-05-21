@@ -1,4 +1,28 @@
 {
+    "chrisbarrett-nursery": {
+        "branch": "main",
+        "description": "Programs and libs that I haven't gotten around to formally packaging",
+        "homepage": "",
+        "owner": "chrisbarrett",
+        "repo": "nursery",
+        "rev": "b4322641ff729e04583ee5478d5def742d2127ab",
+        "sha256": "1z9pv3mymdy8py4nbki15m4x7mdflrdlb8bmn8g1wz44d26lcjr5",
+        "type": "tarball",
+        "url": "https://github.com/chrisbarrett/nursery/archive/b4322641ff729e04583ee5478d5def742d2127ab.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "cirrus": {
+        "branch": "develop",
+        "description": "python library build, test and devop like things assistant",
+        "homepage": null,
+        "owner": "knl",
+        "repo": "cirrus",
+        "rev": "67d7fe61e127089e348254a68ab901514a7bfa16",
+        "sha256": "1sqgh564lvx2f2qx0jzkd6x7pinqs65am51rg9m8w663qk32ndd8",
+        "type": "tarball",
+        "url": "https://github.com/knl/cirrus/archive/67d7fe61e127089e348254a68ab901514a7bfa16.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "doomemacs": {
         "branch": "master",
         "description": "An Emacs framework for the stubborn martian hacker",
@@ -35,6 +59,18 @@
         "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/cf318e06a9b7c9f2219d78f41b46fa6e06011fd9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "fzf-tab": {
+        "branch": "master",
+        "description": "Replace zsh's default completion selection menu with fzf!",
+        "homepage": "",
+        "owner": "Aloxaf",
+        "repo": "fzf-tab",
+        "rev": "2abe1f2f1cbcb3d3c6b879d849d683de5688111f",
+        "sha256": "04k6g2vhh97kx8iah7ci22zk2lab49xfyw38vxsv48chamrm5kyd",
+        "type": "tarball",
+        "url": "https://github.com/Aloxaf/fzf-tab/archive/2abe1f2f1cbcb3d3c6b879d849d683de5688111f.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "home-manager": {
         "branch": "master",
         "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
@@ -69,6 +105,24 @@
         "sha256": "12nznfaazglk8nhkni32y29ifjb9kva1d5bcqkhly0h69lri3jnj",
         "type": "tarball",
         "url": "https://github.com/knl/hs.winter/archive/94505beb073d4ba0f003b1374dae48e0b6314baa.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "imc-k8s-cluster-configs": {
+        "branch": "master",
+        "repo": "https://gitlab/kubernetes/cluster-configs",
+        "rev": "402d73ef93cff04fa882e82bcb8948a8cc65c543",
+        "type": "git"
+    },
+    "mach-nix": {
+        "branch": "master",
+        "description": "Create highly reproducible python environments",
+        "homepage": "",
+        "owner": "DavHau",
+        "repo": "mach-nix",
+        "rev": "98781c6f60d22f8a7f1af521ef81907d337c3619",
+        "sha256": "0f2zs21yry4x6mlz24wlp02icz6869b2fp53q7lqfa5s0kcm2x98",
+        "type": "tarball",
+        "url": "https://github.com/DavHau/mach-nix/archive/98781c6f60d22f8a7f1af521ef81907d337c3619.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nerd-icons.el": {
@@ -141,6 +195,18 @@
         "sha256": "0wz6rna6bb28g0zkm8gykf8l2vf86i3c7qg3d19rk8fz560yci4s",
         "type": "tarball",
         "url": "https://github.com/mafredri/zsh-async/archive/ee1d11b68c38dec24c22b1c51a45e8a815a79756.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "zsh-autopair": {
+        "branch": "master",
+        "description": "Auto-close and delete matching delimiters in zsh",
+        "homepage": "",
+        "owner": "hlissner",
+        "repo": "zsh-autopair",
+        "rev": "449a7c3d095bc8f3d78cf37b9549f8bb4c383f3d",
+        "sha256": "1x16y24hbwcaxfhqabw4x26jmpxzz2zzmlvs9nnbzaxyi20cwfyz",
+        "type": "tarball",
+        "url": "https://github.com/hlissner/zsh-autopair/archive/449a7c3d095bc8f3d78cf37b9549f8bb4c383f3d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "zsh-autosuggestions": {

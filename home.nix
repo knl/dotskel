@@ -239,6 +239,7 @@ rec {
     mtr
     netcat
     niv.niv
+    npins
     nixpkgs-fmt
     nmap
     openssh_hpnWithKerberos # needed because macOS version is limited wrt yubikey
@@ -256,13 +257,14 @@ rec {
     tree
     unar
     uv
+    viddy
+    watch
     xz
     yq-go
     yubico-piv-tool
     yubikey-agent
     yubikey-manager
     yubikey-personalization
-    watch
     (pkgs.callPackage ./nix/pkgs/ghostty.nix { })
     zstd
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = theEmacs; })
@@ -494,6 +496,8 @@ rec {
       hm = "home-manager";
       d = "direnv";
 
+      jjw = "viddy --skip-empty-diffs --unfold 'jjx 2>&1'";
+
       df = "duf";
       du = "dua";
 
@@ -710,6 +714,14 @@ rec {
       {
         name = "zsh-histdb-fzf";
         src = sources.zsh-histdb-fzf;
+      }
+      {
+        name = "zsh-autopair";
+        src = sources.zsh-autopair;
+      }
+      {
+        name = "fzf-tab";
+	src = sources.fzf-tab;
       }
     ];
   };
