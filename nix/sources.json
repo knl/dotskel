@@ -119,10 +119,10 @@
         "homepage": "",
         "owner": "DavHau",
         "repo": "mach-nix",
-        "rev": "98781c6f60d22f8a7f1af521ef81907d337c3619",
-        "sha256": "0f2zs21yry4x6mlz24wlp02icz6869b2fp53q7lqfa5s0kcm2x98",
+        "rev": "c409df5347ef23f0bcba0aefc9a6345ef17b3441",
+        "sha256": "10jwpwmdf3789aidqjbzhzr2r7mz04l1wfjaja4mzns8lf91g3w1",
         "type": "tarball",
-        "url": "https://github.com/DavHau/mach-nix/archive/98781c6f60d22f8a7f1af521ef81907d337c3619.tar.gz",
+        "url": "https://github.com/DavHau/mach-nix/archive/c409df5347ef23f0bcba0aefc9a6345ef17b3441.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nerd-icons.el": {
