@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "chrisbarrett",
         "repo": "nursery",
-        "rev": "b4322641ff729e04583ee5478d5def742d2127ab",
-        "sha256": "1z9pv3mymdy8py4nbki15m4x7mdflrdlb8bmn8g1wz44d26lcjr5",
+        "rev": "d142559096b3e3ee288d439c59fa6a30abe1b11f",
+        "sha256": "08s9g7vbq8mvqkrmywx78zwsxxazm8d6lwns6k2ccpmyg2bdysm0",
         "type": "tarball",
-        "url": "https://github.com/chrisbarrett/nursery/archive/b4322641ff729e04583ee5478d5def742d2127ab.tar.gz",
+        "url": "https://github.com/chrisbarrett/nursery/archive/d142559096b3e3ee288d439c59fa6a30abe1b11f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "cirrus": {
