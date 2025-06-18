@@ -96,7 +96,12 @@ let
         url = "https://github.com/nashamri/spacemacs-logo/raw/917f2f2694019d534098f5e2e365b5f6e5ddbd37/spacemacs.icns";
         sha256 = "sha256:0049lkmc8pmb9schjk5mqy372b3m7gg1xp649gibriabz9y8pnxk";
       };
-      emacsSource = pkgs.emacs30;
+      patchedPkgs = pkgs.extend (final: prev: {
+        ld64 = prev.ld64.overrideAttrs (old: {
+          patches = old.patches or [] ++ [ ./Dedupe-RPATH-entries.patch ];
+        });
+      });
+      emacsSource = patchedPkgs.emacs30.override { withNativeCompilation = true; };
       emacsSource1 = pkgs.emacs30.overrideAttrs (old: {
 #        patches =
 #          (old.patches or [])
@@ -166,7 +171,7 @@ let
           --prefix PATH : ${pkgs.lib.makeBinPath deps}:${config.home.homeDirectory}/.emacs.d/bin \
           --set LSP_USE_PLISTS true
       '');
-      inherit (pkgs.emacs30) meta;
+      inherit (emacsSource) meta;
     });
 
   myFonts = with pkgs; [
