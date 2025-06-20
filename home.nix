@@ -101,7 +101,8 @@ let
           patches = old.patches or [] ++ [ ./Dedupe-RPATH-entries.patch ];
         });
       });
-      emacsSource = patchedPkgs.emacs30.override { withNativeCompilation = true; };
+      emacsSource_ = patchedPkgs.emacs30.override { withNativeCompilation = true; };
+      emacsSource = pkgs.emacs30;
       emacsSource1 = pkgs.emacs30.overrideAttrs (old: {
 #        patches =
 #          (old.patches or [])
@@ -246,6 +247,7 @@ rec {
     niv.niv
     npins
     nixpkgs-fmt
+    nix-output-monitor
     nmap
     openssh_hpnWithKerberos # needed because macOS version is limited wrt yubikey
     p7zip
