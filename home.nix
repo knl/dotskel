@@ -96,13 +96,15 @@ let
         url = "https://github.com/nashamri/spacemacs-logo/raw/917f2f2694019d534098f5e2e365b5f6e5ddbd37/spacemacs.icns";
         sha256 = "sha256:0049lkmc8pmb9schjk5mqy372b3m7gg1xp649gibriabz9y8pnxk";
       };
-      patchedPkgs = pkgs.extend (final: prev: {
-        ld64 = prev.ld64.overrideAttrs (old: {
-          patches = old.patches or [] ++ [ ./Dedupe-RPATH-entries.patch ];
-        });
-      });
-      emacsSource_ = patchedPkgs.emacs30.override { withNativeCompilation = true; };
-      emacsSource = pkgs.emacs30;
+      pkgs' = pkgs.extend (
+        _final: prev: {
+          ld64 = prev.ld64.overrideAttrs (old: {
+            patches = old.patches or [] ++ [ ./Dedupe-RPATH-entries.patch ];
+          });
+        }
+      );
+      emacsSource = pkgs'.emacs30.override { withNativeCompilation = true; };
+      emacsSource_ = pkgs.emacs30;
       emacsSource1 = pkgs.emacs30.overrideAttrs (old: {
 #        patches =
 #          (old.patches or [])
