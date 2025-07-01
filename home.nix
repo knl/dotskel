@@ -728,10 +728,6 @@ rec {
         name = "zsh-autopair";
         src = sources.zsh-autopair;
       }
-      {
-        name = "fzf-tab";
-	src = sources.fzf-tab;
-      }
     ];
   };
   xdg.configFile."zsh/p10k.zsh".source = ./zsh/p10k.zsh;
