@@ -65,10 +65,10 @@
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e4bf85da687027cfc4a8853ca11b6b86ce41d732",
-        "sha256": "10bwgr0hpqx7vssjblw4d3xb01jply4wq1h6sgdxbf07s19y6bfj",
+        "rev": "f49e872f55e36e67ebcb906ff65f86c7a1538f7c",
+        "sha256": "09qzq4bkxkgn8lp5gzxbyzvqhdlkswq2qxaqmhfgy5508hrxb25y",
         "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/e4bf85da687027cfc4a8853ca11b6b86ce41d732.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/f49e872f55e36e67ebcb906ff65f86c7a1538f7c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "hs-grille": {
