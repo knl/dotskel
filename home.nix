@@ -209,7 +209,6 @@ rec {
     yubikey-agent
     yubikey-manager
     yubikey-personalization
-    (pkgs.callPackage ./nix/pkgs/ghostty.nix { })
     zstd
     (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = theEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
@@ -217,6 +216,12 @@ rec {
     # need to include the Emacs itself, as I'm avoiding programs.emacs because it makes doom unusable
     theEmacs
   ] ++ myFonts;
+
+  programs.ghostty = {
+    enable = true;
+    package = pkgs.callPackage ./nix/pkgs/ghostty.nix { };
+    enableZshIntegration = true;
+  };
 
   # programs.emacs = {
   #   enable = true;
