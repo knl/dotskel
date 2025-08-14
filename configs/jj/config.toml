@@ -10,6 +10,7 @@
     local_unarchived = 'local ~ archived'
     og = 'trunk()'
     interesting = 'og | parents(local_unarchived) | local_unarchived'
+    deflog = 'interesting | ancestors(og, 5)'
     localstale = 'local_unarchived ~ descendants(og)'
 
 [template-aliases]
@@ -140,7 +141,6 @@
 [git]
     auto-local-bookmark = true
     push = 'fork'
-    push-bookmark-prefix = 'knl/jj_'
 
 [merge-tools.difft]
     diff-args = ['--color=always', '$left', '$right']
@@ -153,9 +153,11 @@
     diff-instructions = false
     log-word-wrap = true
     merge-editor = 'vscode'
+    default-command = ["log", "-r", "deflog"]
 
 [revsets]
     short-prefixes = 'interesting'
 
 [templates]
+    push-bookmark-prefix = 'knl/jj_'
     commit_trailers = '"Change-Id: " ++ gerrit_change_id(change_id)'
