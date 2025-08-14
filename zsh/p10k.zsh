@@ -12,6 +12,32 @@
 [[ ! -o 'no_brace_expand' ]] || p10k_config_opts+=('no_brace_expand')
 'builtin' 'setopt' 'no_aliases' 'no_sh_glob' 'brace_expand'
 
+if command -v jj >/dev/null; then
+  function prompt_my_jj_commit() {
+    local result
+    result=$(
+	(
+	    jj bgc show @ --summary --template 'separate(" ", change_id.shortest(4), commit_id.shortest(4), if(empty,"(empty)")) ++ "\n"' \
+	    | head -1; \
+	    jj bgc bookmark list -r 'coalesce(bookmarks() & descendants(@), heads(bookmarks() & ancestors(@)))' --template '"\n " ++ label("bookmark", name)' \
+	    | sort -u
+	) 2>/dev/null \
+	| tr -d '\n' \
+	| sed -e 's/\x1b\[1m/%B/g' -e 's/\x1b\[38;5;\([0-9]*\)m/%F{\1}/g' -e 's/\x1b\[0m/%f%b/g' -e 's/\x1b\[39m/%f/g'
+    )
+    # If there's no output, do nothing; otherwise, add a segment
+    if [[ -z "${result}" ]]; then
+    # Do nothing
+    else
+      p10k segment -t "${result}"
+    fi
+  }
+else
+  function prompt_my_jj_commit() {
+    # Do nothing
+  }
+fi
+
 () {
   emulate -L zsh -o extended_glob
 
@@ -35,6 +61,7 @@
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
+    my_jj_commit            # jujutsu status
     newline
 
     # This line is shown only when there is a readable non-empty ./.note file.
