@@ -98,7 +98,7 @@
     "imc-k8s-cluster-configs": {
         "branch": "master",
         "repo": "https://gitlab/kubernetes/cluster-configs",
-        "rev": "402d73ef93cff04fa882e82bcb8948a8cc65c543",
+        "rev": "fde700244f27690f7512ad95b89c0a378f96b3b5",
         "type": "git"
     },
     "mach-nix": {
