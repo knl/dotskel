@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   sources = import ./nix/sources.nix;
   overlays = let path = ./nix/overlays; in
@@ -27,7 +27,6 @@ let
         windows where title contains "Emacs"
         if result is not {} then perform action "AXRaise" of item 1 of result
     end tell' &> /dev/null || exit 0'';
-
 
   wrapEmacsclient = { emacs }:
     pkgs.writeShellScriptBin "emacs.bash" (''
@@ -122,15 +121,21 @@ let
     source-code-pro
   ] ++ pkgs.lib.attrValues (pkgs.lib.filterAttrs (_: v: pkgs.lib.isDerivation v) pkgs.nerd-fonts);
 
+
+  programModules =
+    let
+      modulesDir = ./modules/programs;
+    in
+          map (name: modulesDir + "/${name}")
+      (lib.filter (name: lib.hasSuffix ".nix" name)
+        (lib.attrNames (builtins.readDir modulesDir)));
+
+  # here goes everything that is not to be committed
+  additionalProgramModules = [];
+
 in
 rec {
-  imports = let path = ./modules/programs; in
-    with builtins;
-    map (n: import (path + ("/" + n)))
-      (filter
-        (n: match ".*\\.nix" n != null ||
-          pathExists (path + ("/" + n + "/default.nix")))
-        (attrNames (readDir path)));
+  imports = programModules ++ additionalProgramModules;
 
   # Allow non-free (as in beer) packages
   nixpkgs = {
