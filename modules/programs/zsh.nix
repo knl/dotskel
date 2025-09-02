@@ -51,7 +51,7 @@ in
         XDG_DATA_HOME = config.xdg.dataHome;
 
         GOPATH = "$HOME/go";
-        PATH = "$HOME/bin:$GOPATH/bin:$HOME/.emacs.d/bin:$PATH";
+        PATH = "$HOME/bin:$HOME/.local/bin:$GOPATH/bin:$HOME/.emacs.d/bin:$PATH";
         TERM = "xterm-256color";
 
         LESS = "-F -g -i -M -R -S -w -X -z-4";
