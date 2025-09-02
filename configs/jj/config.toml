@@ -134,9 +134,11 @@
     'working_copy description placeholder' = 'default'
     working_copy.underline = true
 
-[core]
-    fsmonitor = 'watchman'
-    watchman.register-snapshot-trigger = true
+[fsmonitor]
+    backend = 'watchman'
+
+[fsmonitor.watchman]
+    register-snapshot-trigger = true
 
 [git]
     auto-local-bookmark = true
