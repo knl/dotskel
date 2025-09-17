@@ -30,8 +30,8 @@ jobs:
     name: 'Check for updates (weekly)'
     runs-on: ubuntu-latest
     steps:
-      - name: niv-updater-action
-        uses: knl/niv-updater-action@main
+      - name: npins-updater-action
+        uses: knl/npins-updater-action@main
         with:
           blacklist: 'emacs-overlay,doomemacs,nixpkgs'
           keep_updating: true

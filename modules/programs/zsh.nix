@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  sources = import ../../nix/sources.nix;
+  sources = import ../../npins/default.nix;
 in
 
 {

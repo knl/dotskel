@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  sources = import ./nix/sources.nix;
+  sources = import ./npins/default.nix;
   overlays = let path = ./nix/overlays; in
     with builtins;
     map (n: import (path + ("/" + n)))

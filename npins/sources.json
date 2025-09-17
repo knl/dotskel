@@ -1,0 +1,270 @@
+{
+  "pins": {
+    "chrisbarrett-nursery": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "chrisbarrett",
+        "repo": "nursery"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d142559096b3e3ee288d439c59fa6a30abe1b11f",
+      "url": "https://github.com/chrisbarrett/nursery/archive/d142559096b3e3ee288d439c59fa6a30abe1b11f.tar.gz",
+      "hash": "08s9g7vbq8mvqkrmywx78zwsxxazm8d6lwns6k2ccpmyg2bdysm0"
+    },
+    "doomemacs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "doomemacs",
+        "repo": "doomemacs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "e10477d6d1f1cd8c9369daad6b74f7d2e6e9fad9",
+      "url": "https://github.com/doomemacs/doomemacs/archive/e10477d6d1f1cd8c9369daad6b74f7d2e6e9fad9.tar.gz",
+      "hash": "08hfa5aaxwv76gv7p5j2zfm0w4vsnvqsmy0lr5zd6sni19zpg74i"
+    },
+    "emacs-overlay": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "emacs-overlay"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "99a77c3da5376924f367515fee48795b8ac2368e",
+      "url": "https://github.com/nix-community/emacs-overlay/archive/99a77c3da5376924f367515fee48795b8ac2368e.tar.gz",
+      "hash": "1cr19crxjggnyg9s14kl1f5nhpg9i6x1b1l3vajmv9spwyk4ch40"
+    },
+    "fast-syntax-highlighting": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "zdharma-continuum",
+        "repo": "fast-syntax-highlighting"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "3d574ccf48804b10dca52625df13da5edae7f553",
+      "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/3d574ccf48804b10dca52625df13da5edae7f553.tar.gz",
+      "hash": "085132b1s114six9s4643ghgcmmn6allj2w1z1alymj0h8pm8a36"
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5820376beb804de9acf07debaaff1ac84728b708",
+      "url": "https://github.com/nix-community/home-manager/archive/5820376beb804de9acf07debaaff1ac84728b708.tar.gz",
+      "hash": "0b2a2qjsim6lj9p10h54mv515qj5siq8c9ii1hipwd5pdyh5mv8p"
+    },
+    "hs-grille": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "knl",
+        "repo": "hs.grille"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "90cef41bce4d30903f33a8d71c29475810c6a909",
+      "url": "https://github.com/knl/hs.grille/archive/90cef41bce4d30903f33a8d71c29475810c6a909.tar.gz",
+      "hash": "0lps81vh7jp59aqj52mw8dnghslgxy21n5kmxd81kj6s0p8l18kn"
+    },
+    "hs-winter": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "knl",
+        "repo": "hs.winter"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "94505beb073d4ba0f003b1374dae48e0b6314baa",
+      "url": "https://github.com/knl/hs.winter/archive/94505beb073d4ba0f003b1374dae48e0b6314baa.tar.gz",
+      "hash": "12nznfaazglk8nhkni32y29ifjb9kva1d5bcqkhly0h69lri3jnj"
+    },
+    "imc-k8s-cluster-configs": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://gitlab/kubernetes/cluster-configs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "b975e32e22ee8315f555050d2829d6de09ccb4a5",
+      "url": null,
+      "hash": "1ljz6fw1arz8ym8hclif1yn4b8cycandjhbg7alk62534r1wjk4r"
+    },
+    "nerd-icons.el": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "rainstormstudio",
+        "repo": "nerd-icons.el"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "3774e0578b1023bd2ae10735e28c0cd1ccf46889",
+      "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/3774e0578b1023bd2ae10735e28c0cd1ccf46889.tar.gz",
+      "hash": "0ky9lmjqhci4zgm2nsqbka963i7ijwbicachqanvcndfdj1zv9i1"
+    },
+    "niv": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nmattia",
+        "repo": "niv"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "dd678782cae74508d6b4824580d2b0935308011e",
+      "url": "https://github.com/nmattia/niv/archive/dd678782cae74508d6b4824580d2b0935308011e.tar.gz",
+      "hash": "0dk8dhh9vla2s409anmrfkva6h3r32xmz3cm8ha09wyk8iyf1f87"
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixpkgs-unstable",
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.11pre862361.0d7c15863b25/nixexprs.tar.xz",
+      "hash": "1cyha3ias1ab2i8hc5h5p4ys40dsxhcya3rb96brr1fjwfpm2zjb"
+    },
+    "powerlevel10k": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "romkatv",
+        "repo": "powerlevel10k"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "36f3045d69d1ba402db09d09eb12b42eebe0fa3b",
+      "url": "https://github.com/romkatv/powerlevel10k/archive/36f3045d69d1ba402db09d09eb12b42eebe0fa3b.tar.gz",
+      "hash": "1xjayg0qnm3pzi6ixydhql4w0l99h4wdfjgsi4b6ak50gwd744h5"
+    },
+    "rh": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "knl",
+        "repo": "rh"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "9dc9c35f04749e9564dbb8311526d7093f4070ee",
+      "url": "https://github.com/knl/rh/archive/9dc9c35f04749e9564dbb8311526d7093f4070ee.tar.gz",
+      "hash": "1ghsg5h34rnbgkv3nm3sq8qmxx9a83ww3wllhycx697jw1qqmnqm"
+    },
+    "zsh-async": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "mafredri",
+        "repo": "zsh-async"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "ee1d11b68c38dec24c22b1c51a45e8a815a79756",
+      "url": "https://github.com/mafredri/zsh-async/archive/ee1d11b68c38dec24c22b1c51a45e8a815a79756.tar.gz",
+      "hash": "0wz6rna6bb28g0zkm8gykf8l2vf86i3c7qg3d19rk8fz560yci4s"
+    },
+    "zsh-autopair": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "hlissner",
+        "repo": "zsh-autopair"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "449a7c3d095bc8f3d78cf37b9549f8bb4c383f3d",
+      "url": "https://github.com/hlissner/zsh-autopair/archive/449a7c3d095bc8f3d78cf37b9549f8bb4c383f3d.tar.gz",
+      "hash": "1x16y24hbwcaxfhqabw4x26jmpxzz2zzmlvs9nnbzaxyi20cwfyz"
+    },
+    "zsh-autosuggestions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "zsh-users",
+        "repo": "zsh-autosuggestions"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5",
+      "url": "https://github.com/zsh-users/zsh-autosuggestions/archive/85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5.tar.gz",
+      "hash": "1885w3crr503h5n039kmg199sikb1vw1fvaidwr21sj9mn01fs9a"
+    },
+    "zsh-histdb": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "larkery",
+        "repo": "zsh-histdb"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "90a6c104d0fcc0410d665e148fa7da28c49684eb",
+      "url": "https://github.com/larkery/zsh-histdb/archive/90a6c104d0fcc0410d665e148fa7da28c49684eb.tar.gz",
+      "hash": "0n71m6k2w7zn5pmd5fdvmw7f14ss6lchm3q2zzdvfmcihskbbldy"
+    },
+    "zsh-histdb-fzf": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "knl",
+        "repo": "zsh-histdb-fzf"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "68dcc99127f862ed15c8747621064a550195931b",
+      "url": "https://github.com/knl/zsh-histdb-fzf/archive/68dcc99127f862ed15c8747621064a550195931b.tar.gz",
+      "hash": "0r8azgqh7j87m0rc5qjp30g9hg3wq5bi3vmxb5f2lladyi0vx30h"
+    },
+    "zsh-history-substring-search": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "zsh-users",
+        "repo": "zsh-history-substring-search"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "87ce96b1862928d84b1afe7c173316614b30e301",
+      "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/87ce96b1862928d84b1afe7c173316614b30e301.tar.gz",
+      "hash": "0qk4hxc5l4qgjwk58mijw8bag1wn6w4mg3cq5d2fvdj9wl0k9v6p"
+    },
+    "zsh-syntax-highlighting": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "zsh-users",
+        "repo": "zsh-syntax-highlighting"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5eb677bb0fa9a3e60f0eff031dc13926e093df92",
+      "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/5eb677bb0fa9a3e60f0eff031dc13926e093df92.tar.gz",
+      "hash": "1x33gk7hhp07jqq7yjvrsp2vmdbxmadlv3335ixx29bc6h8106r9"
+    },
+    "zsh-you-should-use": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "MichaelAquilina",
+        "repo": "zsh-you-should-use"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "64dd9e3ff977e4ae7d024602b2d9a7a4f05fd8f6",
+      "url": "https://github.com/MichaelAquilina/zsh-you-should-use/archive/64dd9e3ff977e4ae7d024602b2d9a7a4f05fd8f6.tar.gz",
+      "hash": "14kjc449kkd1fswqlxdpz6a5vg6pyhab69qbw7kavhjyzy39nxmv"
+    }
+  },
+  "version": 5
+}

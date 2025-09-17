@@ -43,8 +43,8 @@ jobs:
             echo "Unknown Event Trigger ${GITHUB_EVENT_NAME}, setting with_debug to false."
             echo "name=with_debug::false" >> $GITHUB_OUTPUT
           fi;
-      - name: niv-updater-action
-        uses: knl/niv-updater-action@main
+      - name: npins-updater-action
+        uses: knl/npins-updater-action@main
         with:
           whitelist: 'nixpkgs'
           keep_updating: true

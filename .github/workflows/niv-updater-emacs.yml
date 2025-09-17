@@ -28,8 +28,8 @@ jobs:
     name: 'Check for emacs overlay updates (monthly)'
     runs-on: ubuntu-latest
     steps:
-      - name: niv-updater-action
-        uses: knl/niv-updater-action@main
+      - name: npins-updater-action
+        uses: knl/npins-updater-action@main
         with:
           whitelist: 'emacs-overlay,doomemacs'
           keep_updating: true
