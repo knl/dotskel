@@ -11,18 +11,6 @@
         "url": "https://github.com/chrisbarrett/nursery/archive/d142559096b3e3ee288d439c59fa6a30abe1b11f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "cirrus": {
-        "branch": "develop",
-        "description": "python library build, test and devop like things assistant",
-        "homepage": null,
-        "owner": "knl",
-        "repo": "cirrus",
-        "rev": "67d7fe61e127089e348254a68ab901514a7bfa16",
-        "sha256": "1sqgh564lvx2f2qx0jzkd6x7pinqs65am51rg9m8w663qk32ndd8",
-        "type": "tarball",
-        "url": "https://github.com/knl/cirrus/archive/67d7fe61e127089e348254a68ab901514a7bfa16.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "doomemacs": {
         "branch": "master",
         "description": "An Emacs framework for the stubborn martian hacker",
