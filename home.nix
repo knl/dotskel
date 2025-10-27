@@ -164,6 +164,7 @@ rec {
 
   # Packages in alphabetical order, as I can't do categories
   home.packages = with pkgs; [
+    (pkgs.callPackage ./nix/pkgs/ash.nix { })
     alejandra
     cachix
     curl
