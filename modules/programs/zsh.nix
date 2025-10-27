@@ -11,7 +11,7 @@ in
 
       # This way, my functions could be stored under
       # .config/zsh/lib
-      dotDir = ".config/zsh";
+      dotDir = "${config.xdg.configHome}/zsh";
 
       autosuggestion.enable = true;
       enableCompletion = true;
