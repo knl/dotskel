@@ -6,19 +6,21 @@ in
 {
   config = {
     home.packages = with pkgs; [
-      gitAndTools.delta
+      delta
       # gitAndTools.git-branchless
-      gitAndTools.gitSVN
-      gitAndTools.hub
+      gitSVN
+      hub
     ];
 
     programs.git = {
       enable = true;
-      userEmail = "nikola@knezevic.ch";
-      package = pkgs.gitAndTools.gitFull.override { openssh = pkgs.openssh_hpnWithKerberos; };
-      userName = "Nikola Knezevic";
+      package = pkgs.gitFull.override { openssh = pkgs.openssh_hpnWithKerberos; };
       # aliases are defined in ~/.gitaliases
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Nikola Knezevic";
+          email = "nikola@knezevic.ch";
+        };
         color = {
           status = "auto";
           diff = "auto";
