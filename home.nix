@@ -110,7 +110,7 @@ let
 
   myFonts = with pkgs; [
     emacs-all-the-icons-fonts
-    emacsPackages.nerd-icons
+    emacs.pkgs.nerd-icons
     fira-code
     font-awesome
     # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
