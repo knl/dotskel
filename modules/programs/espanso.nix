@@ -4,23 +4,26 @@ let
   espanso_app =
     let
       app = "espanso.app";
-      version = "2.2.1";
-      sources = {
-        darwin-x86_64 = pkgs.fetchzip {
-          url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-Intel.zip";
-          hash = "sha256-lVO8Vwn7WIMIuLP1bKdG9fmsp6ll9JwzfiSGXMI9MR1=";
-        };
-        darwin-aarch64 = pkgs.fetchzip {
-          url = "https://github.com/federico-terzi/espanso/releases/download/v${version}/Espanso-Mac-M1.zip";
-          hash = "sha256-L4jEGJw1CIH7sXIh79oovlQnDG+RHEKjglmeGQUx398=";
-        };
+      version = "2.3.0";
+      src = pkgs.fetchzip {
+        url = "https://github.com/espanso/espanso/releases/download/v${version}/Espanso-Mac-Universal.zip";
+        hash = "sha256-aNH4qXVl1Yx52Eq5TT9MjfRlBCMHi5E6Rs/IYJMZ4yM=";
+	stripRoot = false;
       };
     in
     pkgs.stdenvNoCC.mkDerivation rec {
       pname = "espanso";
-      inherit version;
+      inherit version src;
 
-      src = if pkgs.stdenv.isAarch64 then sources.darwin-aarch64 else sources.darwin-x86_64;
+      nativeBuildInputs = [ pkgs._7zz ];
+
+      # Override how unpacking works
+      unpackPhase = ''
+        runHook preUnpack
+        dmg=$(echo $src/espanso/*.dmg)
+        7zz -snld x "$dmg"
+        runHook postUnpack
+      '';
 
       # sourceRoot = "source";
 
@@ -33,7 +36,7 @@ let
       '';
       installPhase = ''
         mkdir -p "$out/Applications/Espanso.app"
-        cp -R . "$out/Applications/Espanso.app"
+        cp -R Espanso.app "$out/Applications/"
 
         mkdir -p "$out/bin"
         ln -s "$out/Applications/Espanso.app/Contents/MacOS/espanso" "$out/bin/espanso"
