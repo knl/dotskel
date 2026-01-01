@@ -22,9 +22,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ead254e15269bf8564625df4c8d2af6690a0df49",
-      "url": "https://github.com/doomemacs/doomemacs/archive/ead254e15269bf8564625df4c8d2af6690a0df49.tar.gz",
-      "hash": "065dj8pdrxghrry1kms99c6i3ms8pgbh9m14j5x2fj6698s3qwj7"
+      "revision": "51154d1d50c9d3a375e4454e959f0687612fbd60",
+      "url": "https://github.com/doomemacs/doomemacs/archive/51154d1d50c9d3a375e4454e959f0687612fbd60.tar.gz",
+      "hash": "0fwcwmbv89fl3dsvqkf0f5v8ys5cb36f4p83wj3zaacaj1js28bl"
     },
     "emacs-overlay": {
       "type": "Git",
