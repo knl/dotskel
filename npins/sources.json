@@ -35,9 +35,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "13f3735013045537953ff45cf2432f42efe6079f",
-      "url": "https://github.com/nix-community/emacs-overlay/archive/13f3735013045537953ff45cf2432f42efe6079f.tar.gz",
-      "hash": "1vgql3xngfa29qvrf090xw1mcnz8fijd0bsqqfh6dk3d8qq49jn2"
+      "revision": "ff02fe1802aa90146fe3c236ec504c788825b152",
+      "url": "https://github.com/nix-community/emacs-overlay/archive/ff02fe1802aa90146fe3c236ec504c788825b152.tar.gz",
+      "hash": "100k7fgzxariw7q4zfqvmly351ivaa1y4hy5llgzlkrcb2lxn40p"
     },
     "fast-syntax-highlighting": {
       "type": "Git",
