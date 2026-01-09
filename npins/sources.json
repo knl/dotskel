@@ -11,7 +11,7 @@
       "submodules": false,
       "revision": "d142559096b3e3ee288d439c59fa6a30abe1b11f",
       "url": "https://github.com/chrisbarrett/nursery/archive/d142559096b3e3ee288d439c59fa6a30abe1b11f.tar.gz",
-      "hash": "08s9g7vbq8mvqkrmywx78zwsxxazm8d6lwns6k2ccpmyg2bdysm0"
+      "hash": "sha256-oGrflni+XsbENNpyahqqX/Wu+Uenc1/zxLsivPZ5SSM="
     },
     "doomemacs": {
       "type": "Git",
@@ -50,7 +50,7 @@
       "submodules": false,
       "revision": "3d574ccf48804b10dca52625df13da5edae7f553",
       "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/3d574ccf48804b10dca52625df13da5edae7f553.tar.gz",
-      "hash": "085132b1s114six9s4643ghgcmmn6allj2w1z1alymj0h8pm8a36"
+      "hash": "sha256-ZihUL4JAVk9V+IELSakytlb24BvEEJ161CQEHZYYoSA="
     },
     "home-manager": {
       "type": "Git",
@@ -63,7 +63,7 @@
       "submodules": false,
       "revision": "a65c04965c841eb01ba401f5162f12bc8d52014f",
       "url": "https://github.com/nix-community/home-manager/archive/a65c04965c841eb01ba401f5162f12bc8d52014f.tar.gz",
-      "hash": "015rjpnj9apw5hb9aq6ynwxl0bz82qcpxh0kxrjk28mikba0lj9p"
+      "hash": "sha256-N0kK1JqxIjFl7hPAfhkW6C9AO7feYJUWLPyqJO2VuQQ="
     },
     "hs-grille": {
       "type": "Git",
@@ -76,7 +76,7 @@
       "submodules": false,
       "revision": "90cef41bce4d30903f33a8d71c29475810c6a909",
       "url": "https://github.com/knl/hs.grille/archive/90cef41bce4d30903f33a8d71c29475810c6a909.tar.gz",
-      "hash": "0lps81vh7jp59aqj52mw8dnghslgxy21n5kmxd81kj6s0p8l18kn"
+      "hash": "sha256-dqJA0QXayBlQ63UWG4Tvj2r4bEO8iiKxSuXKA3dA+lI="
     },
     "hs-winter": {
       "type": "Git",
@@ -89,7 +89,7 @@
       "submodules": false,
       "revision": "94505beb073d4ba0f003b1374dae48e0b6314baa",
       "url": "https://github.com/knl/hs.winter/archive/94505beb073d4ba0f003b1374dae48e0b6314baa.tar.gz",
-      "hash": "12nznfaazglk8nhkni32y29ifjb9kva1d5bcqkhly0h69lri3jnj"
+      "hash": "sha256-0soRM00GAk/hxGyVFtSeaUkXk/BiRDuhRZO+r5Sz34o="
     },
     "imc-k8s-cluster-configs": {
       "type": "Git",
@@ -99,9 +99,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "b975e32e22ee8315f555050d2829d6de09ccb4a5",
+      "revision": "ba9579d88597276519a7359e7b2b9444908c3b53",
       "url": null,
-      "hash": "1ljz6fw1arz8ym8hclif1yn4b8cycandjhbg7alk62534r1wjk4r"
+      "hash": "sha256-q201hCafr0kYvnMqElXxtrwbwfrUXMfpT9LjEpcrqkY="
     },
     "nerd-icons.el": {
       "type": "Git",
@@ -114,7 +114,7 @@
       "submodules": false,
       "revision": "d41902fe68a94fcf4394f25a89ba2d510bec4461",
       "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/d41902fe68a94fcf4394f25a89ba2d510bec4461.tar.gz",
-      "hash": "08j8sw8ik55pd0jw1nar90016nnd5bicd5mhrm202xzigqmx2bxl"
+      "hash": "sha256-tC/RK37xdwFEzbCWxuIqzVoTAEhZ2cAlaLeUGRHXSCI="
     },
     "niv": {
       "type": "Git",
@@ -127,7 +127,7 @@
       "submodules": false,
       "revision": "dd678782cae74508d6b4824580d2b0935308011e",
       "url": "https://github.com/nmattia/niv/archive/dd678782cae74508d6b4824580d2b0935308011e.tar.gz",
-      "hash": "0dk8dhh9vla2s409anmrfkva6h3r32xmz3cm8ha09wyk8iyf1f87"
+      "hash": "sha256-B7ngfETT8wQURJWNX7sYeUCj9nS5WpUA0ULRnSBsaDY="
     },
     "nixpkgs": {
       "type": "Channel",
@@ -146,7 +146,7 @@
       "submodules": false,
       "revision": "36f3045d69d1ba402db09d09eb12b42eebe0fa3b",
       "url": "https://github.com/romkatv/powerlevel10k/archive/36f3045d69d1ba402db09d09eb12b42eebe0fa3b.tar.gz",
-      "hash": "1xjayg0qnm3pzi6ixydhql4w0l99h4wdfjgsi4b6ak50gwd744h5"
+      "hash": "sha256-BRJyGn+gTGUWifpJ1ziBKVHACcWw+R5N/HdUi8HzSvY="
     },
     "rh": {
       "type": "Git",
@@ -159,7 +159,7 @@
       "submodules": false,
       "revision": "9dc9c35f04749e9564dbb8311526d7093f4070ee",
       "url": "https://github.com/knl/rh/archive/9dc9c35f04749e9564dbb8311526d7093f4070ee.tar.gz",
-      "hash": "1ghsg5h34rnbgkv3nm3sq8qmxx9a83ww3wllhycx697jw1qqmnqm"
+      "hash": "sha256-FduKceDyJNOZh5TywflAKvVeMcJ6VDv2fMtmMmB5Gr4="
     },
     "zsh-async": {
       "type": "Git",
@@ -172,7 +172,7 @@
       "submodules": false,
       "revision": "ee1d11b68c38dec24c22b1c51a45e8a815a79756",
       "url": "https://github.com/mafredri/zsh-async/archive/ee1d11b68c38dec24c22b1c51a45e8a815a79756.tar.gz",
-      "hash": "0wz6rna6bb28g0zkm8gykf8l2vf86i3c7qg3d19rk8fz560yci4s"
+      "hash": "sha256-mkTmgSnfoZlTaOPhw0Y0yG1BkZv+oTo/eEisZZTN5nM="
     },
     "zsh-autopair": {
       "type": "Git",
@@ -185,7 +185,7 @@
       "submodules": false,
       "revision": "449a7c3d095bc8f3d78cf37b9549f8bb4c383f3d",
       "url": "https://github.com/hlissner/zsh-autopair/archive/449a7c3d095bc8f3d78cf37b9549f8bb4c383f3d.tar.gz",
-      "hash": "1x16y24hbwcaxfhqabw4x26jmpxzz2zzmlvs9nnbzaxyi20cwfyz"
+      "hash": "sha256-3zvOgIi+q7+sTXrT+r/4v98qjeiEL4Wh64rxBYnwJvQ="
     },
     "zsh-autosuggestions": {
       "type": "Git",
@@ -198,7 +198,7 @@
       "submodules": false,
       "revision": "85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5",
       "url": "https://github.com/zsh-users/zsh-autosuggestions/archive/85919cd1ffa7d2d5412f6d3fe437ebdbeeec4fc5.tar.gz",
-      "hash": "1885w3crr503h5n039kmg199sikb1vw1fvaidwr21sj9mn01fs9a"
+      "hash": "sha256-KmkXgK1J6iAyb1FtF/gOa0adUnh1pgFsgQOUnNngBaE="
     },
     "zsh-histdb": {
       "type": "Git",
@@ -211,7 +211,7 @@
       "submodules": false,
       "revision": "90a6c104d0fcc0410d665e148fa7da28c49684eb",
       "url": "https://github.com/larkery/zsh-histdb/archive/90a6c104d0fcc0410d665e148fa7da28c49684eb.tar.gz",
-      "hash": "0n71m6k2w7zn5pmd5fdvmw7f14ss6lchm3q2zzdvfmcihskbbldy"
+      "hash": "sha256-vtG1poaRVbfb/wKPChk1WpPgDq+7udLqLfYfLqap4Vg="
     },
     "zsh-histdb-fzf": {
       "type": "Git",
@@ -224,7 +224,7 @@
       "submodules": false,
       "revision": "68dcc99127f862ed15c8747621064a550195931b",
       "url": "https://github.com/knl/zsh-histdb-fzf/archive/68dcc99127f862ed15c8747621064a550195931b.tar.gz",
-      "hash": "0r8azgqh7j87m0rc5qjp30g9hg3wq5bi3vmxb5f2lladyi0vx30h"
+      "hash": "sha256-EIy+QfRNUSpcWb3uEVfBfDyYHhhX4sIyqAfJA/H7CmU="
     },
     "zsh-history-substring-search": {
       "type": "Git",
@@ -237,7 +237,7 @@
       "submodules": false,
       "revision": "87ce96b1862928d84b1afe7c173316614b30e301",
       "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/87ce96b1862928d84b1afe7c173316614b30e301.tar.gz",
-      "hash": "0qk4hxc5l4qgjwk58mijw8bag1wn6w4mg3cq5d2fvdj9wl0k9v6p"
+      "hash": "sha256-1+w0AeVJtu1EK5iNVwk3loenFuIyVlQmlw8TWliHZGI="
     },
     "zsh-syntax-highlighting": {
       "type": "Git",
@@ -250,7 +250,7 @@
       "submodules": false,
       "revision": "5eb677bb0fa9a3e60f0eff031dc13926e093df92",
       "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/5eb677bb0fa9a3e60f0eff031dc13926e093df92.tar.gz",
-      "hash": "1x33gk7hhp07jqq7yjvrsp2vmdbxmadlv3335ixx29bc6h8106r9"
+      "hash": "sha256-KRsQEDRsJdF7LGOMTZuqfbW6xdV5S38wlgdcCM98Y/Q="
     },
     "zsh-you-should-use": {
       "type": "Git",
@@ -263,8 +263,8 @@
       "submodules": false,
       "revision": "64dd9e3ff977e4ae7d024602b2d9a7a4f05fd8f6",
       "url": "https://github.com/MichaelAquilina/zsh-you-should-use/archive/64dd9e3ff977e4ae7d024602b2d9a7a4f05fd8f6.tar.gz",
-      "hash": "14kjc449kkd1fswqlxdpz6a5vg6pyhab69qbw7kavhjyzy39nxmv"
+      "hash": "sha256-u3abhv9ewq3m4QsnsxT017xdlPm3dYq5dqHNmQhhcpI="
     }
   },
-  "version": 5
+  "version": 7
 }
