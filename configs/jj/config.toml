@@ -5,7 +5,7 @@
 
 [revset-aliases]
     archived = 'description(glob:"(jj archive)*")'
-    local = 'all() ~ ancestors(remote_bookmarks(remote=origin))'
+    local = 'all() ~ ancestors(remote_bookmarks(remote=exact:"origin"))'
     'chain(revisions)' = 'ancestors(revisions) & local'
     local_unarchived = 'local ~ archived'
     og = 'trunk()'
@@ -141,8 +141,11 @@
     register-snapshot-trigger = true
 
 [git]
-    auto-local-bookmark = true
     push = 'fork'
+
+[remotes.origin]
+    auto-track-bookmarks = 'glob:*'
+
 
 [merge-tools.difft]
     diff-args = ['--color=always', '$left', '$right']
