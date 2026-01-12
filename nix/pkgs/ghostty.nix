@@ -32,7 +32,7 @@ stdenvNoCC.mkDerivation rec {
 
   postInstall = ''
     mkdir -p $out/Applications
-    mv Ghostty.app $out/Applications/
+    cp -r Ghostty.app $out/Applications/
     makeWrapper $out/Applications/Ghostty.app/Contents/MacOS/ghostty $out/bin/ghostty
   '';
 
