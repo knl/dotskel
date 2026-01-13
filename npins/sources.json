@@ -22,9 +22,7 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "51154d1d50c9d3a375e4454e959f0687612fbd60",
-      "url": "https://github.com/doomemacs/doomemacs/archive/51154d1d50c9d3a375e4454e959f0687612fbd60.tar.gz",
-      "hash": "0fwcwmbv89fl3dsvqkf0f5v8ys5cb36f4p83wj3zaacaj1js28bl"
+      "revision": "51154d1d50c9d3a375e4454e959f0687612fbd60"
     },
     "emacs-overlay": {
       "type": "Git",
@@ -35,9 +33,7 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ff02fe1802aa90146fe3c236ec504c788825b152",
-      "url": "https://github.com/nix-community/emacs-overlay/archive/ff02fe1802aa90146fe3c236ec504c788825b152.tar.gz",
-      "hash": "100k7fgzxariw7q4zfqvmly351ivaa1y4hy5llgzlkrcb2lxn40p"
+      "revision": "ff02fe1802aa90146fe3c236ec504c788825b152"
     },
     "fast-syntax-highlighting": {
       "type": "Git",
@@ -61,9 +57,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "a65c04965c841eb01ba401f5162f12bc8d52014f",
-      "url": "https://github.com/nix-community/home-manager/archive/a65c04965c841eb01ba401f5162f12bc8d52014f.tar.gz",
-      "hash": "sha256-N0kK1JqxIjFl7hPAfhkW6C9AO7feYJUWLPyqJO2VuQQ="
+      "revision": "fbd566923adcfa67be512a14a79467e2ab8a5777",
+      "url": "https://github.com/nix-community/home-manager/archive/fbd566923adcfa67be512a14a79467e2ab8a5777.tar.gz",
+      "hash": "sha256-zmFw7AtcmfMxW3vR7AiGeQQeHhdrd2x7a3hxzd6vJYI="
     },
     "hs-grille": {
       "type": "Git",
@@ -132,8 +128,7 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre925980.4d113fe1f7bb/nixexprs.tar.xz",
-      "hash": "17yszpw0m1w0nyp7p34pvrlqgkq9ryzkbgpzy0ic9xrz753xc3mg"
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre925980.4d113fe1f7bb/nixexprs.tar.xz"
     },
     "powerlevel10k": {
       "type": "Git",
