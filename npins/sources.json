@@ -235,9 +235,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "87ce96b1862928d84b1afe7c173316614b30e301",
-      "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/87ce96b1862928d84b1afe7c173316614b30e301.tar.gz",
-      "hash": "sha256-1+w0AeVJtu1EK5iNVwk3loenFuIyVlQmlw8TWliHZGI="
+      "revision": "14c8d2e0ffaee98f2df9850b19944f32546fdea5",
+      "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/14c8d2e0ffaee98f2df9850b19944f32546fdea5.tar.gz",
+      "hash": "sha256-KHujL1/TM5R3m4uQh2nGVC98D6MOyCgQpyFf+8gjKR0="
     },
     "zsh-syntax-highlighting": {
       "type": "Git",
