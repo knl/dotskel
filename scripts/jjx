@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+#
+# Usage: jjx
+
+print '@ Working copy changes:'
+# We intentionally don't use bg(c) here to let jj automatically commit
+# changes to the working copy (so it's not stale on output).
+jj --color=always whatsout --revision=@ | ~/bin/indent
+conflicts=$(jj bgc resolve --list 2>/dev/null) && {
+	print '\n\e[31mx Conflicts:\e[0m'
+	print "$conflicts" | ~/bin/indent
+}
+print '\n| Parent commit changes:'
+jj bgc whatsout --revision='parents(@)' | ~/bin/indent
+print
+jj bgc log --revisions=interesting

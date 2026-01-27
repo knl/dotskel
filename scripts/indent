@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+#
+# Usage: command | indent
+
+reset='\e[0m'
+while read line; do
+	print "\t$line$reset"
+done

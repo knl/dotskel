@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+#
+# Usage: jjs [--push]
+
+_jjs_fetch() {
+	print 'Fetching..'
+	jj bg git fetch --all-remotes
+	print 'Done.'
+}
+
+zparseopts -F -- -push=push || exit
+
+_jjs_push() {
+	if (( $#push )); then
+		print 'Pushing..'
+		jj bg git push --tracked
+	fi
+}
+
+_jjs_rebase() {
+	jj rebasestale && {
+		# Update to og iff parents(@) are submitted and @ is empty.
+		# This is achieved by running `up` with a revset that expands to just og
+		# iff the above conditions are met or multiple revisions otherwise
+		# (which is not allowed and so a no-op ATM).
+		jj up 'og | (parents(@) & local) | (@ ~ empty())'
+	}
+	true
+}
+
+_jjs_fetch && _jjs_push && _jjs_rebase 2>/dev/null && _jjs_push
