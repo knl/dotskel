@@ -83,9 +83,14 @@ in
         "*.elc"
         "auto-save-list"
         ".direnv/"
+	".devenv/"
         # exclude nix-build result
         "result"
         "result-*"
+        "**/.claude/settings.local.json"
+	"CLAUDE.md"
+	"*.pcap"
+	"*.cap"
       ];
       # see home.file.".gitaliases".source below
       includes = [
