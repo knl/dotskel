@@ -1,4 +1,4 @@
-name: Automatically update niv-managed dependencies
+name: Automatically update npins-managed dependencies
 on:
   # Manual override, one can start the workflow by running:
   # curl -H "Accept: application/vnd.github.everest-preview+json" \
@@ -26,7 +26,7 @@ on:
     # This used to run every day, but that is way too many changes...
     - cron:  '30 3 * * 2'
 jobs:
-  niv-updater:
+  npins-updater:
     name: 'Check for updates (weekly)'
     runs-on: ubuntu-latest
     steps:
