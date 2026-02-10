@@ -87,8 +87,6 @@ in
         hm = "home-manager";
         d = "direnv";
 
-        jjw = "viddy --skip-empty-diffs --unfold 'jjx 2>&1'";
-
         df = "duf";
         du = "dua";
 
