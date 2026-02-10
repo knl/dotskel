@@ -251,6 +251,26 @@ rec {
   # TODO: maybe patch https://github.com/berbiche/dotfiles/blob/b5cb06db7764a963ab10b943d9269a51b12991e0/profiles/dev/home-manager/emacs/default.nix#L42
   home.file.".doom.d".source = link ./configs/doom;
 
+  home.activation.installMyScripts = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    for script in ${./scripts}/{murder,notify}; do
+      ln -sf "$script" "$HOME/bin/$(basename "$script")"
+    done
+  '';
+    
+#   home.activation.doomSync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+#     if [ -x "$HOME/.emacs.d/bin/doom" ]; then
+#       export PATH="${pkgs.git}/bin:${theEmacs}/bin:$PATH"
+#       run echo "Running doom sync..."
+# 
+#       run "$HOME/.emacs.d/bin/doom" sync -e --aot -j 13 || echo "doom sync failed"
+#       run "$HOME/.emacs.d/bin/doom" gc || echo "doom gc failed"
+#       run "$HOME/.emacs.d/bin/doom" env || echo "doom env failed"
+# 
+#       run echo "Finished running doom sync... remember to use doom env && doom doctor!"
+#     else
+#       run echo "doom binary not found, skipping doom sync"
+#     fi
+#   '';
 
   programs.z-lua = {
     enable = true;

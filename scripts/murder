@@ -1,0 +1,106 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i ruby -p ruby
+
+SIGNALS = [
+  [15, 3],
+  [2, 3],
+  [1, 4],
+  [9, 0]
+]
+
+def i?(arg)
+  arg.to_i != 0
+end
+
+def running?(pid)
+  `ps -p #{pid}`.lines.length == 2
+end
+
+def go_ahead?
+  %w(y yes yas).include? $stdin.gets.strip.downcase
+end
+
+def kill(pid, code)
+  `kill -#{code} #{pid}`
+end
+
+def murder_pid(pid)
+  SIGNALS.each do |signal|
+    break unless running? pid
+
+    code, wait = signal
+
+    kill(pid, code)
+    sleep 0.5
+    sleep(wait) if running? pid
+  end
+end
+
+def murder_names(name)
+  loop do
+    should_loop = false
+
+    running = `ps -eo 'pid command' | grep -Fiw '#{name}' | grep -Fv grep`
+    running.lines.each do |line|
+      pid, fullname = line.split(nil, 2)
+
+      next if Process.pid == pid.to_i
+
+      print "murder #{fullname.chomp} (pid #{pid})? "
+      if go_ahead?
+        murder_pid(pid)
+        should_loop = true
+        break
+      end
+    end
+
+    break unless should_loop
+  end
+end
+
+def murder_port(arg)
+  loop do
+    should_loop = false
+
+    lsofs = `lsof -i #{arg}`
+
+    lsofs.lines.drop(1).each do |line|
+      pid = line.split(nil, 3)[1]
+
+      fullname = `ps -eo 'command' #{pid}`.lines.drop(1).first
+
+      print "murder #{fullname.chomp} (pid #{pid})? "
+      if go_ahead?
+        murder_pid(pid)
+        should_loop = true
+        break
+      end
+    end
+
+    break unless should_loop
+  end
+end
+
+def murder(arg)
+  is_pid = i?(arg)
+  is_port = arg[0] == ':' && i?(arg.slice(1, arg.size))
+
+  if is_pid
+    murder_pid arg
+  elsif is_port
+    murder_port arg
+  else
+    murder_names arg
+  end
+end
+
+if ARGV.size < 1
+  puts 'usage:'
+  puts 'murder 123    # kill by pid'
+  puts 'murder ruby   # kill by process name'
+  puts 'murder :3000  # kill by port'
+  exit 1
+else
+  ARGV.each { |arg| murder(arg) }
+end
+
