@@ -75,6 +75,19 @@
             format_short_change_id_with_hidden_and_divergent_info(commit)
         ) ++ "\n"
     '''
+    status = '''
+        "@ Working copy changes:\n" ++
+        indent("    ", diff.summary()) ++
+        if(conflict,
+            "\nx Conflicts:\n" ++
+            indent("    ", conflicted_files.map(|x|
+                label("conflict", "x " ++ x.path())).join("\n")) ++
+            "\n"
+        ) ++
+        "\n| Parent commit changes:\n" ++
+        indent("    ", parents.map(|x| x.diff().summary()).join("")) ++
+        "\n"
+    '''
     'unarchived(description)' = """
         description.remove_prefix("(jj archive) ").remove_suffix("\n")
     """
