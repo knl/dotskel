@@ -137,10 +137,10 @@
     working_copy.underline = true
 
 [fsmonitor]
-    backend = 'watchman'
+    # backend = 'watchman'
 
-[fsmonitor.watchman]
-    register-snapshot-trigger = true
+# [fsmonitor.watchman]
+#     register-snapshot-trigger = true
 
 [git]
     push = 'fork'
