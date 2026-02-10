@@ -262,6 +262,29 @@ in
         in
         pkgs.lib.mkMerge [ initExtraFirst initExtra ];
 
+      siteFunctions = {
+        take = ''
+          \mkdir --parents "$1" && cd "$1"
+	      '';
+	      running = ''
+          set -euo pipefail
+          
+          process_list="$(ps -eo 'pid command')"
+          if [[ $# != 0 ]]; then
+            process_list="$(echo "$process_list" | grep -Fiw "$@")"
+          fi
+          
+          echo "$process_list" |
+            grep -Fv "''${BASH_SOURCE[0]}" |
+            grep -Fv grep |
+            GREP_COLORS='mt=00;35' grep -E --colour=auto '^\s*[[:digit:]]+'
+        '';
+        cpwd = ''
+          set -euo pipefail
+          pwd | tr -d '\n' | pbcopy
+        '';
+      };
+
       loginExtra = ''
         # Execute code only if STDERR is bound to a TTY.
         if [[ -o INTERACTIVE && -t 2 ]]; then
