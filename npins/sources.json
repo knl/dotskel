@@ -261,9 +261,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "4bd8a1e1e5541d515dfc3fabdf050b4a0f7420cc",
-      "url": "https://github.com/MichaelAquilina/zsh-you-should-use/archive/4bd8a1e1e5541d515dfc3fabdf050b4a0f7420cc.tar.gz",
-      "hash": "sha256-5dl6NJD0DWSDlWE1Ua8EviQWmWDW7kWBH0OB5A5UOZQ="
+      "revision": "ff371d6a11b653e1fa8dda4e61c896c78de26bfa",
+      "url": "https://github.com/MichaelAquilina/zsh-you-should-use/archive/ff371d6a11b653e1fa8dda4e61c896c78de26bfa.tar.gz",
+      "hash": "sha256-a/DNVxD55Bh6AmSh5C4z4JpZM5xUiQgoaFoDgYPQsbo="
     }
   },
   "version": 7
