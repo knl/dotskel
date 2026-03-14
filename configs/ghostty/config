@@ -9,6 +9,9 @@ shell-integration-features = no-cursor
 copy-on-select = clipboard
 
 window-inherit-working-directory = false
+tab-inherit-working-directory = false
+split-inherit-working-directory = true
+
 window-step-resize = true
 
 macos-option-as-alt = true
@@ -18,5 +21,10 @@ font-family = "Iosevka Term SS08"
 
 font-size = 18.0
 
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 30s
+
 # clear screen on Cmd+K (from iTerm2)
 keybind = cmd+k=clear_screen
+keybind = shift+enter=text:\x1b\r
