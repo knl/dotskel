@@ -5,11 +5,11 @@
 
 [revset-aliases]
     archived = 'description(glob:"(jj archive)*")'
-    local = 'all() ~ ancestors(remote_bookmarks(remote=exact:"origin"))'
+    local = 'mutable() ~ archived'
     'chain(revisions)' = 'ancestors(revisions) & local'
     local_unarchived = 'local ~ archived'
     og = 'trunk()'
-    interesting = 'og | parents(local_unarchived) | local_unarchived'
+    interesting = 'og | ancestors(local | working_copies(), 2)'
     deflog = 'interesting | ancestors(og, 5)'
     localstale = 'local_unarchived ~ descendants(og)'
 
@@ -67,7 +67,7 @@
                 )
             ),
             separate(" ",
-                if(commit.git_head(), label("git_head", "git_head()")),
+                if(commit.contained_in('first_parent(@)'), label("git_head", "git_head()")),
                 commit.bookmarks(),
                 commit.tags(),
                 commit.working_copies()
@@ -131,7 +131,7 @@
         ''']
     rebasestale = [
         'rebase',
-        '--source=all:roots(localstale)', '--destination=og', '--skip-emptied']
+        '--source=roots(localstale)', '--destination=og', '--skip-emptied']
     revlog = ['evolog']
     rollback = ['revert']
     unarchive = [
@@ -156,11 +156,7 @@
 #     register-snapshot-trigger = true
 
 [git]
-    push = 'fork'
-
-[remotes.origin]
-    auto-track-bookmarks = 'glob:*'
-
+    push = 'origin'
 
 [merge-tools.difft]
     diff-args = ['--color=always', '$left', '$right']
@@ -180,7 +176,6 @@
 
 [templates]
     push-bookmark-prefix = 'knl/jj_'
-    commit_trailers = '"Change-Id: " ++ gerrit_change_id(change_id)'
     draft_commit_description = '''
         concat(
             coalesce(description, default_commit_description, "\n"),
