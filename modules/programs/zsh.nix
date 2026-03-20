@@ -340,6 +340,7 @@ in
       ];
     };
     xdg.configFile."zsh/p10k.zsh".source = ../../zsh/p10k.zsh;
+    xdg.configFile."zsh/p10k-jj.zsh".source = ../../zsh/p10k-jj.zsh;
     xdg.configFile."zsh/functions".source = ../../zsh/functions;
   };
 }
