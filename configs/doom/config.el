@@ -163,18 +163,6 @@
 (setq doom-themes-treemacs-theme "doom-colors")
                                         ;(treemacs-load-theme "all-the-icons")
 
-;; Until the related PR merged, I neeed to configure colemak binding manually
-;; https://github.com/hlissner/doom-emacs/issues/783
-(use-package! evil-colemak-basics
-  :after evil
-  :init
-  (setq evil-colemak-basics-layout-mod `mod-dh) ; Swap "h" and "m"
-  ;; I frequently use "t" and "f", while end-of-word ("e", on Colemak "j") not so much
-  (setq evil-colemak-basics-rotate-t-f-j nil)
-  :config
-  (global-evil-colemak-basics-mode) ; Enable colemak rebinds
-)
-
 (use-package! atomic-chrome
   :defer 5                              ; since the entry of this
                                         ; package is from Chrome
