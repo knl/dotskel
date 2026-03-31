@@ -73,7 +73,6 @@ in
         ll = "eza -l --color always -a -s type";
         "]" = "open";
         dl = "\curl -O -L";
-        up = "\cd ..";
         p = "pushd";
         pd = "perldoc";
         mkdir = "nocorrect mkdir";
@@ -267,9 +266,14 @@ in
 
       siteFunctions = {
         take = ''
-          \mkdir --parents "$1" && cd "$1"
-	      '';
-	      running = ''
+          \mkdir -p "$1" && cd "$1"
+	'';
+	up = ''
+          local n=''${1:-1}
+          [[ "$n" =~ '^[0-9]+$' ]] || { echo "usage: up [number]"; return 1; }
+          cd $(printf '../%.0s' {1..$n})
+	'';
+	running = ''
           set -euo pipefail
           
           process_list="$(ps -eo 'pid command')"
