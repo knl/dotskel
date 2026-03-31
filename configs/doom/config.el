@@ -147,11 +147,16 @@
   ;; (advice-add #'org-roam-buffer-set-header-line-format :after #'org-roam-add-preamble-a)
   )
 
-(after! org-tree-slide
-  ;; I use g{h,j,k} to traverse headings and TAB to toggle their visibility, and
-  ;; leave C-left/C-right to .  I'll do a lot of movement because my
-  ;; presentations tend not to be very linear.
-  (setq org-tree-slide-skip-outline-level 2))
+                                        ; (after! org-tree-slide
+;; I use g{h,j,k} to traverse headings and TAB to toggle their visibility, and
+;; leave C-left/C-right to .  I'll do a lot of movement because my
+;; presentations tend not to be very linear.
+                                        ;  (setq org-tree-slide-skip-outline-level 2))
+(map! :after org-tree-slide
+      :map org-tree-slide-mode-map
+      :n "n" #'org-tree-slide-move-next-tree
+      :n "p" #'org-tree-slide-move-previous-tree)
+
 
                                         ;(require 'treemacs-all-the-icons)
 (setq doom-themes-treemacs-enable-variable-pitch nil)
