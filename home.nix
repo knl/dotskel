@@ -172,17 +172,13 @@ rec {
     dua
     duf
     entr
-    eza
-    fd
     fortune
     gnused
     gron
-    htop
     hyperfine
     imagemagick
     jc
     jless
-    jq
     lua
     moreutils
     mtr
@@ -197,7 +193,6 @@ rec {
     paperkey
     python3
     readline
-    ripgrep
     rsync
     scc
     sd
@@ -206,7 +201,6 @@ rec {
     tokei
     tree
     unar
-    uv
     viddy
     watch
     xz
@@ -239,6 +233,76 @@ rec {
     enable = true;
     enableZshIntegration = true;
   };
+  programs.eza = {
+    enable = true;
+    icons = "never";
+    colors = "auto";
+    git = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--header"
+    ];
+    enableZshIntegration = true;
+  };
+  programs.htop = {
+    enable = true;
+    settings = {
+      show_program_path = true;
+      highlight_base_name = true;
+      highlight_megabytes = true;
+      detailed_cpu_time = true;
+      cpu_count_from_one = true;
+      show_cpu_frequency = true;
+      hide_kernel_threads = true;
+      delay = 15;
+      color_scheme = 6;
+      fields = with config.lib.htop.fields; [
+        PID
+        USER
+        PRIORITY
+        NICE
+        M_SIZE
+        M_RESIDENT
+        STATE
+        PERCENT_CPU
+        PERCENT_MEM
+        TIME
+        COMM
+      ];
+    } // (with config.lib.htop; leftMeters [
+      (bar "AllCPUs2")
+      (bar "Memory")
+      (bar "Swap")
+    ]) // (with config.lib.htop; rightMeters [
+      (text "Tasks")
+      (text "LoadAverage")
+      (text "Uptime")
+    ]);
+  };
+  programs.jq = {
+    enable = true;
+    colors = {
+      null       = "1;30";  # bold dark gray
+      false      = "0;31";  # red
+      true       = "0;32";  # green
+      numbers    = "0;36";  # cyan
+      strings    = "0;33";  # yellow
+      arrays     = "1;35";  # bold magenta
+      objects    = "1;37";  # bold white
+      objectKeys = "1;34";  # bold blue
+    };
+  };
+  programs.ripgrep = {                                                                                                                                                                             enable = true;                                                                                                                                                                                 arguments = [                                                                                                                                                                                    "--smart-case"                                                                                                                                                                                 "--hidden"
+      "--glob=!.git"
+      "--glob=!.jj"
+      "--glob=!node_modules"
+      "--glob=!.direnv"
+      "--max-columns=200"
+      "--max-columns-preview"
+    ];
+  };
+  programs.fd.enable = true;
+  programs.uv.enable = true;
 
   # home.file.".emacs.d" = {
   #   source = link sources.doomemacs;
