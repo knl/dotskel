@@ -28,3 +28,6 @@ notify-on-command-finish-after = 30s
 # clear screen on Cmd+K (from iTerm2)
 keybind = cmd+k=clear_screen
 keybind = shift+enter=text:\x1b\r
+
+# use ctrl+, to change the tab title
+keybind = ctrl+,=prompt_tab_title
