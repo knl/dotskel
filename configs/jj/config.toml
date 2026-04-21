@@ -12,6 +12,9 @@
     interesting = 'og | ancestors(local | working_copies(), 2)'
     deflog = 'interesting | ancestors(og, 5)'
     localstale = 'local_unarchived ~ descendants(og)'
+    'empty_description()' = 'description(exact:"")'
+    'closest_pushable(to)' = 'heads(::to & mutable() & ~empty_description() & (~empty() | merges()))'
+    'last' = 'latest(ancestors(@) & ~empty() & ~empty_description())'
 
 [template-aliases]
     'commit_timestamp(commit)' = '''
@@ -93,8 +96,7 @@
     """
 
 [aliases]
-    tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
-    tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+    tug = ["bookmark", "advance"]
     ab = ['absorb']
     am = ['amend']
     bg = [
@@ -173,6 +175,7 @@
 
 [revsets]
     short-prefixes = 'interesting'
+    bookmark-advance-to = 'closest_pushable(@)'
 
 [templates]
     push-bookmark-prefix = 'knl/jj_'
