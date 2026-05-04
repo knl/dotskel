@@ -132,8 +132,8 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre988811.ebc08544afa7/nixexprs.tar.xz",
-      "hash": "sha256-fUlUlthbjH+ppUqSdGoLFM+GbtuxcDhp8V8ouXEAgow="
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre991389.73c703c22422/nixexprs.tar.xz",
+      "hash": "sha256-bA5oJv7j54PubdUbBlLCwdoK29G2+9sLnc8dDqLQ9YE="
     },
     "powerlevel10k": {
       "type": "Git",
