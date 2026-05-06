@@ -105,6 +105,7 @@
         '--no-pager']
     bgc = ['bg', '--color=always']
     list = ['log', '--no-graph']
+    lg = ['log', '-T', 'builtin_log_compact_full_description', '--patch', '--no-graph']
     reword = ['describe']
     archive = [
         'util', 'exec', '--', 'sh', '-c', '''
