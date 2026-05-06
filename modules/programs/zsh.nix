@@ -56,8 +56,7 @@ in
 
         LESS = "-F -g -i -M -R -S -w -X -z-4";
 
-        # This is to make `z my-dir` work with z.lua
-        _ZL_HYPHEN = "1";
+        _ZO_DATA_DIR = "$HOME/.local/zoxide";
       };
 
       localVariables = {

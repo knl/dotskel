@@ -292,11 +292,18 @@ rec {
       objectKeys = "1;34";  # bold blue
     };
   };
-  programs.ripgrep = {                                                                                                                                                                             enable = true;                                                                                                                                                                                 arguments = [                                                                                                                                                                                    "--smart-case"                                                                                                                                                                                 "--hidden"
+  programs.ripgrep = {
+      enable = true; 
+      arguments = [
+      "--smart-case"
+      "--hidden"
       "--glob=!.git"
       "--glob=!.jj"
+      "--glob=!.svn"
       "--glob=!node_modules"
       "--glob=!.direnv"
+      "--glob=!.devenv"
+      "--glob=!.venv"
       "--max-columns=200"
       "--max-columns-preview"
     ];
@@ -336,9 +343,13 @@ rec {
 #     fi
 #   '';
 
-  programs.z-lua = {
+  # programs.z-lua = {
+  #   enable = true;
+  #   options = [ "once" "fzf" ];
+  # };
+  programs.zoxide = {
     enable = true;
-    options = [ "once" "fzf" ];
+    enableZshIntegration = true;
   };
 
   xdg.configFile."ghostty".source = link ./configs/ghostty;
