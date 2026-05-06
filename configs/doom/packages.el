@@ -52,9 +52,9 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(package! evil-colemak-basics
-  :recipe
-  (:host github
-   :repo "wbolster/emacs-evil-colemak-basics"
-   :branch "main")
-)
+;; Use emacs-tramp-rpc to speed up interaction with remote hosts
+(package! msgpack)
+(package! tramp-rpc :recipe (:host github :repo "ArthurHeymans/emacs-tramp-rpc"))
+
+;; better commenting
+(package! comment-dwim-2)

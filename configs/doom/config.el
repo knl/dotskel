@@ -78,7 +78,8 @@
         ;; If an LSP server isn't present when I start a prog-mode buffer, you
         ;; don't need to tell me. I know. On some machines I don't care to have
         ;; a whole development environment for some ecosystems.
-        lsp-enable-suggest-server-download nil))
+        lsp-enable-suggest-server-download nil
+        lsp-rust-analyzer-diagnostics-disabled ["unlinked-file"]))
 (after! lsp-ui
   (setq lsp-ui-sideline-enable nil  ; no more useful than flycheck
         lsp-ui-doc-enable nil))     ; redundant with K
@@ -188,6 +189,13 @@
 
 ;; Weeks should start on Monday
 (setq calendar-week-start-day 1)
+
+(use-package! msgpack)
+(use-package! tramp-rpc)
+
+(use-package comment-dwim-2
+  :bind
+  ("S-/" . comment-dwim-2))
 
 ;; (setq explicit-shell-file-name "/bin/zsh")
 ;; (setq shell-file-name "zsh")
