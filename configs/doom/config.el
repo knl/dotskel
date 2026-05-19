@@ -164,6 +164,12 @@
 (setq doom-themes-treemacs-theme "doom-colors")
                                         ;(treemacs-load-theme "all-the-icons")
 
+(after! treemacs
+  ;; Keep Treemacs focused on the file in the selected buffer.
+  (treemacs-follow-mode 1)
+  ;; Optional: also switch Treemacs to the current buffer's project.
+  (treemacs-project-follow-mode 1))
+
 (use-package! atomic-chrome
   :defer 5                              ; since the entry of this
                                         ; package is from Chrome
@@ -190,12 +196,93 @@
 ;; Weeks should start on Monday
 (setq calendar-week-start-day 1)
 
-(use-package! msgpack)
-(use-package! tramp-rpc)
+;;(use-package! msgpack)
+;;(use-package! tramp-rpc)
 
 (use-package comment-dwim-2
   :bind
   ("S-/" . comment-dwim-2))
+
+(after! vertico
+  ;; Add file preview
+  ;;(add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
+  ;;(define-key vertico-map (kbd "DEL") #'vertico-directory-delete-char)
+  ;;(define-key vertico-map (kbd "M-DEL") #'vertico-directory-delete-word)
+  ;; Make vertico use a more minimal display
+  (setq vertico-count 17
+        vertico-cycle t
+        vertico-resize t)
+  ;; Enable alternative filter methods
+  (setq vertico-sort-function #'vertico-sort-history-alpha)
+  ;; Quick actions keybindings
+  (define-key vertico-map (kbd "C-j") #'vertico-next)
+  (define-key vertico-map (kbd "C-k") #'vertico-previous)
+  (define-key vertico-map (kbd "M-RET") #'vertico-exit-input)
+
+  ;; History navigation
+  (define-key vertico-map (kbd "M-p") #'vertico-previous-history)
+  (define-key vertico-map (kbd "M-n") #'vertico-next-history)
+  (define-key vertico-map (kbd "C-r") #'consult-history)
+
+  ;; Configure orderless for better filtering
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles basic partial-completion orderless))))
+
+  ;; Customize orderless behavior
+  (setq orderless-component-separator #'orderless-escapable-split-on-space
+        orderless-matching-styles '(orderless-literal
+                                    orderless-prefixes
+                                    orderless-initialism
+                                    orderless-flex
+                                    orderless-regexp)))
+
+;; Enhanced sorting and filtering with prescient
+(use-package! vertico-prescient
+  :after vertico
+  :config
+  (vertico-prescient-mode 1)
+  (prescient-persist-mode 1)
+  (setq prescient-sort-length-enable nil
+        prescient-filter-method '(literal regexp initialism fuzzy)))
+
+;; Enhanced marginalia annotations
+(after! marginalia
+  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  ;; Show more details in marginalia
+  (setq marginalia-max-relative-age 0
+        marginalia-align 'right))
+
+;; Configure consult for better previews
+(after! consult
+  (setq consult-preview-key "M-."
+        consult-ripgrep-args "rg --null --line-buffered --color=never --max-columns=1000 --path-separator /   --smart-case --no-heading --with-filename --line-number --search-zip"
+        consult-narrow-key "<"
+        consult-line-numbers-widen t
+        consult-async-min-input 2
+        consult-async-refresh-delay 0.15
+        consult-async-input-throttle 0.2
+        consult-async-input-debounce 0.1)
+
+  ;; More useful previews for different commands
+  (consult-customize
+   consult-theme consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   :preview-key '(:debounce 0.4 any)))
+
+;; Enhanced directory navigation
+(use-package! consult-dir
+  :bind
+  (("C-x C-d" . consult-dir)
+   :map vertico-map
+   ("C-x C-d" . consult-dir)
+   ("C-x C-j" . consult-dir-jump-file)))
+
+;; Add additional useful shortcuts
+(map! :leader
+      (:prefix "s"
+       :desc "Command history" "h" #'consult-history
+       :desc "Recent directories" "d" #'consult-dir))
 
 ;; (setq explicit-shell-file-name "/bin/zsh")
 ;; (setq shell-file-name "zsh")

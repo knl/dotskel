@@ -53,8 +53,12 @@
 ;(unpin! t)
 
 ;; Use emacs-tramp-rpc to speed up interaction with remote hosts
-(package! msgpack)
-(package! tramp-rpc :recipe (:host github :repo "ArthurHeymans/emacs-tramp-rpc"))
+;;(package! msgpack)
+;;(package! tramp-rpc :recipe (:host github :repo "ArthurHeymans/emacs-tramp-rpc"))
 
 ;; better commenting
 (package! comment-dwim-2)
+
+;; https://www.chiply.dev/post-vompeccc#vompeccc-framework
+(package! vertico-prescient)
+(package! corfu-prescient)
