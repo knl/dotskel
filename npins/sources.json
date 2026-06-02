@@ -99,9 +99,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ba9579d88597276519a7359e7b2b9444908c3b53",
+      "revision": "72243962e139699b2e532f829f34dfd5d3305cb0",
       "url": null,
-      "hash": "sha256-q201hCafr0kYvnMqElXxtrwbwfrUXMfpT9LjEpcrqkY="
+      "hash": "sha256-t+653jWxXjMTROtFHaMgTS26y//Q2tmimenvyxSVJRQ="
     },
     "nerd-icons.el": {
       "type": "Git",
@@ -132,8 +132,9 @@
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre1003764.3d8f0f3f72a6/nixexprs.tar.xz",
-      "hash": "sha256-Zc5W2GRfLZtIDsEn0A5kzoN0+yNWq/3MzzoXGu0ytMU="
+      "artifact": "nixexprs.tar.xz",
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1008784.4df1b885d76a/nixexprs.tar.xz",
+      "hash": "sha256-bWVU1JP9hCYZzQjMLdMzr/FINF+UvpZGvCJcnNY616k="
     },
     "powerlevel10k": {
       "type": "Git",
@@ -266,5 +267,5 @@
       "hash": "sha256-a/DNVxD55Bh6AmSh5C4z4JpZM5xUiQgoaFoDgYPQsbo="
     }
   },
-  "version": 7
+  "version": 8
 }
