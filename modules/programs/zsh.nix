@@ -2,6 +2,36 @@
 
 let
   sources = import ../../npins/default.nix;
+
+  # The `<tool> init zsh` outputs below are environment-independent (verified
+  # by diffing runs across clean/changed environments), so generate them once
+  # at build time and source the files, instead of forking the tool at every
+  # shell startup.
+  staticInit = name: cmd: pkgs.runCommand "zsh-${name}-init" { } "${cmd} > $out";
+  zoxideInit = staticInit "zoxide" "${config.programs.zoxide.package}/bin/zoxide init zsh";
+  fzfInit = staticInit "fzf" "${config.programs.fzf.package}/bin/fzf --zsh";
+  # carapace reads $XDG_CONFIG_HOME/carapace/specs at init (unreadable in the
+  # sandbox) and embeds the config path in its PATH bootstrap line, so point
+  # it at an empty stand-in and fix the path up. `typeset -U path` dedups the
+  # PATH prepend in nested shells. Only used while no user specs exist, see
+  # carapaceHasSpecs.
+  carapaceInit = pkgs.runCommand "zsh-carapace-init" { } ''
+    export XDG_CONFIG_HOME=$TMPDIR/config
+    mkdir -p $XDG_CONFIG_HOME/carapace/specs
+    ${config.programs.carapace.package}/bin/carapace _carapace zsh \
+      | sed "s|$XDG_CONFIG_HOME|${config.xdg.configHome}|g" > $out
+  '';
+  # The prebuilt init can never include user specs (the sandbox can't read
+  # them), so detect them at eval time — impure, like the getEnv in home.nix —
+  # and fall back to runtime init whenever any exist.
+  carapaceSpecsDir = "${config.xdg.configHome}/carapace/specs";
+  carapaceHasSpecs =
+    builtins.pathExists carapaceSpecsDir
+    && builtins.removeAttrs (builtins.readDir carapaceSpecsDir) [ ".DS_Store" ] != { };
+  # rh embeds the invoking lua into its output; pkgs.lua is the same package
+  # as the `lua` in home.packages.
+  rhInit = staticInit "rh"
+    "${pkgs.lua}/bin/lua ${sources.rh}/rh.lua --init zsh ${config.home.homeDirectory}/work";
 in
 
 {
@@ -13,19 +43,40 @@ in
       # .config/zsh/lib
       dotDir = "${config.xdg.configHome}/zsh";
 
-      autosuggestion.enable = true;
+      # zsh-autosuggestions is loaded via the plugins list below; enabling
+      # this as well would source the nixpkgs copy on top of it.
+      autosuggestion.enable = false;
       enableCompletion = true;
+      # compinit -C skips the slow fpath security audit. The dump is keyed on
+      # the nix store paths that feed fpath (the profiles plus this
+      # generation's .zshrc), so any rebuild or profile change starts a fresh
+      # dump automatically; unchanged generations reuse the zcompiled dump.
+      completionInit = ''
+        autoload -U compinit
+        () {
+          local p key=
+          for p in ''${(z)NIX_PROFILES} $ZDOTDIR/.zshrc; do
+            p=''${p:A}
+            key+=''${''${''${p#/nix/store/}%%-*}//\//}
+          done
+          local dump=''${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-''${ZSH_VERSION}-''${key:-default}
+          if [[ ! -e $dump ]]; then
+            command mkdir -p -- ''${dump:h}
+            command rm -f -- ''${dump:h}/zcompdump-*(N)
+          fi
+          compinit -C -d $dump
+          if [[ ! -e $dump.zwc || $dump -nt $dump.zwc ]]; then
+            zcompile $dump
+          fi
+        }
+      '';
       history = {
         size = 50000;
         save = 500000;
         # Put the ZSH history into the same directory as the configuration.
         # Also, the path must be absolute, relative paths just make new directories
         # wherever you're working from.
-        path =
-          let
-            inherit (config.home) homeDirectory;
-          in
-          "${homeDirectory}/${dotDir}/history";
+        path = "${dotDir}/history";
         extended = true;
         ignoreDups = true;
         share = true;
@@ -64,6 +115,11 @@ in
         WORDCHARS = "*?_-.[]~&;!#$%^(){}<>";
 
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=8";
+        # Bind the autosuggest widgets once at the first precmd instead of
+        # re-binding on every prompt. (Async suggestion fetching needs no
+        # setting: the plugin force-enables ZSH_AUTOSUGGEST_USE_ASYNC on
+        # zsh >= 5.0.8.)
+        ZSH_AUTOSUGGEST_MANUAL_REBIND = "1";
       };
 
       shellAliases = {
@@ -127,6 +183,14 @@ in
 
       initContent =
         let
+          # Must stay the very first thing in .zshrc (mkBefore is order 500,
+          # this is 400): paints the prompt immediately and lets the rest of
+          # the init run behind it.
+          instantPrompt = pkgs.lib.mkOrder 400 ''
+            if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+              source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+            fi
+          '';
           initExtraFirst = pkgs.lib.mkBefore ''
 	    # Make sure we can get nix after macos upgrade (when /etc/zshrc gets overwritten)
 	    if [[ ! $(command -v nix) && -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]]; then
@@ -161,10 +225,6 @@ in
             # Nix setup (environment variables, etc.)
             if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
               . ~/.nix-profile/etc/profile.d/nix.sh
-            fi
-
-            if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
-              source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
             fi
 
             # expands .... to ../..
@@ -210,18 +270,14 @@ in
               done
             }
 
-            eval "$(lua ${sources.rh}/rh.lua --init zsh ~/work)"
+            source ${rhInit}
 
-            # Theme (custom built on powerlevel10k)
-            # First load all variables
+            # Theme config; powerlevel10k itself is loaded earlier, as a plugin
             source ${config.xdg.configHome}/zsh/p10k.zsh
-            # Then source the theme
-            source ${sources.powerlevel10k}/powerlevel10k.zsh-theme
 
             # zsh-histdb start
+            # sqlite-history.zsh itself is sourced via the zsh-histdb plugin entry
             HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
-
-            source ''${ZDOTDIR}/plugins/zsh-histdb/sqlite-history.zsh
 
             _zsh_autosuggest_strategy_histdb_top() {
                 local query="
@@ -259,9 +315,81 @@ in
             _fzf_complete_git_post() {
                 cut -d ' ' -f1
             }
+
+            # Tab/window title (OSC 2). Ghostty's own title integration is
+            # disabled (no-title in configs/ghostty/config): it reports the
+            # cwd head-first, and tab truncation eats the tail, leaving only
+            # the uninformative leading components. Instead: the repo name
+            # plus the abbreviated path below it when inside a git/jj
+            # checkout (dotskel, dotskel/m/programs), fish-style abbreviated
+            # ~-relative path otherwise (s/foo for ~/scratchpad/foo).
+            _tab_title_precmd() {
+              [[ $TERM == (dumb|linux) || -z $TTY ]] && return
+              local root=$PWD pretty= first=1
+              local -a parts
+              while [[ -n $root && ! -e $root/.git && ! -e $root/.jj ]]; do
+                root=''${root%/*}
+              done
+              if [[ -n $root && $root != $HOME ]]; then
+                # Inside a checkout: repo name stays full, the rest shortens.
+                parts=(''${root:t} ''${(s:/:)''${PWD#$root}})
+                first=2
+              else
+                pretty=''${(%):-%~}
+                parts=(''${(s:/:)pretty})
+                (( $#parts > 1 )) && [[ $parts[1] == '~' ]] && parts[1]=()
+              fi
+              local i
+              for (( i = first; i < $#parts; i++ )); do
+                [[ $parts[i] == .* ]] && parts[i]=''${parts[i][1,2]} || parts[i]=''${parts[i][1]}
+              done
+              local title=''${(j:/:)parts}
+              [[ $pretty == /* ]] && title=/$title
+              print -rn -- $'\e]2;'$title$'\a' > $TTY
+            }
+
+            # While a command runs, show it in the title (what ghostty's
+            # integration did); the next precmd switches back to the path.
+            _tab_title_preexec() {
+              [[ $TERM == (dumb|linux) || -z $TTY ]] && return
+              local cmd=''${1//[[:cntrl:]]}
+              print -rn -- $'\e]2;'$cmd$'\a' > $TTY
+            }
+
+            autoload -Uz add-zsh-hook
+            add-zsh-hook precmd _tab_title_precmd
+            add-zsh-hook preexec _tab_title_preexec
           '';
+          # Static replacements for the disabled enableZshIntegration hooks,
+          # at the orders the home-manager modules would have used: zoxide
+          # 851, fzf 910 (with its zle guard), carapace at the end of the
+          # order-1000 block.
+          staticInits = pkgs.lib.mkMerge [
+            (pkgs.lib.mkOrder 851 "source ${zoxideInit}")
+            (pkgs.lib.mkOrder 910 ''
+              if [[ $options[zle] = on ]]; then
+                source ${fzfInit}
+              fi
+            '')
+            (pkgs.lib.mkOrder 1001 (
+              if carapaceHasSpecs then
+                # Specs only work with runtime init; costs one fork per startup.
+                "source <(${config.programs.carapace.package}/bin/carapace _carapace zsh)"
+              else
+                ''
+                  source ${carapaceInit}
+                  # Catch specs added since the last switch; rebuilding picks
+                  # the runtime-init branch above as long as any spec exists.
+                  () {
+                    local -a specs=(${config.xdg.configHome}/carapace/specs/*(N))
+                    specs=(''${specs:#*/.DS_Store})
+                    (( $#specs )) && print -ru2 -- "carapace: new spec files detected; run 'hm switch' to include them in completions"
+                  }
+                ''
+            ))
+          ];
         in
-        pkgs.lib.mkMerge [ initExtraFirst initExtra ];
+        pkgs.lib.mkMerge [ instantPrompt initExtraFirst initExtra staticInits ];
 
       siteFunctions = {
         take = ''
@@ -291,17 +419,6 @@ in
         '';
       };
 
-      loginExtra = ''
-        # Execute code only if STDERR is bound to a TTY.
-        if [[ -o INTERACTIVE && -t 2 ]]; then
-          # Print a random, hopefully interesting, adage.
-          if (( $+commands[fortune] )); then
-            fortune -s
-            print
-          fi
-        fi >&2
-      '';
-
       plugins = [
         {
           name = "zsh-autosuggestions";
@@ -320,9 +437,11 @@ in
           src = sources.zsh-async;
         }
         {
-          # look at home.file.".p10k.zsh".source for config
+          # upstream ships no powerlevel10k.plugin.zsh, so name the theme file
+          # explicitly; the p10k.zsh config is sourced later, from initContent
           name = "powerlevel10k";
           src = sources.powerlevel10k;
+          file = "powerlevel10k.zsh-theme";
         }
         {
           name = "zsh-you-should-use";

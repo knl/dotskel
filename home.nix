@@ -172,7 +172,6 @@ rec {
     dua
     duf
     entr
-    fortune
     gnused
     gron
     hyperfine
@@ -229,9 +228,12 @@ rec {
   #   # extraPackages = (epkgs: [epkgs.pdf-tools] );
   # };
   programs.fzf.enable = true;
+  # zsh init is generated at build time instead, see modules/programs/zsh.nix
+  programs.fzf.enableZshIntegration = false;
   programs.carapace = {
     enable = true;
-    enableZshIntegration = true;
+    # zsh init is generated at build time instead, see modules/programs/zsh.nix
+    enableZshIntegration = false;
   };
   programs.eza = {
     enable = true;
@@ -349,7 +351,8 @@ rec {
   # };
   programs.zoxide = {
     enable = true;
-    enableZshIntegration = true;
+    # zsh init is generated at build time instead, see modules/programs/zsh.nix
+    enableZshIntegration = false;
   };
 
   xdg.configFile."ghostty".source = link ./configs/ghostty;
@@ -397,6 +400,6 @@ rec {
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    stateVersion = "25.11";
+    stateVersion = "26.05";
   };
 }
