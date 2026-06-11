@@ -39,19 +39,6 @@
       "url": "https://github.com/nix-community/emacs-overlay/archive/4d84d5c37f28595b34858e4ae9c76c11e7c257ab.tar.gz",
       "hash": "sha256-FxU58LNvJzcOU9K6xUyE01GvB8x5Vtm0b6sUbjB82WE="
     },
-    "fast-syntax-highlighting": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "zdharma-continuum",
-        "repo": "fast-syntax-highlighting"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "3d574ccf48804b10dca52625df13da5edae7f553",
-      "url": "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/3d574ccf48804b10dca52625df13da5edae7f553.tar.gz",
-      "hash": "sha256-ZihUL4JAVk9V+IELSakytlb24BvEEJ161CQEHZYYoSA="
-    },
     "home-manager": {
       "type": "Git",
       "repository": {
@@ -239,6 +226,19 @@
       "revision": "14c8d2e0ffaee98f2df9850b19944f32546fdea5",
       "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/14c8d2e0ffaee98f2df9850b19944f32546fdea5.tar.gz",
       "hash": "sha256-KHujL1/TM5R3m4uQh2nGVC98D6MOyCgQpyFf+8gjKR0="
+    },
+    "zsh-patina": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "michel-kraemer",
+        "repo": "zsh-patina"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "efe6e7593b9b21959996f0eee03b12db988b3e13",
+      "url": "https://github.com/michel-kraemer/zsh-patina/archive/efe6e7593b9b21959996f0eee03b12db988b3e13.tar.gz",
+      "hash": "sha256-hE7PFVE7CmLUALHwSfNWhwwXcy9ORiXYd4aP2Mg+c80="
     },
     "zsh-syntax-highlighting": {
       "type": "Git",

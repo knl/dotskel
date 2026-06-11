@@ -32,6 +32,16 @@ let
   # as the `lua` in home.packages.
   rhInit = staticInit "rh"
     "${pkgs.lua}/bin/lua ${sources.rh}/rh.lua --init zsh ${config.home.homeDirectory}/work";
+  # Syntax highlighter (replaces fast-syntax-highlighting); not in nixpkgs
+  # yet, so build the daemon binary the same way upstream's flake does. Its
+  # `activate` output embeds the per-user runtime dir and starts the daemon,
+  # so it cannot be a staticInit — it must be eval'd at shell startup.
+  zshPatina = pkgs.rustPlatform.buildRustPackage {
+    pname = "zsh-patina";
+    version = (pkgs.lib.importTOML "${sources.zsh-patina}/Cargo.toml").package.version;
+    src = sources.zsh-patina;
+    cargoLock.lockFile = "${sources.zsh-patina}/Cargo.lock";
+  };
 in
 
 {
@@ -388,8 +398,14 @@ in
                 ''
             ))
           ];
+          # Last in .zshrc, as upstream recommends: the eval registers the
+          # line-pre-redraw widget and starts the shared highlighter daemon
+          # if it is not already running.
+          patinaInit = pkgs.lib.mkOrder 1200 ''
+            eval "$(${zshPatina}/bin/zsh-patina activate)"
+          '';
         in
-        pkgs.lib.mkMerge [ instantPrompt initExtraFirst initExtra staticInits ];
+        pkgs.lib.mkMerge [ instantPrompt initExtraFirst initExtra staticInits patinaInit ];
 
       siteFunctions = {
         take = ''
@@ -423,10 +439,6 @@ in
         {
           name = "zsh-autosuggestions";
           src = sources.zsh-autosuggestions;
-        }
-        {
-          name = "fast-syntax-highlighting";
-          src = sources.fast-syntax-highlighting;
         }
         {
           name = "zsh-history-substring-search";
