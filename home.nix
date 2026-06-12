@@ -1,19 +1,7 @@
 { config, lib, ... }:
 let
   sources = import ./npins/default.nix;
-  overlays = let path = ./nix/overlays; in
-    with builtins;
-    map (n: import (path + ("/" + n)))
-      (filter
-        (n: match ".*\\.nix" n != null ||
-          pathExists (path + ("/" + n + "/default.nix")))
-        (attrNames (readDir path)));
-  pkgs = import sources.nixpkgs {
-    # Get all files in overlays
-    overlays = [
-      (_self: super: { inherit sources; })
-    ] ++ overlays;
-  };
+  pkgs = import sources.nixpkgs { };
   niv = import sources.niv { };
   link = config.lib.file.mkOutOfStoreSymlink;
   # Darwin specific run-or-raise style script for emacs.
