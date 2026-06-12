@@ -1,4 +1,4 @@
-{ lib, stdenv, pkgs, writeText, emacs ? pkgs.emacsMacport }:
+{ lib, stdenv, writeText, emacs }:
 
 stdenv.mkDerivation rec {
   pname = "OrgProtocolClient";

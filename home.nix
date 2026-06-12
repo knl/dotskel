@@ -12,8 +12,6 @@ let
     # Get all files in overlays
     overlays = [
       (_self: super: { inherit sources; })
-      # temporarily disable as I'm trying out #doom
-      # (import sources.emacs-overlay)
     ] ++ overlays;
   };
   niv = import sources.niv { };
@@ -42,75 +40,28 @@ let
     + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
   ;
 
-  theEmacs =
-    let
-      spacemacsIcon = pkgs.fetchurl {
-        url = "https://github.com/nashamri/spacemacs-logo/raw/917f2f2694019d534098f5e2e365b5f6e5ddbd37/spacemacs.icns";
-        sha256 = "sha256:0049lkmc8pmb9schjk5mqy372b3m7gg1xp649gibriabz9y8pnxk";
-      };
-      pkgs' = pkgs.extend (
-        _final: prev: {
-          ld64 = prev.ld64.overrideAttrs (old: {
-            patches = old.patches or [ ] ++ [ ./Dedupe-RPATH-entries.patch ];
-          });
-        }
-      );
-      emacsSource_ = pkgs'.emacs30.override { withNativeCompilation = true; };
-      emacsSource = pkgs.emacs30;
-      emacsSource1 = pkgs.emacs30.overrideAttrs (old: {
-        #        patches =
-        #          (old.patches or [])
-        #          ++ [
-        #            # Fix OS window role (needed for window managers like yabai)
-        #            (pkgs.fetchpatch {
-        #              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-        #              sha256 = "sha256-+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
-        #            })
-        #            # Enable rounded window with no decoration
-        #            (pkgs.fetchpatch {
-        #              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
-        #              sha256 = "sha256-uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
-        #            })
-        #            # Make Emacs aware of OS-level light/dark mode
-        #            # points to emacs-28, as 29 is just a symlink
-        #            (pkgs.fetchpatch {
-        #              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-        #              sha256 = "sha256-oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
-        #            })
-        #          ];
-        postPatch = old.postPatch + ''
-          # copy the nice icon to it
-          cp ${spacemacsIcon} mac/Emacs.app/Contents/Resources/Emacs.icns
-        '';
-      });
-      emacsPkg = emacsSource.pkgs.emacsWithPackages (epkgs: with epkgs; [
-        treesit-grammars.with-all-grammars
-        nerd-icons
-      ] ++ (with epkgs.melpaPackages; [
-        vterm
-        all-the-icons
-        emojify
-      ]));
-      deps = [
-        (pkgs.aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-        (pkgs.hunspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large ]))
-        (pkgs.nuspellWithDicts (with pkgs.hunspellDicts; [ en_GB-large ]))
-        pkgs.graphviz-nox
-        pkgs.imagemagick # for image-dired
-        pkgs.gnutls # for TLS connectivity
-        pkgs.coreutils # needed for gls for dired
-        pkgs.binutils # native-comp needs 'as', provided by this
-        # :tools editorconfig
-        pkgs.editorconfig-core-c
-        # :tools lookup & :lang org +roam
-        pkgs.sqlite
-      ];
-    in
-    emacsPkg;
+  theEmacs = pkgs.emacs30.pkgs.emacsWithPackages (epkgs: [
+    # Native-module / native-artifact packages only; everything pure-elisp
+    # is managed by Doom/straight. Runtime tools live in emacsRuntimeDeps and
+    # reach Emacs via `doom env`.
+    epkgs.treesit-grammars.with-all-grammars
+    epkgs.melpaPackages.vterm
+  ]);
+
+  myAspell = pkgs.aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]);
+  # Tools only Emacs needs. Not in home.packages; injected into the doom env
+  # PATH snapshot by the doomEnv activation below. GC-safe: the store paths
+  # are references of the generation's activation script.
+  emacsRuntimeDeps = [
+    myAspell
+    pkgs.coreutils-prefixed # gls for dired (doom hardcodes "gls" on macOS)
+    pkgs.editorconfig-core-c
+    pkgs.gnutls
+    pkgs.graphviz-nox # org-babel dot
+  ];
 
   myFonts = with pkgs; [
     emacs-all-the-icons-fonts
-    emacs.pkgs.nerd-icons
     fira-code
     font-awesome
     # (iosevka.override { privateBuildPlan = { family = "Iosevka Term"; design = [ "term" "ss08" ]; }; set = "term-ss08"; })
@@ -142,12 +93,6 @@ rec {
     config = {
       allowUnfree = true;
       allowUnsupportedSystem = true;
-      permittedInsecurePackages = [
-        "my-doom-emacs"
-        "emacs-mac-macport-with-packages-29.1"
-        "emacs-mac-macport-29.1"
-        "emacs-29.4"
-      ];
     };
   };
 
@@ -222,11 +167,6 @@ rec {
     enableZshIntegration = true;
   };
 
-  # programs.emacs = {
-  #   enable = true;
-  #   package = theEmacs;
-  #   # extraPackages = (epkgs: [epkgs.pdf-tools] );
-  # };
   programs.fzf.enable = true;
   # zsh init is generated at build time instead, see modules/programs/zsh.nix
   programs.fzf.enableZshIntegration = false;
@@ -313,12 +253,6 @@ rec {
   programs.fd.enable = true;
   programs.uv.enable = true;
 
-  # home.file.".emacs.d" = {
-  #   source = link sources.doomemacs;
-  #   recursive = true;
-  #   onChange = "${config.home.homeDirectory}/.emacs.d/bin/doom sync";
-  # };
-
   # This creates a symlink to the file, so I can easily edit it
   # Not for the faint of heart, though...
   # TODO: maybe patch https://github.com/berbiche/dotfiles/blob/b5cb06db7764a963ab10b943d9269a51b12991e0/profiles/dev/home-manager/emacs/default.nix#L42
@@ -329,21 +263,23 @@ rec {
       ln -sf "$script" "$HOME/bin/$(basename "$script")"
     done
   '';
-    
-#   home.activation.doomSync = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-#     if [ -x "$HOME/.emacs.d/bin/doom" ]; then
-#       export PATH="${pkgs.git}/bin:${theEmacs}/bin:$PATH"
-#       run echo "Running doom sync..."
-# 
-#       run "$HOME/.emacs.d/bin/doom" sync -e --aot -j 13 || echo "doom sync failed"
-#       run "$HOME/.emacs.d/bin/doom" gc || echo "doom gc failed"
-#       run "$HOME/.emacs.d/bin/doom" env || echo "doom env failed"
-# 
-#       run echo "Finished running doom sync... remember to use doom env && doom doctor!"
-#     else
-#       run echo "doom binary not found, skipping doom sync"
-#     fi
-#   '';
+
+  # Refresh doom's envvar snapshot so Emacs sees the tools from the new
+  # generation. `doom env` records the doom CLI's own environment, so run it
+  # inside a scrubbed interactive zsh: env -i drops the activation/nix-shell
+  # pollution and the inherited guards (e.g. __HM_SESS_VARS_SOURCED) that
+  # would suppress the PATH setup in zshenv, and zsh -ic then rebuilds the
+  # same environment a fresh terminal would have. emacsRuntimeDeps are
+  # prepended inside the -ic command (after zshenv/zshrc, so the session-vars
+  # PATH= line can't clobber them) so they reach Emacs without polluting the
+  # global profile.
+  home.activation.doomEnv = lib.hm.dag.entryAfter ["installPackages"] ''
+    if [ -x "$HOME/.emacs.d/bin/doom" ]; then
+      run env -i HOME="$HOME" USER="$USER" SHELL=/bin/zsh TERM=dumb \
+        PATH="$HOME/.nix-profile/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+        /bin/zsh -ic 'export PATH="${lib.makeBinPath emacsRuntimeDeps}:$PATH"; "$HOME/.emacs.d/bin/doom" env && "$HOME/.emacs.d/bin/doom" sync --aot' || run echo "doom env/sync failed"
+    fi
+  '';
 
   # programs.z-lua = {
   #   enable = true;
@@ -359,7 +295,7 @@ rec {
 
   # Setting up aspell
   home.file.".aspell.conf".text = ''
-    data-dir ${builtins.getEnv "HOME"}/.nix-profile/lib/aspell
+    data-dir ${myAspell}/lib/aspell
     master en_US
     extra-dicts en-computers.rws
     add-extra-dicts en_US-science.rws
