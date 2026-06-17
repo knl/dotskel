@@ -4,6 +4,9 @@ let
   pkgs = import sources.nixpkgs { };
   niv = import sources.niv { };
   link = config.lib.file.mkOutOfStoreSymlink;
+  # Karabiner config rendered from the Nix attrset to JSON at build time.
+  karabinerJson = pkgs.writeText "karabiner.json"
+    (builtins.toJSON (import ./configs/karabiner/karabiner.nix));
   # Darwin specific run-or-raise style script for emacs.
   osascript = ''
     open $HOME/.nix-profile/Applications/Emacs.app
@@ -247,7 +250,7 @@ rec {
   home.file.".doom.d".source = link ./configs/doom;
 
   home.activation.installMyScripts = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    for script in ${./scripts}/{murder,notify}; do
+    for script in ${./scripts}/{murder,notify,karabiner-nix}; do
       ln -sf "$script" "$HOME/bin/$(basename "$script")"
     done
   '';
@@ -295,8 +298,20 @@ rec {
   home.file.".hammerspoon/grille.lua".source = "${sources.hs-grille}/grille.lua";
   home.file.".hammerspoon/winter.lua".source = "${sources.hs-winter}/winter.lua";
 
-  # Karabiner's config file
-  xdg.configFile."karabiner/karabiner.json".source = link ./configs/karabiner/karabiner.json;
+  # Karabiner's config is defined as a Nix attrset (configs/karabiner/karabiner.nix,
+  # the source of truth) and rendered to JSON at build time. Unlike the other
+  # config files it is NOT a read-only store symlink: Karabiner-Elements must be
+  # able to rewrite the file (GUI edits, its own normalisation), so we deploy a
+  # writable copy via this activation gate. `karabiner-nix apply` aborts the
+  # switch if the live file has GUI changes not yet reflected in karabiner.nix,
+  # so they can't be silently clobbered; run `karabiner-nix import` to fold them
+  # back in. See scripts/karabiner-nix.
+  home.activation.karabiner = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+    run ${pkgs.python3}/bin/python3 ${./scripts/karabiner-nix} apply \
+      --generated ${karabinerJson} \
+      --live "${config.xdg.configHome}/karabiner/karabiner.json" \
+      --baseline "${config.xdg.stateHome}/karabiner-nix/baseline.json"
+  '';
 
   # Use cachix to speed up some fetches (niv, specifically)
   xdg.configFile."nix/nix.conf".text = ''

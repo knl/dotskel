@@ -1,0 +1,397 @@
+#!/usr/bin/env python3
+"""karabiner-nix — keep karabiner.nix and the live karabiner.json in sync.
+
+Karabiner-Elements owns ~/.config/karabiner/karabiner.json: it re-expands the
+file on launch (adds a `global` block, `parameters`, the full fn-row, every
+connected device with default settings, etc.) and rewrites it when you change
+anything in the GUI. So the live file never matches our trimmed, Nix-generated
+file byte-for-byte even with zero user changes.
+
+To tell a *real* change apart from Karabiner's noise we compare a **canonical
+projection** of the managed surface (the keys karabiner.nix actually sets),
+with Karabiner's defaults stripped. Three-way against a stored baseline lets us
+distinguish "you edited the GUI" (drift -> block) from "you edited
+karabiner.nix" (apply normally).
+
+Subcommands:
+  apply   --generated G --live L --baseline B   (run by `hm switch`)
+  diff    --generated G --live L                (show the managed drift)
+  import  --live L [--out FILE]                 (capture live -> a .nix to merge)
+"""
+
+import argparse
+import difflib
+import json
+import os
+import sys
+
+DEFAULT_PROFILE = "Default profile"
+
+# Karabiner's default function-row mapping (what it auto-fills for keys you do
+# not set). Entries equal to these are dropped from the projection so the
+# auto-filled fn-row is not seen as drift. Update if a Karabiner-Elements
+# version ships different defaults.
+DEFAULT_FN = {
+    "f1": [{"consumer_key_code": "display_brightness_decrement"}],
+    "f2": [{"consumer_key_code": "display_brightness_increment"}],
+    "f3": [{"key_code": "mission_control"}],
+    "f4": [{"key_code": "launchpad"}],
+    "f5": [{"key_code": "illumination_decrement"}],
+    "f6": [{"key_code": "illumination_increment"}],
+    "f7": [{"consumer_key_code": "rewind"}],
+    "f8": [{"consumer_key_code": "play_or_pause"}],
+    "f9": [{"consumer_key_code": "fastforward"}],
+    "f10": [{"consumer_key_code": "mute"}],
+    "f11": [{"consumer_key_code": "volume_decrement"}],
+    "f12": [{"consumer_key_code": "volume_increment"}],
+}
+
+# Per-device setting defaults. A device entry is part of the managed surface
+# only if it carries at least one non-default setting below (or per-device
+# mods). `ignore` is intentionally excluded: Karabiner auto-toggles it for mice
+# and HID it does not treat as keyboards, which would be constant false drift.
+DEVICE_DEFAULTS = {
+    "disable_built_in_keyboard_if_exists": False,
+    "manipulate_caps_lock_led": True,
+    "treat_as_built_in_keyboard": False,
+}
+
+# Recognised devices, keyed by (vendor_id, product_id, is_keyboard,
+# is_pointing_device). Used only by `import` to label devices in the emitted
+# Nix. Keep in sync with the `device` block in karabiner.nix.
+DEVICE_NAMES = {
+    (1452, 570, True, False): "appleWirelessKeyboard",
+    (1133, 45833, True, True): "logitechKeyboardTrackpad",
+    (1118, 1957, True, False): "microsoftSculpt",
+    (1133, 49948, True, False): "logitechK120",
+    (4176, 1031, True, False): "yubikey",
+    (12951, 6505, True, False): "zsaMoonlander",
+}
+
+
+def die(msg, code=1):
+    print(f"karabiner-nix: {msg}", file=sys.stderr)
+    sys.exit(code)
+
+
+def load_json(path):
+    with open(path, "r") as f:
+        return json.load(f)
+
+
+def pick_profile(doc, name):
+    profiles = doc.get("profiles", [])
+    for p in profiles:
+        if p.get("name") == name:
+            return p
+    for p in profiles:
+        if p.get("selected"):
+            return p
+    if profiles:
+        return profiles[0]
+    die("no profiles found in karabiner.json")
+
+
+def _sorted(items):
+    """Order-insensitive normalisation for sets of mods/devices."""
+    return sorted(items, key=lambda x: json.dumps(x, sort_keys=True))
+
+
+def _ident(identifiers):
+    out = {}
+    for k in ("vendor_id", "product_id"):
+        if k in identifiers:
+            out[k] = identifiers[k]
+    out["is_keyboard"] = bool(identifiers.get("is_keyboard", False))
+    if identifiers.get("is_pointing_device"):
+        out["is_pointing_device"] = True
+    return out
+
+
+def project(profile):
+    """Reduce a profile to the managed surface, Karabiner defaults stripped."""
+    rules = (profile.get("complex_modifications", {}) or {}).get("rules", []) or []
+
+    fn = {}
+    for e in profile.get("fn_function_keys", []) or []:
+        kc = (e.get("from") or {}).get("key_code")
+        if kc is None:
+            continue
+        to = e.get("to", [])
+        if DEFAULT_FN.get(kc) == to:
+            continue  # auto-filled / default mapping
+        fn[kc] = to
+
+    devices = []
+    for d in profile.get("devices", []) or []:
+        # Karabiner auto-ignores mice/HID it does not treat as keyboards (and
+        # writes manipulate_caps_lock_led:false on them). Those are noise.
+        if d.get("ignore") is True:
+            continue
+        ident = d.get("identifiers", {})
+        sm = d.get("simple_modifications") or []
+        dfn = d.get("fn_function_keys") or []
+        # A pure pointing device with no mods carries nothing we manage.
+        if not ident.get("is_keyboard") and not sm and not dfn:
+            continue
+        settings = {}
+        for key, default in DEVICE_DEFAULTS.items():
+            if key in d and d[key] != default:
+                settings[key] = d[key]
+        if sm:
+            settings["simple_modifications"] = _sorted(sm)
+        if dfn:
+            settings["fn_function_keys"] = _sorted(dfn)
+        if settings:
+            settings["identifiers"] = _ident(ident)
+            devices.append(settings)
+
+    vhk = profile.get("virtual_hid_keyboard", {}) or {}
+    return {
+        "name": profile.get("name"),
+        "selected": bool(profile.get("selected", False)),
+        "rules": rules,  # order is significant -> kept as-is
+        "simple_modifications": _sorted(profile.get("simple_modifications") or []),
+        "fn_function_keys": fn,
+        "keyboard_type_v2": vhk.get("keyboard_type_v2", "ansi"),
+        "devices": _sorted(devices),
+    }
+
+
+def canon_str(proj):
+    return json.dumps(proj, indent=2, sort_keys=True)
+
+
+def equal(a, b):
+    return canon_str(a) == canon_str(b)
+
+
+def show_diff(old, new, old_label, new_label):
+    d = difflib.unified_diff(
+        canon_str(old).splitlines(keepends=True),
+        canon_str(new).splitlines(keepends=True),
+        fromfile=old_label,
+        tofile=new_label,
+    )
+    sys.stdout.writelines(d)
+
+
+# --------------------------------------------------------------------------- #
+# apply: the gate run during `hm switch`
+# --------------------------------------------------------------------------- #
+def cmd_apply(args):
+    gen = pick_profile(load_json(args.generated), args.profile)
+    gen_proj = project(gen)
+
+    # A symlink is the previous home-manager binding (mkOutOfStoreSymlink or a
+    # read-only /nix/store link), not a Karabiner-writable file — so it can't
+    # hold GUI drift. Replace it with a writable copy. os.replace() rewrites the
+    # path entry itself, so it never writes through the (possibly dangling)
+    # link target.
+    if os.path.islink(args.live):
+        _install(args.generated, args.live, gen_proj, args.baseline,
+                 "replaced read-only symlink with a writable copy")
+        return
+
+    # First deploy: no live file yet -> just install.
+    if not os.path.exists(args.live):
+        _install(args.generated, args.live, gen_proj, args.baseline,
+                 "installed karabiner.json")
+        return
+
+    live_proj = project(pick_profile(load_json(args.live), args.profile))
+
+    baseline = None
+    if os.path.exists(args.baseline):
+        baseline = json.loads(open(args.baseline).read())
+
+    if baseline is None:
+        # No history. Adopt only if the live file already agrees with Nix;
+        # otherwise we cannot tell intent apart -> block.
+        if equal(live_proj, gen_proj):
+            _write_baseline(args.baseline, gen_proj)
+            print("karabiner-nix: already in sync; baseline initialised")
+            return
+        _block(live_proj, gen_proj, "live karabiner.json", "karabiner.nix",
+               first=True)
+
+    if equal(live_proj, baseline):
+        # No GUI drift since last apply -> safe to apply karabiner.nix.
+        if equal(gen_proj, baseline):
+            print("karabiner-nix: up to date")
+        else:
+            _install(args.generated, args.live, gen_proj, args.baseline,
+                     "applied karabiner.nix changes")
+        return
+
+    # Live diverged from the baseline -> a GUI change we would clobber.
+    _block(baseline, live_proj, "baseline (karabiner.nix)", "live karabiner.json")
+
+
+def _install(generated, live, gen_proj, baseline, msg):
+    os.makedirs(os.path.dirname(live), exist_ok=True)
+    with open(generated) as f:
+        data = f.read()
+    # Atomic, symlink-safe: write a temp file then rename over the path entry
+    # (does not follow an existing symlink, and Karabiner never sees a partial
+    # file).
+    tmp = live + ".karabiner-nix.tmp"
+    with open(tmp, "w") as f:
+        f.write(data)
+    os.replace(tmp, live)
+    _write_baseline(baseline, gen_proj)
+    print(f"karabiner-nix: {msg}")
+
+
+def _write_baseline(path, proj):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
+        f.write(canon_str(proj))
+
+
+def _block(old, new, old_label, new_label, first=False):
+    print("=" * 70, file=sys.stderr)
+    print("karabiner-nix: ABORTING — karabiner.json has changes not in "
+          "karabiner.nix", file=sys.stderr)
+    print("=" * 70, file=sys.stderr)
+    sys.stderr.write("".join(difflib.unified_diff(
+        canon_str(old).splitlines(keepends=True),
+        canon_str(new).splitlines(keepends=True),
+        fromfile=old_label, tofile=new_label)))
+    msg = """
+Your live Karabiner config drifted from karabiner.nix. The switch was aborted
+so the change above is not lost. Choose one:
+
+  • Capture it:   karabiner-nix import
+                  then merge configs/karabiner/karabiner.imported.nix into
+                  configs/karabiner/karabiner.nix, and re-run the switch.
+
+  • Discard it:   rm ~/.config/karabiner/karabiner.json
+                  then re-run the switch to accept the karabiner.nix version.
+"""
+    if first:
+        msg += ("\nNote: no baseline exists yet (first run on this machine), so"
+                " intent\ncannot be inferred automatically.\n")
+    print(msg, file=sys.stderr)
+    sys.exit(1)
+
+
+def cmd_diff(args):
+    gen_proj = project(pick_profile(load_json(args.generated), args.profile))
+    if not os.path.exists(args.live):
+        print("karabiner-nix: no live karabiner.json")
+        return
+    live_proj = project(pick_profile(load_json(args.live), args.profile))
+    if equal(gen_proj, live_proj):
+        print("karabiner-nix: no managed drift")
+        return
+    show_diff(gen_proj, live_proj, "karabiner.nix", "live karabiner.json")
+
+
+# --------------------------------------------------------------------------- #
+# import: live json -> a Nix file to merge by hand
+# --------------------------------------------------------------------------- #
+def _nix(value, indent):
+    pad = "  " * indent
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, int):
+        return str(value)
+    if isinstance(value, str):
+        return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+    if isinstance(value, list):
+        if not value:
+            return "[ ]"
+        body = "\n".join(f"{pad}  {_nix(v, indent + 1)}" for v in value)
+        return f"[\n{body}\n{pad}]"
+    if isinstance(value, dict):
+        if not value:
+            return "{ }"
+        lines = []
+        for k, v in value.items():
+            key = k if k.replace("_", "").isalnum() else f'"{k}"'
+            lines.append(f"{pad}  {key} = {_nix(v, indent + 1)};")
+        return "{\n" + "\n".join(lines) + f"\n{pad}}}"
+    raise TypeError(f"cannot render {type(value)} as Nix")
+
+
+def cmd_import(args):
+    proj = project(pick_profile(load_json(args.live), args.profile))
+
+    fn_list = [{"from": {"key_code": k}, "to": to}
+               for k, to in sorted(proj["fn_function_keys"].items())]
+
+    header = (
+        "# Imported from the live karabiner.json by `karabiner-nix import`.\n"
+        "#\n"
+        "# This is the *managed surface* with Karabiner's defaults stripped\n"
+        "# (the auto-filled fn-row, default device settings, ignored devices,\n"
+        "# global/parameters). Diff it against karabiner.nix and merge the\n"
+        "# intended changes by hand — then delete this file.\n"
+        "#\n"
+        "# Devices are labelled by name where recognised; map them back onto\n"
+        "# the `device.*` bindings in karabiner.nix.\n"
+    )
+
+    out = [header, "{", "  profiles = [", "    {",
+           f"      name = {_nix(proj['name'], 0)};",
+           f"      selected = {_nix(proj['selected'], 0)};", "",
+           f"      complex_modifications.rules = {_nix(proj['rules'], 3)};", "",
+           f"      simple_modifications = {_nix(proj['simple_modifications'], 3)};",
+           "", f"      fn_function_keys = {_nix(fn_list, 3)};", "",
+           "      devices = ["]
+    for d in proj["devices"]:
+        ident = d["identifiers"]
+        key = (ident.get("vendor_id"), ident.get("product_id"),
+               bool(ident.get("is_keyboard", False)),
+               bool(ident.get("is_pointing_device", False)))
+        name = DEVICE_NAMES.get(key)
+        out.append(f"        # {name}" if name
+                   else "        # TODO: unrecognised device — name it in "
+                        "karabiner.nix")
+        ordered = {"identifiers": ident}
+        ordered.update({k: v for k, v in d.items() if k != "identifiers"})
+        out.append(f"        {_nix(ordered, 4)}")
+    out += ["      ];", "",
+            f"      virtual_hid_keyboard.keyboard_type_v2 = "
+            f"{_nix(proj['keyboard_type_v2'], 0)};",
+            "    }", "  ];", "}", ""]
+    out = "\n".join(out)
+
+    if args.out:
+        with open(args.out, "w") as f:
+            f.write(out)
+        print(f"karabiner-nix: wrote {args.out}")
+    else:
+        sys.stdout.write(out)
+
+
+def main():
+    ap = argparse.ArgumentParser(prog="karabiner-nix")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    a = sub.add_parser("apply", help="sync gate for hm switch")
+    a.add_argument("--generated", required=True)
+    a.add_argument("--live", required=True)
+    a.add_argument("--baseline", required=True)
+    a.add_argument("--profile", default=DEFAULT_PROFILE)
+    a.set_defaults(func=cmd_apply)
+
+    d = sub.add_parser("diff", help="show managed drift")
+    d.add_argument("--generated", required=True)
+    d.add_argument("--live", required=True)
+    d.add_argument("--profile", default=DEFAULT_PROFILE)
+    d.set_defaults(func=cmd_diff)
+
+    i = sub.add_parser("import", help="capture live json -> Nix to merge")
+    i.add_argument("--live", required=True)
+    i.add_argument("--out", help="output file (default: stdout)")
+    i.add_argument("--profile", default=DEFAULT_PROFILE)
+    i.set_defaults(func=cmd_import)
+
+    args = ap.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()
