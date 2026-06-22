@@ -31,7 +31,7 @@ jobs:
             /usr/share/swift
           find /Applications/ -name "Xcode*" | sort -r | tail --lines=+2 | xargs rm -rf
           df -h /
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - id: set_var
         run: |
           content=$(jq -r '.pins["nixpkgs"].url' <./npins/sources.json)
