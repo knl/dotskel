@@ -86,9 +86,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "72243962e139699b2e532f829f34dfd5d3305cb0",
+      "revision": "33972e7abd1fb0ac5f9664d553ab90d55b718ca4",
       "url": null,
-      "hash": "sha256-t+653jWxXjMTROtFHaMgTS26y//Q2tmimenvyxSVJRQ="
+      "hash": "sha256-vmUUjr+wcdu+YZLN/jikKpFBslz78zTq2lzCvUdlchA="
     },
     "nerd-icons.el": {
       "type": "Git",
@@ -117,11 +117,17 @@
       "hash": "sha256-n7ch4OAH3K1pDGB09TvaQF8k/zcoU+d7VBHlKwe5cKk="
     },
     "nixpkgs": {
-      "type": "Channel",
-      "name": "nixpkgs-unstable",
-      "artifact": "nixexprs.tar.xz",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1017567.3e41b24abd26/nixexprs.tar.xz",
-      "hash": "sha256-eM+l4TVD26SNoEjcxRcpispqZi5Qrqj/G0ZY4LfqwfM="
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "04fdf0e855fe2fbb8265c4b55e91157b858d0be1",
+      "url": "https://github.com/nixos/nixpkgs/archive/04fdf0e855fe2fbb8265c4b55e91157b858d0be1.tar.gz",
+      "hash": "sha256-aABpzLYFldYBexYuGaqtGs9m8U8wyBYtGgpF6oEgGC4="
     },
     "powerlevel10k": {
       "type": "Git",
