@@ -83,7 +83,7 @@ rec {
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowUnsupportedSystem = true;
+      allowUnsupportedSystem = false;
     };
   };
 
@@ -268,7 +268,7 @@ rec {
     if [ -x "$HOME/.emacs.d/bin/doom" ]; then
       run env -i HOME="$HOME" USER="$USER" SHELL=/bin/zsh TERM=dumb \
         PATH="$HOME/.nix-profile/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
-        /bin/zsh -ic 'export PATH="${lib.makeBinPath emacsRuntimeDeps}:$PATH"; "$HOME/.emacs.d/bin/doom" env && "$HOME/.emacs.d/bin/doom" sync --aot' || run echo "doom env/sync failed"
+        /bin/zsh -ic 'export PATH="${lib.makeBinPath emacsRuntimeDeps}:$PATH"; "$HOME/.emacs.d/bin/doom" env --force && "$HOME/.emacs.d/bin/doom" sync -u -e --aot --force' || run echo "doom env/sync failed"
     fi
   '';
 
