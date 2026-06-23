@@ -112,9 +112,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "e9519949d2b39bc9574b10f6ba216d65f014874e",
-      "url": "https://github.com/nmattia/niv/archive/e9519949d2b39bc9574b10f6ba216d65f014874e.tar.gz",
-      "hash": "sha256-6JhsgP7MYv00Y3V7E8jEP5PfO+8AgAOnmGAAr2k6Y9c="
+      "revision": "1ad9d90fea53b0e794cdbabf5515b39e539bc148",
+      "url": "https://github.com/nmattia/niv/archive/1ad9d90fea53b0e794cdbabf5515b39e539bc148.tar.gz",
+      "hash": "sha256-n7ch4OAH3K1pDGB09TvaQF8k/zcoU+d7VBHlKwe5cKk="
     },
     "nixpkgs": {
       "type": "Channel",
