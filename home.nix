@@ -242,7 +242,21 @@ rec {
     ];
   };
   programs.fd.enable = true;
-  programs.uv.enable = true;
+
+  programs.uv = {
+    enable = true;
+
+    python = {
+      versions = [ "3.14" "3.13" "3.12" ];
+      default = [ "3.14" ];
+      prune = true;
+    };
+
+    tool = {
+      packages = [ "ruff" "prek" ];
+      prune = true;
+    };
+  };
 
   # This creates a symlink to the file, so I can easily edit it
   # Not for the faint of heart, though...
