@@ -4,7 +4,9 @@ theme = light:"Tempus Day",dark:"Tempus Night"
 cursor-style = block
 cursor-style-blink = true
 cursor-invert-fg-bg = true
-shell-integration-features = no-cursor
+# no-title: zsh sets the tab title itself (repo-aware, tail-biased);
+# see _tab_title_precmd in modules/programs/zsh.nix
+shell-integration-features = no-cursor,no-title
 
 copy-on-select = clipboard
 
@@ -31,3 +33,5 @@ keybind = shift+enter=text:\x1b\r
 
 # use ctrl+, to change the tab title
 keybind = ctrl+,=prompt_tab_title
+
+window-save-state = always
