@@ -312,6 +312,20 @@ rec {
   home.file.".hammerspoon/grille.lua".source = "${sources.hs-grille}/grille.lua";
   home.file.".hammerspoon/winter.lua".source = "${sources.hs-winter}/winter.lua";
 
+  # Firefox on macOS treats a held Option key at launch as a request to start
+  # in Troubleshoot (safe) Mode. Hyper includes alt, so launching Firefox via
+  # the Hammerspoon Hyper+F binding kept triggering the "Open Firefox in
+  # Troubleshoot Mode?" dialog. MOZ_DISABLE_SAFE_MODE_KEY disables that key
+  # check (toolkit/xre/SafeMode.h); inject it into the launchd GUI session so
+  # LaunchServices-spawned apps (Hammerspoon/Dock/Spotlight launches) see it.
+  launchd.agents.disable-firefox-safe-mode-key = {
+    enable = true;
+    config = {
+      ProgramArguments = [ "/bin/launchctl" "setenv" "MOZ_DISABLE_SAFE_MODE_KEY" "1" ];
+      RunAtLoad = true;
+    };
+  };
+
   # Karabiner's config is defined as a Nix attrset (configs/karabiner/karabiner.nix,
   # the source of truth) and rendered to JSON at build time. Unlike the other
   # config files it is NOT a read-only store symlink: Karabiner-Elements must be
