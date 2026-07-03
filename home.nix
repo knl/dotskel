@@ -270,8 +270,8 @@ rec {
   '';
 
   # Refresh doom's envvar snapshot so Emacs sees the tools from the new
-  # generation. `doom env` records the doom CLI's own environment, so run it
-  # inside a scrubbed interactive zsh: env -i drops the activation/nix-shell
+  # generation. `doom sync -e` records the doom CLI's own environment, so run
+  # it inside a scrubbed interactive zsh: env -i drops the activation/nix-shell
   # pollution and the inherited guards (e.g. __HM_SESS_VARS_SOURCED) that
   # would suppress the PATH setup in zshenv, and zsh -ic then rebuilds the
   # same environment a fresh terminal would have. emacsRuntimeDeps are
@@ -282,7 +282,7 @@ rec {
     if [ -x "$HOME/.emacs.d/bin/doom" ]; then
       run env -i HOME="$HOME" USER="$USER" SHELL=/bin/zsh TERM=dumb \
         PATH="$HOME/.nix-profile/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
-        /bin/zsh -ic 'export PATH="${lib.makeBinPath emacsRuntimeDeps}:$PATH"; "$HOME/.emacs.d/bin/doom" env --force && "$HOME/.emacs.d/bin/doom" sync -u -e --aot --force' || run echo "doom env/sync failed"
+        /bin/zsh -ic 'export PATH="${lib.makeBinPath emacsRuntimeDeps}:$PATH"; "$HOME/.emacs.d/bin/doom" sync -u -e --aot --force' || run echo "doom sync failed"
     fi
   '';
 
