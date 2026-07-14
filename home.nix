@@ -135,7 +135,7 @@ rec {
     shfmt
     tokei
     tree
-    unar
+    # unar
     viddy
     watch
     xz
