@@ -23,6 +23,7 @@ import argparse
 import difflib
 import json
 import os
+import subprocess
 import sys
 
 DEFAULT_PROFILE = "Default profile"
@@ -56,17 +57,29 @@ DEVICE_DEFAULTS = {
     "treat_as_built_in_keyboard": False,
 }
 
-# Recognised devices, keyed by (vendor_id, product_id, is_keyboard,
-# is_pointing_device). Used only by `import` to label devices in the emitted
-# Nix. Keep in sync with the `device` block in karabiner.nix.
-DEVICE_NAMES = {
-    (1452, 570, True, False): "appleWirelessKeyboard",
-    (1133, 45833, True, True): "logitechKeyboardTrackpad",
-    (1118, 1957, True, False): "microsoftSculpt",
-    (1133, 49948, True, False): "logitechK120",
-    (4176, 1031, True, False): "yubikey",
-    (12951, 6505, True, False): "zsaMoonlander",
-}
+DEFAULT_DEVICES_NIX = "configs/karabiner/devices.nix"
+
+
+def device_names(devices_nix):
+    """Map (vendor_id, product_id, is_keyboard, is_pointing_device) -> name by
+    evaluating devices.nix — the same source karabiner.nix imports, so the two
+    never drift. Returns {} (no labels) if the file or `nix` is unavailable."""
+    if not devices_nix or not os.path.exists(devices_nix):
+        return {}
+    try:
+        out = subprocess.check_output(
+            ["nix-instantiate", "--eval", "--strict", "--json",
+             "-E", f"import {os.path.abspath(devices_nix)}"],
+            stderr=subprocess.DEVNULL)
+        data = json.loads(out)
+    except (OSError, subprocess.CalledProcessError, ValueError):
+        return {}
+    names = {}
+    for name, ident in data.items():
+        names[(ident.get("vendor_id"), ident.get("product_id"),
+               bool(ident.get("is_keyboard", False)),
+               bool(ident.get("is_pointing_device", False)))] = name
+    return names
 
 
 def die(msg, code=1):
@@ -317,6 +330,7 @@ def _nix(value, indent):
 
 def cmd_import(args):
     proj = project(pick_profile(load_json(args.live), args.profile))
+    names = device_names(args.devices)
 
     fn_list = [{"from": {"key_code": k}, "to": to}
                for k, to in sorted(proj["fn_function_keys"].items())]
@@ -345,10 +359,10 @@ def cmd_import(args):
         key = (ident.get("vendor_id"), ident.get("product_id"),
                bool(ident.get("is_keyboard", False)),
                bool(ident.get("is_pointing_device", False)))
-        name = DEVICE_NAMES.get(key)
+        name = names.get(key)
         out.append(f"        # {name}" if name
-                   else "        # TODO: unrecognised device — name it in "
-                        "karabiner.nix")
+                   else "        # TODO: unrecognised device — add it to "
+                        "devices.nix")
         ordered = {"identifiers": ident}
         ordered.update({k: v for k, v in d.items() if k != "identifiers"})
         out.append(f"        {_nix(ordered, 4)}")
@@ -386,6 +400,9 @@ def main():
     i = sub.add_parser("import", help="capture live json -> Nix to merge")
     i.add_argument("--live", required=True)
     i.add_argument("--out", help="output file (default: stdout)")
+    i.add_argument("--devices", default=DEFAULT_DEVICES_NIX,
+                   help="devices.nix to label devices from "
+                        f"(default: {DEFAULT_DEVICES_NIX})")
     i.add_argument("--profile", default=DEFAULT_PROFILE)
     i.set_defaults(func=cmd_import)
 
