@@ -71,6 +71,12 @@
                "r" #'org-roam-node-find
                "R" #'org-roam-capture))
 
+;; ffap probes `gcc'/`g++' via call-process when it loads. Under nix, those
+;; resolve to apple-sdk xcrun shims that recurse forever (xcrun finds the shim
+;; on PATH again), freezing Emacs. Binding these preempts the defvar probes.
+(setq ffap-c-path '("/usr/include" "/usr/local/include")
+      ffap-c++-path '("/usr/include" "/usr/local/include"))
+
 ;;; :tools lsp
 ;; Disable invasive lsp-mode features
 (after! lsp-mode

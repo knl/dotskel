@@ -18,10 +18,10 @@ function check_emacs_server {
 function ee {
   if ( ! check_emacs_server ); then
     echo "starting emacs: make tea..."
-    open -a Emacs.app --args "$@"
+    env -u DEVELOPER_DIR -u SDKROOT open -a Emacs.app --args "$@"
   else
     echo "using emacsclient"
-    emacsclient "$@"
+    env -u DEVELOPER_DIR -u SDKROOT emacsclient "$@"
   fi;
 }
 
