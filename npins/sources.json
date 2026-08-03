@@ -125,9 +125,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ba41c57689f1d839d9eeaea0952df4cc99682a45",
-      "url": "https://github.com/nixos/nixpkgs/archive/ba41c57689f1d839d9eeaea0952df4cc99682a45.tar.gz",
-      "hash": "sha256-TMqc8ZRqVosOOXjZ7HNSV51wImDQK6BkxwXYaUPkT+w="
+      "revision": "3939c15de1fe3ee41f23f0ae1710c3a375c99f21",
+      "url": "https://github.com/nixos/nixpkgs/archive/3939c15de1fe3ee41f23f0ae1710c3a375c99f21.tar.gz",
+      "hash": "sha256-RUHYwOMO4ENeDLSKlYeajjwn/d96h5rSCbBWpOVYHkE="
     },
     "powerlevel10k": {
       "type": "Git",
