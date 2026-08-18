@@ -242,9 +242,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "63d033ce397becd7dc325171b7a9b933bda8ea6e",
-      "url": "https://github.com/michel-kraemer/zsh-patina/archive/63d033ce397becd7dc325171b7a9b933bda8ea6e.tar.gz",
-      "hash": "sha256-lsalJHGQIYRzHtqhtXlH0KRTAoW1CdAmvH3vSFR/NPY="
+      "revision": "5319607c43bc2237eda3b95bc8ad2485dd2297e1",
+      "url": "https://github.com/michel-kraemer/zsh-patina/archive/5319607c43bc2237eda3b95bc8ad2485dd2297e1.tar.gz",
+      "hash": "sha256-feBmmR6B83172VBHSlKIZLJuZ/wRx8R/AJ//Dnf/NaQ="
     },
     "zsh-syntax-highlighting": {
       "type": "Git",
