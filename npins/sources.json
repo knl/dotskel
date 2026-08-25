@@ -99,9 +99,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "1e75075e323dedaf9f2fd5837082c60a2d0dfae3",
-      "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/1e75075e323dedaf9f2fd5837082c60a2d0dfae3.tar.gz",
-      "hash": "sha256-LtHyI6HMvlzPwt/ld+fw1sxwxtbbw+TJCZhr8Dsm8uc="
+      "revision": "17faac7977242b470732efd417d3bcc8eb5a830e",
+      "url": "https://github.com/rainstormstudio/nerd-icons.el/archive/17faac7977242b470732efd417d3bcc8eb5a830e.tar.gz",
+      "hash": "sha256-OuB4MRI7ji7UQ//zH7KtOCV76N0Mkz++pcqYrL21PNU="
     },
     "niv": {
       "type": "Git",
