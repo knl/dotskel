@@ -31,7 +31,7 @@ let
     + pkgs.lib.optionalString pkgs.stdenv.isDarwin osascript)
   ;
 
-  theEmacs = pkgs.emacs30.pkgs.emacsWithPackages (epkgs: [
+  theEmacs = pkgs.emacs.pkgs.emacsWithPackages (epkgs: [
     # Native-module / native-artifact packages only; everything pure-elisp
     # is managed by Doom/straight. Runtime tools live in emacsRuntimeDeps and
     # reach Emacs via `doom env`.
