@@ -94,6 +94,43 @@ but I can live with it.
      hm switch
    #+end_src
 
+** Firefox on a machine with an existing profile
+
+   =modules/programs/firefox.nix= finds the profile in
+   =~/Library/Application Support/Firefox/Profiles= and writes =user.js= and
+   =chrome/userChrome.css= into it. It does not touch =profiles.ini= or
+   =search.json.mozlz4= when a profile is already there, because Firefox owns
+   both and home-manager would drop the =[Install<hash>]= section, the
+   =StoreID= and =Version=2=.
+
+   Two things to do on such a machine:
+
+   1. Quit Firefox first. Then switch with a backup extension, so a
+      hand-written =user.js= or =userChrome.css= is moved aside instead of
+      aborting the switch:
+
+      #+begin_src bash
+        home-manager -b bak switch
+      #+end_src
+
+   2. If an earlier switch already replaced =profiles.ini= with a symlink,
+      put the original back before starting Firefox again:
+
+      #+begin_src bash
+        cd ~/Library/Application\ Support/Firefox
+        [ -e profiles.ini.bak ] && mv profiles.ini.bak profiles.ini
+      #+end_src
+
+      Without it Firefox writes a new =profiles.ini= and opens a new, empty
+      profile.
+
+   If the machine has several profiles and the wrong one is picked, set the
+   path in a machine-local module:
+
+   #+begin_src nix
+     programs.firefox.profiles.default.path = lib.mkForce "xxxxxxxx.default";
+   #+end_src
+
 * References
 
 - https://hugoreeves.com/posts/2019/nix-home/

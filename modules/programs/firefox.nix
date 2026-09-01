@@ -1,7 +1,45 @@
 { config, lib, pkgs, ... }:
 
+let
+  cfg = config.programs.firefox;
+
+  # Name used when this machine has no profile yet. Firefox itself would pick
+  # a random "<8 chars>.default-release"; a fixed name is fine and readable.
+  freshProfileName = "default-release";
+
+  profilesDir = "${config.home.homeDirectory}/${cfg.profilesPath}";
+
+  # A directory with prefs.js in it is a profile Firefox has actually used.
+  # Everything else in Profiles/ (archives, leftovers) is ignored.
+  usedProfiles =
+    if !builtins.pathExists profilesDir then [ ]
+    else
+      lib.filter
+        (name: builtins.pathExists "${profilesDir}/${name}/prefs.js")
+        (lib.attrNames (builtins.readDir profilesDir));
+
+  # Firefox's own default; several profiles can exist (dev-edition, old ones).
+  releaseProfiles = lib.filter (lib.hasSuffix ".${freshProfileName}") usedProfiles;
+
+  # null on a machine that has never run Firefox.
+  # Override in a machine-local module if this picks the wrong one:
+  #   programs.firefox.profiles.default.path = lib.mkForce "xxxxxxxx.default";
+  existingProfile =
+    if releaseProfiles != [ ] then lib.head releaseProfiles
+    else if usedProfiles != [ ] then lib.head usedProfiles
+    else null;
+
+  hasExistingProfile = existingProfile != null;
+in
 {
   config = {
+    # Firefox owns profiles.ini once it has run. Its file carries three things
+    # home-manager's generator drops: the [Install<hash>] section (which tells
+    # *this* install which profile to open), StoreID (links the profile to
+    # "Profile Groups/<id>.sqlite") and Version=2. Regenerating it detaches a
+    # long-lived profile, so only write it on a machine that has none yet.
+    home.file."${cfg.configPath}/profiles.ini".enable = !hasExistingProfile;
+
     programs.firefox = {
       enable = true;
       # Firefox is installed system-wide in /Applications (IT-managed);
@@ -43,10 +81,12 @@
           };
       profiles.default = {
         # Reuse the pre-existing profile so history/logins/extensions stay.
-        path = "ad9aicjy.default-release";
+        path = if hasExistingProfile then existingProfile else freshProfileName;
         isDefault = true;
 
-        search = {
+        # search.force replaces search.json.mozlz4 on every switch, dropping
+        # engines added by hand. Only acceptable on a profile we just created.
+        search = lib.mkIf (!hasExistingProfile) {
           force = true;
           default = "ddg";
         };
