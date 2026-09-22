@@ -229,9 +229,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "14c8d2e0ffaee98f2df9850b19944f32546fdea5",
-      "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/14c8d2e0ffaee98f2df9850b19944f32546fdea5.tar.gz",
-      "hash": "sha256-KHujL1/TM5R3m4uQh2nGVC98D6MOyCgQpyFf+8gjKR0="
+      "revision": "a0bdb0d47dbaba31dba2db7af8c48a5d9c74049a",
+      "url": "https://github.com/zsh-users/zsh-history-substring-search/archive/a0bdb0d47dbaba31dba2db7af8c48a5d9c74049a.tar.gz",
+      "hash": "sha256-zJYTmlZy/b40dX1ZIeEo0/Vianm0Call04uwJDD1rYw="
     },
     "zsh-patina": {
       "type": "Git",
