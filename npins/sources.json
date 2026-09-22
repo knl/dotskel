@@ -255,9 +255,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "2fc57d63067c18b1100ecdbf684fa5baf49459d1",
-      "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/2fc57d63067c18b1100ecdbf684fa5baf49459d1.tar.gz",
-      "hash": "sha256-d/io9jvBn6XuSPWQia4OPWDwZRS8Pt74XG9VWqIYFFw="
+      "revision": "0bfcb582e71d3abe604ce67bc0fe5a21f377507e",
+      "url": "https://github.com/zsh-users/zsh-syntax-highlighting/archive/0bfcb582e71d3abe604ce67bc0fe5a21f377507e.tar.gz",
+      "hash": "sha256-6yqlW0AWQ2xzl27OqhGjb4MS7yxKnxzLC4g/6riIhn4="
     },
     "zsh-you-should-use": {
       "type": "Git",
