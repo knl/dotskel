@@ -21,10 +21,10 @@
         "repo": "doomemacs"
       },
       "branch": "master",
-      "submodules": false,
+      "submodules": true,
       "revision": "01d68aaf6bd7db073365385cd82e1ad7e815295c",
-      "url": "https://github.com/doomemacs/doomemacs/archive/01d68aaf6bd7db073365385cd82e1ad7e815295c.tar.gz",
-      "hash": "sha256-Ywp5JhRziVk11M8qPhejJS+tF4ONNbOhevj5JRZsfOg="
+      "url": null,
+      "hash": "sha256-+b0yNSXBTNroSuwH89Mp5wtJojaGfRgDn9G2ooorurM="
     },
     "emacs-overlay": {
       "type": "Git",
