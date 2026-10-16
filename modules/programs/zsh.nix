@@ -28,10 +28,9 @@ let
   carapaceHasSpecs =
     builtins.pathExists carapaceSpecsDir
     && builtins.removeAttrs (builtins.readDir carapaceSpecsDir) [ ".DS_Store" ] != { };
-  # rh embeds the invoking lua into its output; pkgs.lua is the same package
-  # as the `lua` in home.packages.
+  # rh reassigns loop variables, which Lua 5.5 rejects.
   rhInit = staticInit "rh"
-    "${pkgs.lua}/bin/lua ${sources.rh}/rh.lua --init zsh ${config.home.homeDirectory}/work";
+    "${pkgs.lua5_4}/bin/lua ${sources.rh}/rh.lua --init zsh ${config.home.homeDirectory}/work";
   # Syntax highlighter (replaces fast-syntax-highlighting); not in nixpkgs
   # yet, so build the daemon binary the same way upstream's flake does. Its
   # `activate` output embeds the per-user runtime dir and starts the daemon,
@@ -112,7 +111,7 @@ in
         XDG_DATA_HOME = config.xdg.dataHome;
 
         GOPATH = "$HOME/go";
-        PATH = "$HOME/bin:$HOME/.local/bin:$GOPATH/bin:$HOME/.emacs.d/bin:$PATH";
+        PATH = "$HOME/bin:$HOME/.local/bin:$GOPATH/bin:$PATH";
         TERM = "xterm-256color";
 
         LESS = "-F -g -i -M -R -S -w -X -z-4";

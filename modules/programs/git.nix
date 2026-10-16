@@ -8,7 +8,6 @@ in
     home.packages = with pkgs; [
       delta
       # gitAndTools.git-branchless
-      gitSVN
       hub
     ];
 

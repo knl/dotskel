@@ -230,6 +230,11 @@
   (define-key vertico-map (kbd "M-n") #'vertico-next-history)
   (define-key vertico-map (kbd "C-r") #'consult-history)
 
+  ;; Consult tuning per https://www.jamescherti.com/emacs-consult-speed-async-searche-grep-ripgrep-fd-find/
+  (setq consult-async-input-debounce 0.05
+      consult-async-input-throttle 0.1
+      consult-async-refresh-delay 0.05)
+
   ;; Configure orderless for better filtering
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil

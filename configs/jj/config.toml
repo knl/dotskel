@@ -124,14 +124,66 @@
         'diff', '--git']
     hide = ['abandon']
     hideempty = ['hide', 'empty() & local ~ root()']
-    push = [
-        'util', 'exec', '--', 'ash', '-r @- revision', '--remote', ''' \
-            jj bookmark move \
-                --from='heads(ancestors({{.r}}) & tracked_remote_bookmarks())' \
-                --to={{.r}} \
-            && jj git push --revisions={{.r}} \
-                {{if len .remote}}--remote={{.remote}}{{end}}
-        ''']
+    # `jj push`:
+    #   - For Gerrit, uploads @ when it is non-empty and described; otherwise @-.
+    #   - For a normal Git remote, runs plain `jj git push`.
+    #
+    # `jj push <revision>`:
+    #   - Pushes the explicitly selected change/revision.
+    #   - For Gerrit, this becomes `jj gerrit upload -r <revision>`.
+    #   - For normal Git, this becomes `jj git push --change <revision>`.
+    #
+    # Optionally configure a lint command per repository:
+    #   jj config set --repo push.lint-command 'uv run ruff check . && uv run pytest'
+    #
+    # Without push.lint-command, the alias warns and continues.
+    #
+    # For Gerrit repositories, configure the remote and target branch:
+    #   jj config set --repo gerrit.default-remote origin
+    #   jj config set --repo gerrit.default-remote-branch master
+    #
+    # Leave the Gerrit settings unset for ordinary Git repositories.
+    push = ["util", "exec", "--", "/bin/zsh", "-c", '''
+        set -euo pipefail
+
+        if (( $# > 1 )); then
+            echo "usage: jj push [revision]" >&2
+            exit 2
+        fi
+
+        explicit_revision=0
+
+        if (( $# == 1 )); then
+            revision="$1"
+            explicit_revision=1
+        else
+            revision="@-"
+
+            # The working-copy change @ is pushable when it is both non-empty
+            # and described. Otherwise, use the previously committed change @-.
+            if [[ -n "$(jj log --no-graph \
+                -r '@ & ~empty() & ~description(exact:"")' \
+                -T 'change_id')" ]]; then
+            revision="@"
+            fi
+        fi
+
+        if lint_command="$(jj config get push.lint-command 2>/dev/null)"; then
+            jj run -r "trunk()..($revision)" -- /bin/zsh -c "$lint_command"
+        else
+            echo "warning: push.lint-command is not configured; skipping lint" >&2
+        fi
+
+        if remote_branch="$(jj config get gerrit.default-remote-branch 2>/dev/null)"; then
+            jj gerrit upload \
+            -r "$revision" \
+            --remote-branch "$remote_branch"
+        elif (( explicit_revision )); then
+            jj git push --change "$revision"
+        else
+            jj git push
+        fi
+        ''', "jj-push"]
     rebasestale = [
         'rebase',
         '--source=roots(localstale)', '--destination=og', '--skip-emptied']
@@ -176,7 +228,9 @@
 
 [revsets]
     short-prefixes = 'interesting'
-    bookmark-advance-to = 'closest_pushable(@)'
+    # Pick @ parents reachable from the nearest bookmarks.
+    # Errors out if ambiguous, by design
+    bookmark-advance-to = "@- & heads(::@ & bookmarks())::"
 
 [templates]
     push-bookmark-prefix = 'knl/jj_'

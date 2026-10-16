@@ -124,8 +124,9 @@ but I can live with it.
       Without it Firefox writes a new =profiles.ini= and opens a new, empty
       profile.
 
-   If the machine has several profiles and the wrong one is picked, set the
-   path in a machine-local module:
+   The profile named in the =[Install<hash>]= section of =profiles.ini= wins;
+   other profiles in =Profiles/= are only a fallback. If the wrong one is
+   still picked, set the path in a machine-local module:
 
    #+begin_src nix
      programs.firefox.profiles.default.path = lib.mkForce "xxxxxxxx.default";

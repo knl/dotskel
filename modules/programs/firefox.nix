@@ -21,11 +21,30 @@ let
   # Firefox's own default; several profiles can exist (dev-edition, old ones).
   releaseProfiles = lib.filter (lib.hasSuffix ".${freshProfileName}") usedProfiles;
 
+  # The [Install<hash>] section in profiles.ini names the profile this install
+  # opens:
+  #   Default=Profiles/ad9aicjy.default-release
+  # Profile sections use Default=1, so the path form is unambiguous. This is
+  # the authoritative pick; a stray profile in Profiles/ cannot shadow it.
+  installDefault =
+    let
+      iniFile = "${config.home.homeDirectory}/${cfg.configPath}/profiles.ini";
+      defaults =
+        lib.concatMap
+          (line:
+            let m = builtins.match "Default=Profiles/(.*)" line;
+            in if m == null then [ ] else m)
+          (lib.splitString "\n" (builtins.readFile iniFile));
+    in
+    if !builtins.pathExists iniFile || defaults == [ ] then null
+    else lib.head defaults;
+
   # null on a machine that has never run Firefox.
   # Override in a machine-local module if this picks the wrong one:
   #   programs.firefox.profiles.default.path = lib.mkForce "xxxxxxxx.default";
   existingProfile =
-    if releaseProfiles != [ ] then lib.head releaseProfiles
+    if installDefault != null && lib.elem installDefault usedProfiles then installDefault
+    else if releaseProfiles != [ ] then lib.head releaseProfiles
     else if usedProfiles != [ ] then lib.head usedProfiles
     else null;
 
