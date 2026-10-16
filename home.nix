@@ -39,7 +39,44 @@ let
     epkgs.melpaPackages.vterm
   ]);
 
-  myAspell = pkgs.aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]);
+  # Doom core comes from the npin (with the doom+ modules submodule) and is
+  # read-only in the store. Everything mutable (straight repos, eln cache,
+  # env file) goes to doomLocalDir. The dir is deliberately separate from the
+  # legacy hand-cloned ~/.emacs.d, so rolling back is a generation switch.
+  #
+  #   Emacs.app / bin/emacs --init-directory ${doomSrc}   (EMACSDIR)
+  #                          DOOMDIR=~/.doom.d              (config, symlinked)
+  #                          DOOMLOCALDIR=~/.local/share/doom-nix
+  #
+  # `open` does not pass shell env, so the .app binary is wrapped too.
+  doomSrc = sources.doomemacs;
+  doomDir = "${config.home.homeDirectory}/.doom.d";
+  doomLocalDir = "${config.xdg.dataHome}/doom-nix";
+  doomWrapFlags = lib.escapeShellArgs [
+    "--add-flags" "--init-directory ${doomSrc}"
+    "--set" "DOOMDIR" doomDir
+    "--set" "DOOMLOCALDIR" doomLocalDir
+  ];
+  doomEmacs = pkgs.symlinkJoin {
+    name = "doom-emacs";
+    paths = [ theEmacs ];
+    nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/emacs ${doomWrapFlags}
+    '' + lib.optionalString pkgs.stdenv.isDarwin ''
+      wrapProgram $out/Applications/Emacs.app/Contents/MacOS/Emacs ${doomWrapFlags}
+    '';
+  };
+  # `doom` CLI against the store Doom. Replaces ~/.emacs.d/bin/doom.
+  doomCli = pkgs.writeShellScriptBin "doom" ''
+    export EMACS=${theEmacs}/bin/emacs
+    export EMACSDIR=${doomSrc}
+    export DOOMDIR=${doomDir}
+    export DOOMLOCALDIR=${doomLocalDir}
+    exec ${doomSrc}/bin/doom "$@"
+  '';
+
+  myAspell = pkgs.aspellWithDicts (dicts: with dicts; [ en ]);
   # Tools only Emacs needs. Not in home.packages; injected into the doom env
   # PATH snapshot by the doomEnv activation below. GC-safe: the store paths
   # are references of the generation's activation script.
@@ -104,6 +141,7 @@ rec {
     alejandra
     cachix
     curl
+    d2
     devenv
     dua
     duf
@@ -145,11 +183,12 @@ rec {
     yubikey-manager
     yubikey-personalization
     zstd
-    (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = theEmacs; })
+    (pkgs.callPackage ./nix/pkgs/orgprotocolclient.nix { emacs = doomEmacs; })
     # Use my own bespoke wrapper for `emacsclient`.
-    (wrapEmacsclient { emacs = theEmacs; })
+    (wrapEmacsclient { emacs = doomEmacs; })
     # need to include the Emacs itself, as I'm avoiding programs.emacs because it makes doom unusable
-    theEmacs
+    doomEmacs
+    doomCli
   ] ++ myFonts;
 
   programs.ghostty = {
@@ -279,11 +318,9 @@ rec {
   # PATH= line can't clobber them) so they reach Emacs without polluting the
   # global profile.
   home.activation.doomEnv = lib.hm.dag.entryAfter ["installPackages"] ''
-    if [ -x "$HOME/.emacs.d/bin/doom" ]; then
-      run env -i HOME="$HOME" USER="$USER" SHELL=/bin/zsh TERM=dumb \
-        PATH="$HOME/.nix-profile/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
-        /bin/zsh -ic 'export PATH="${lib.makeBinPath emacsRuntimeDeps}:$PATH"; "$HOME/.emacs.d/bin/doom" sync -u -e --aot --force' || run echo "doom sync failed"
-    fi
+    run env -i HOME="$HOME" USER="$USER" SHELL=/bin/zsh TERM=dumb \
+      PATH="$HOME/.nix-profile/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+      /bin/zsh -ic 'export PATH="${lib.makeBinPath emacsRuntimeDeps}:$PATH"; ${doomCli}/bin/doom sync -u -e --aot --force' || run echo "doom sync failed"
   '';
 
   # programs.z-lua = {
@@ -302,8 +339,6 @@ rec {
   home.file.".aspell.conf".text = ''
     data-dir ${myAspell}/lib/aspell
     master en_US
-    extra-dicts en-computers.rws
-    add-extra-dicts en_US-science.rws
   '';
 
   # It's Hammerspoon time
