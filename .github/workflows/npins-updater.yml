@@ -25,6 +25,7 @@ on:
     # Run every Tuesday at 03:30, but we use the dispatch to trigger when urgent
     # This used to run every day, but that is way too many changes...
     - cron:  '30 3 * * 2'
+      timezone: "Europe/Zurich"
 jobs:
   npins-updater:
     name: 'Check for updates (weekly)'

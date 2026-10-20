@@ -21,8 +21,9 @@ on:
         default: false
   schedule:
     # * is a special character in YAML so you have to quote this string
-    # Run every first of the month at 01:17, but we use the dispatch to trigger when urgent
+    # Run every first of the month at 01:00 but we use the dispatch to trigger when urgent
     - cron:  '1 0 1 * *'
+      timezone: "Europe/Zurich"
 jobs:
   niv-updater:
     name: 'Check for emacs overlay updates (monthly)'

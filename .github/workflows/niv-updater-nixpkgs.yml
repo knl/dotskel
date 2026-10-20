@@ -23,6 +23,7 @@ on:
     # * is a special character in YAML so you have to quote this string
     # Run every Monday at 01:17, but we use the dispatch to trigger when urgent
     - cron:  '17 01 * * 1'
+      timezone: "Europe/Zurich"
 jobs:
   niv-updater:
     name: 'Check for nixpkgs updates (weekly)'
