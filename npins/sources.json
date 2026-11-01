@@ -22,9 +22,9 @@
       },
       "branch": "master",
       "submodules": true,
-      "revision": "01d68aaf6bd7db073365385cd82e1ad7e815295c",
+      "revision": "59cdaa32ae933469bb6a1fb3cadee8a988c15968",
       "url": null,
-      "hash": "sha256-+b0yNSXBTNroSuwH89Mp5wtJojaGfRgDn9G2ooorurM="
+      "hash": "sha256-Wu2Tztg+QibAewCBeI3UKxN2mheSU2aoXEtb19RuIPM="
     },
     "emacs-overlay": {
       "type": "Git",
