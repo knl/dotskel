@@ -138,9 +138,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "64df59615df306c7a8bb37d0a5a1ebc46337dfb1",
-      "url": "https://github.com/romkatv/powerlevel10k/archive/64df59615df306c7a8bb37d0a5a1ebc46337dfb1.tar.gz",
-      "hash": "sha256-fF53hKX23kdtoCHcErnKCiGpiNstDivUklgBmzgqg5Q="
+      "revision": "50a35cc8d9f1488d18fb8aea6cddcfc31189cc9f",
+      "url": "https://github.com/romkatv/powerlevel10k/archive/50a35cc8d9f1488d18fb8aea6cddcfc31189cc9f.tar.gz",
+      "hash": "sha256-Plv/JqwPjat0JLW4sKw6KdoB2v4Ol0zSFIldHqj5ku0="
     },
     "rh": {
       "type": "Git",
